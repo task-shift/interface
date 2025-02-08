@@ -24,7 +24,7 @@ export default function SignupForm() {
                     Agree to terms and conditions
                 </label>
             </div>
-            <button class="btn w-100 py-2" type="submit" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}>Sign in</button>
+            <button class="btn w-100 py-2" type="submit" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}>Sign up</button>
             <Link to="/signin"><small>Sign in here</small></Link>
         </>
     )
