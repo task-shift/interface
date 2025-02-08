@@ -1,6 +1,10 @@
 /* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { SiEbox } from "react-icons/si";
+import { GoOrganization } from "react-icons/go";
+import { FaCaretDown } from "react-icons/fa";
+import { FaRegUserCircle } from "react-icons/fa";
+
 export default function ShiftHeader() {
     return (
         <>
@@ -20,22 +24,22 @@ export default function ShiftHeader() {
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li> */}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact us</a>
+                                
+                                <a class="nav-link" href="#">
+                                    <button class="btn btn-md bg-light text-muted" style={{ "borderRadius": "30px" }}>
+                                        <GoOrganization /> my-organization <FaCaretDown /> 
+                                    </button>
+                                </a>
+
                             </li>
 
                         </ul>
                         <form class="d-flex" role="search">
                             <Link to="/signin">
-                                <button class="btn btn-md me-2" style={{ "borderRadius": "20px" }}>Login</button>
+                                <button class="btn btn-md me-2" style={{ "borderRadius": "20px" }}>Signout</button>
                             </Link>
                             <Link to="/signup">
-                                <button class="btn btn-md" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}>Book a demo</button>
+                                <button class="btn btn-md" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}><FaRegUserCircle className="me-2"/>Profile</button>
                             </Link>
                         </form>
                     </div>
