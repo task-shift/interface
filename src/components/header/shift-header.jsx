@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { SiEbox } from "react-icons/si";
-export default function Header() {
+export default function ShiftHeader() {
     return (
         <>
+
             <nav class="navbar navbar-expand-lg" style={{ "fontFamily": "Roboto, sans-serif" }}>
                 <div class="container">
                     <a class="navbar-brand" href="#">
