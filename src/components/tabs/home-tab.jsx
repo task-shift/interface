@@ -53,7 +53,8 @@ export default function HomeTab() {
         return () => clearTimeout(timeout);
     }, [textIndex, charIndex, isDeleting, texts]);
 
-    const handleHideClick = () => {
+    const handleHideClick = (e) => {
+        e.preventDefault();
         if (formRef.current) {
             formRef.current.style.transition = 'all 0.3s ease';
             formRef.current.style.overflow = 'hidden';
@@ -72,7 +73,8 @@ export default function HomeTab() {
         }
     };
 
-    const handleShowClick = () => {
+    const handleShowClick = (e) => {
+        e.preventDefault();
         setIsFormVisible(true);
         setTimeout(() => {
             if (formRef.current) {
@@ -188,7 +190,7 @@ export default function HomeTab() {
                                                             Hide <FaRegTimesCircle />
                                                         </button>
                                                     </div>
-                                                    <button className="btn btn-primary px-4" style={{ "borderRadius": "0 35px 35px 0", "height": "150px" }}><IoSendSharp size={20} /></button>
+                                                    <button className="btn btn-primary px-4" type="submit" style={{ "borderRadius": "0 35px 35px 0", "height": "150px" }}><IoSendSharp size={20} /></button>
                                                 </div>
                                             </form>
                                         </div>
