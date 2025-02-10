@@ -61,6 +61,14 @@ export default function AgentTab() {
                                                 <img src="/profile.jpeg" alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             </div>
                                         </div>
+                                        <div className="message user-message mb-3 d-flex justify-content-end align-items-start">
+                                            <div className="bg-primary text-white p-3" style={{ maxWidth: '70%', borderRadius: '15px 15px 0 15px' }}>
+                                                <p>Hi! Can you help me with my project tasks?</p>
+                                            </div>
+                                            <div className="ms-2" style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden' }}>
+                                                <img src="/profile.jpeg" alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="chat-input p-3" style={{ borderTop: '1px solid #eee', flexShrink: 0 }}>
                                         <div className="input-group">
