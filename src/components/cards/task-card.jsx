@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { FaCaretDown } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 export default function TaskCard() {
@@ -8,6 +8,7 @@ export default function TaskCard() {
         text: "Failed",
         color: "danger"
     });
+    const dropdownRef = useRef(null);
 
     const handleStatusChange = (newStatus, color) => {
         setStatus({
@@ -16,13 +17,29 @@ export default function TaskCard() {
         });
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                const dropdown = dropdownRef.current.querySelector('.dropdown-menu');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <>
             <div className="card h-100 border-0" style={{ borderRadius: "20px" }}>
                 <div className="card-body">
                     <div className="mb-3">
                         <div className="d-flex justify-content-between w-100">
-                            <div className="dropdown">
+                            <div className="dropdown" ref={dropdownRef}>
                                 <span
                                     className={`badge bg-${status.color} text-white`}
                                     data-bs-toggle="dropdown"
