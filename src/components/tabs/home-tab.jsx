@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unknown-property */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoSendSharp } from "react-icons/io5";
+import { FaRegTimesCircle, } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
+
 import TaskCard from "../cards/task-card";
 
 export default function HomeTab() {
@@ -17,6 +20,8 @@ export default function HomeTab() {
     const [textIndex, setTextIndex] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(true);
+    const formRef = useRef(null);
 
     useEffect(() => {
         const typeText = () => {
@@ -48,112 +53,157 @@ export default function HomeTab() {
         return () => clearTimeout(timeout);
     }, [textIndex, charIndex, isDeleting, texts]);
 
+    const handleHideClick = () => {
+        if (formRef.current) {
+            formRef.current.style.transition = 'all 0.3s ease';
+            formRef.current.style.overflow = 'hidden';
+            formRef.current.style.height = formRef.current.scrollHeight + 'px';
+            
+            // Trigger reflow
+            formRef.current.offsetHeight;
+            
+            formRef.current.style.height = '0';
+            formRef.current.style.opacity = '0';
+            formRef.current.style.margin = '0';
+            
+            setTimeout(() => {
+                setIsFormVisible(false);
+            }, 300);
+        }
+    };
+
+    const handleShowClick = () => {
+        setIsFormVisible(true);
+        setTimeout(() => {
+            if (formRef.current) {
+                formRef.current.style.transition = 'all 0.3s ease';
+                formRef.current.style.height = '0';
+                formRef.current.style.opacity = '0';
+                formRef.current.style.margin = '0';
+                
+                // Trigger reflow
+                formRef.current.offsetHeight;
+                
+                formRef.current.style.height = formRef.current.scrollHeight + 'px';
+                formRef.current.style.opacity = '1';
+                formRef.current.style.margin = 'inherit';
+            }
+        }, 10);
+    };
+
     return (
         <>
             <div className="mt-5">
                 <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>Chat with your AI task agent—tell it what you need!<br />assign tasks, receive reports, and much more!</p>
 
                 <div className="d-flex justify-content-center">
-
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px" }}>
                         <div className="card-body">
-                            <h5 className="card-title">
-
-                            </h5>
+                            <h5 className="card-title"></h5>
                             <div className="container">
-                                <div className="d-flex justify-content-center">
-                                    <form class="d-flex" style={{ width: "100%", maxWidth: "800px" }}>
-                                        <div className="d-flex justify-content-center align-items-center" style={{ width: "100%" }}>
-                                            <div className="position-relative" style={{ width: "100%" }}>
-                                                <textarea
-                                                    class="form-control border-0 bg-white"
-                                                    placeholder={placeholder}
-                                                    style={{ "borderRadius": "10px 0 0 10px", "minHeight": "150px", "maxWidth": "800px" }}
-                                                    onInput={(e) => {
-                                                        const value = e.target.value;
-                                                        // Only show dropdown if @ is the last character
-                                                        if (value.endsWith('@')) {
-                                                            document.getElementById('user-list').classList.remove('d-none');
-                                                        } else if (!value.includes('@')) {
-                                                            document.getElementById('user-list').classList.add('d-none');
-                                                        }
-                                                    }}
-                                                    onKeyDown={(e) => {
-                                                        // Hide dropdown when space is pressed
-                                                        if (e.key === ' ') {
-                                                            document.getElementById('user-list').classList.add('d-none');
-                                                        }
-                                                    }}
-                                                    onBlur={() => {
-                                                        // Hide dropdown when textarea loses focus
-                                                        setTimeout(() => {
-                                                            document.getElementById('user-list').classList.add('d-none');
-                                                        }, 100);
-                                                    }}
-                                                ></textarea>
-                                                <div
-                                                    id="user-list"
-                                                    className="d-none position-absolute bg-white shadow-sm p-2"
-                                                    style={{ top: "-100px", left: "0", width: "50%", borderRadius: "10px", zIndex: 1000 }}
-                                                    onMouseDown={(e) => {
-                                                        // Prevent dropdown from closing when clicking inside it
-                                                        e.preventDefault();
-                                                    }}
-                                                    onBlur={() => {
-                                                        // Hide dropdown when it loses focus
-                                                        document.getElementById('user-list').classList.add('d-none');
-                                                    }}
-                                                    tabIndex={-1} // Make the div focusable
-                                                >
-                                                    <div className="list-group">
-                                                        <button
-                                                            className="list-group-item list-group-item-action"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                const textarea = document.querySelector('textarea');
-                                                                const currentValue = textarea.value;
-                                                                const atPosition = currentValue.lastIndexOf('@');
-                                                                const newValue = currentValue.substring(0, atPosition) + '@User1 ' + currentValue.substring(atPosition + 1);
-                                                                textarea.value = newValue;
-                                                                document.getElementById('user-list').classList.add('d-none');
-                                                                textarea.focus();
+                                <div className="d-flex justify-content-center" style={{ width: "100%", maxWidth: "800px" }}>
+                                    {isFormVisible ? (
+                                        <div ref={formRef} className="w-100">
+                                            <form className="d-flex w-100">
+                                                <div className="d-flex justify-content-center align-items-center w-100">
+                                                    <div className="position-relative w-100">
+                                                        <textarea
+                                                            className="form-control border-0 bg-white"
+                                                            placeholder={placeholder}
+                                                            style={{ "borderRadius": "10px 0 0 10px", "minHeight": "150px" }}
+                                                            onInput={(e) => {
+                                                                const value = e.target.value;
+                                                                if (value.endsWith('@')) {
+                                                                    document.getElementById('user-list').classList.remove('d-none');
+                                                                } else if (!value.includes('@')) {
+                                                                    document.getElementById('user-list').classList.add('d-none');
+                                                                }
                                                             }}
-                                                        >User 1</button>
-                                                        <button
-                                                            className="list-group-item list-group-item-action"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                const textarea = document.querySelector('textarea');
-                                                                const currentValue = textarea.value;
-                                                                const atPosition = currentValue.lastIndexOf('@');
-                                                                const newValue = currentValue.substring(0, atPosition) + '@User2 ' + currentValue.substring(atPosition + 1);
-                                                                textarea.value = newValue;
-                                                                document.getElementById('user-list').classList.add('d-none');
-                                                                textarea.focus();
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === ' ') {
+                                                                    document.getElementById('user-list').classList.add('d-none');
+                                                                }
                                                             }}
-                                                        >User 2</button>
-                                                        <button
-                                                            className="list-group-item list-group-item-action"
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                const textarea = document.querySelector('textarea');
-                                                                const currentValue = textarea.value;
-                                                                const atPosition = currentValue.lastIndexOf('@');
-                                                                const newValue = currentValue.substring(0, atPosition) + '@User3 ' + currentValue.substring(atPosition + 1);
-                                                                textarea.value = newValue;
-                                                                document.getElementById('user-list').classList.add('d-none');
-                                                                textarea.focus();
+                                                            onBlur={() => {
+                                                                setTimeout(() => {
+                                                                    document.getElementById('user-list').classList.add('d-none');
+                                                                }, 100);
                                                             }}
-                                                        >User 3</button>
+                                                        ></textarea>
+                                                        <div
+                                                            id="user-list"
+                                                            className="d-none position-absolute bg-white shadow-sm p-2"
+                                                            style={{ top: "-100px", left: "0", width: "50%", borderRadius: "10px", zIndex: 1000 }}
+                                                            onMouseDown={(e) => e.preventDefault()}
+                                                            onBlur={() => document.getElementById('user-list').classList.add('d-none')}
+                                                            tabIndex={-1}
+                                                        >
+                                                            <div className="list-group">
+                                                                <button
+                                                                    className="list-group-item list-group-item-action"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        const textarea = document.querySelector('textarea');
+                                                                        const currentValue = textarea.value;
+                                                                        const atPosition = currentValue.lastIndexOf('@');
+                                                                        const newValue = currentValue.substring(0, atPosition) + '@User1 ' + currentValue.substring(atPosition + 1);
+                                                                        textarea.value = newValue;
+                                                                        document.getElementById('user-list').classList.add('d-none');
+                                                                        textarea.focus();
+                                                                    }}
+                                                                >User 1</button>
+                                                                <button
+                                                                    className="list-group-item list-group-item-action"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        const textarea = document.querySelector('textarea');
+                                                                        const currentValue = textarea.value;
+                                                                        const atPosition = currentValue.lastIndexOf('@');
+                                                                        const newValue = currentValue.substring(0, atPosition) + '@User2 ' + currentValue.substring(atPosition + 1);
+                                                                        textarea.value = newValue;
+                                                                        document.getElementById('user-list').classList.add('d-none');
+                                                                        textarea.focus();
+                                                                    }}
+                                                                >User 2</button>
+                                                                <button
+                                                                    className="list-group-item list-group-item-action"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        const textarea = document.querySelector('textarea');
+                                                                        const currentValue = textarea.value;
+                                                                        const atPosition = currentValue.lastIndexOf('@');
+                                                                        const newValue = currentValue.substring(0, atPosition) + '@User3 ' + currentValue.substring(atPosition + 1);
+                                                                        textarea.value = newValue;
+                                                                        document.getElementById('user-list').classList.add('d-none');
+                                                                        textarea.focus();
+                                                                    }}
+                                                                >User 3</button>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            className="btn btn-light position-absolute top-22 start-50 translate-middle shadow"
+                                                            style={{ zIndex: 1, borderRadius: "30px" }}
+                                                            onClick={handleHideClick}
+                                                        >
+                                                            Hide <FaRegTimesCircle />
+                                                        </button>
                                                     </div>
+                                                    <button className="btn btn-primary px-4" style={{ "borderRadius": "0 35px 35px 0", "height": "150px" }}><IoSendSharp size={20} /></button>
                                                 </div>
-                                            </div>
-                                            <button class="btn btn-primary px-4" style={{ "borderRadius": "0 35px 35px 0", "height": "150px" }}><IoSendSharp size={20} /></button>
+                                            </form>
                                         </div>
-                                    </form>
+                                    ) : (
+                                        <button 
+                                            className="btn" 
+                                            style={{ borderRadius: "30px", backgroundColor: "#FBFEFF"}}
+                                            onClick={handleShowClick}
+                                        >
+                                            Show <IoEyeSharp/>
+                                        </button>
+                                    )}
                                 </div>
 
-                                <div className="row mt-4">
+                                <div className="row mt-5">
                                     <div className="col-md-4 mb-3">
                                         <TaskCard />
                                     </div>
