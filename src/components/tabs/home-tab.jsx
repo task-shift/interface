@@ -99,8 +99,8 @@ export default function HomeTab() {
                 <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>Chat with your AI task agent—tell it what you need!<br />assign tasks, receive reports, and much more!</p>
 
                 <div className="d-flex justify-content-center">
-                    <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px" }}>
-                        <div className="card-body">
+                    <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
+                        <div className="card-body" style={{ overflowY: "auto", height: "100%" }}>
                             <h5 className="card-title"></h5>
                             <div className="container">
                                 <div className="d-flex justify-content-center" style={{ width: "100%", maxWidth: "800px" }}>
@@ -205,7 +205,16 @@ export default function HomeTab() {
                                     )}
                                 </div>
 
-                                <div className="row mt-5">
+                                <div className="row mt-5" >
+                                    <div className="col-md-4 mb-3">
+                                        <TaskCard />
+                                    </div>
+                                    <div className="col-md-4 mb-3">
+                                        <TaskCard />
+                                    </div>
+                                    <div className="col-md-4 mb-3">
+                                        <TaskCard />
+                                    </div>
                                     <div className="col-md-4 mb-3">
                                         <TaskCard />
                                     </div>

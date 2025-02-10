@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import ProjectTab from "../tabs/project-tab";
 import HomeTab from "../tabs/home-tab";
+import AgentTab from "../tabs/agent-tab";
 export default function ShiftNavbar() {
     return (
         <>
@@ -20,7 +21,7 @@ export default function ShiftNavbar() {
                 </li>
                 <li class="nav-item" role="presentation">
                     <button style={{ "borderRadius": "20px" }} class="nav-link text-dark" id="pills-agents-tab" data-bs-toggle="pill" data-bs-target="#agents-tab" type="button" role="tab" aria-controls="pills-agents-tab" aria-selected="false">
-                        Agents
+                        Agent
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -44,7 +45,7 @@ export default function ShiftNavbar() {
                     <HomeTab />
                 </div>
                 <div class="tab-pane fade" id="agents-tab" role="tabpanel" aria-labelledby="pills-agents-tab" tabindex="0">
-
+                    <AgentTab />
                 </div>
                 <div class="tab-pane fade" id="projects-tab" role="tabpanel" aria-labelledby="pills-projects-tab" tabindex="0">
                     <ProjectTab />
