@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from './pages/index'
 import Signin from './pages/auth/signin'
 import Signup from './pages/auth/signup'
+import Shift from './pages/shift/shift'
 import './App.css'
 
 function App() {
@@ -23,9 +24,13 @@ function App() {
             path="/signin"
             element={<Signin />}
           ></Route>
-           <Route
+          <Route
             path="/signup"
             element={<Signup />}
+          ></Route>
+          <Route
+            path="/shift"
+            element={<Shift />}
           ></Route>
           {/* <Route
             path="/riders-details/:id"
