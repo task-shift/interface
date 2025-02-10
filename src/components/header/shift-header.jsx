@@ -7,7 +7,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
 
 export default function ShiftHeader() {
-    const [selectedOrg, setSelectedOrg] = useState("my-organization");
+    const [selectedOrg, setSelectedOrg] = useState("untitled");
     const [isSwitching, setIsSwitching] = useState(false);
 
     const handleOrgSelect = (orgName) => {
@@ -47,7 +47,7 @@ export default function ShiftHeader() {
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>
-                        <p className="text-muted mb-0">Switching organization...</p>
+                        <p className="text-muted mb-0">Switching projects...</p>
                     </div>
                 </div>
             )}
@@ -72,8 +72,8 @@ export default function ShiftHeader() {
 
                                         <ul class="dropdown-menu border-0 shadow-sm text-muted" style={{ "borderRadius": "20px" }}>
                                             <li>
-                                                <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("John Org")}>
-                                                    <GoOrganization /> John Org
+                                                <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("John project")}>
+                                                    <GoOrganization /> John project
                                                 </a>
                                             </li>
                                             <li>
