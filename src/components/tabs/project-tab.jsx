@@ -9,6 +9,7 @@ export default function ProjectTab() {
                 <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>
                     Organize your tasks by creating projects, <br />and add tasks to them.
                 </p>
+
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
                         <div className="card-body p-0" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -23,14 +24,8 @@ export default function ProjectTab() {
                                 </div>
                             </h5>
 
-                            <div className="container">
+                            <div className="container" style={{ overflowY: 'auto' }}>
                                 <div className="row mt-2" >
-                                    <div className="col-md-4 mb-3">
-                                        <ProjectCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <ProjectCard />
-                                    </div>
                                     <div className="col-md-4 mb-3">
                                         <ProjectCard />
                                     </div>
