@@ -2,10 +2,11 @@
 import { FaCaretDown } from "react-icons/fa";
 import { useState, useEffect, useRef } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 
-export default function TaskCard() {
+export default function ProjectCard() {
     const [status, setStatus] = useState({
-        text: "Failed",
+        text: "Destroy",
         color: "danger"
     });
     const dropdownRef = useRef(null);
@@ -49,11 +50,6 @@ export default function TaskCard() {
                                 </span>
                                 <ul className="dropdown-menu border-0 shadow-sm" style={{ minWidth: "120px", borderRadius: "20px" }}>
                                     <li>
-                                        <a className="dropdown-item" href="#" onClick={() => handleStatusChange("Pending", "warning")}>
-                                            <span className="badge bg-warning text-white">Pending</span>
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a className="dropdown-item" href="#" onClick={() => handleStatusChange("Ongoing", "info")}>
                                             <span className="badge bg-info text-white">Ongoing</span>
                                         </a>
@@ -71,22 +67,24 @@ export default function TaskCard() {
                                 </ul>
                             </div>
 
-                            <button className="btn btn-sm bg-light text-muted" style={{ "borderRadius": "30px", fontSize: "12px" }}>
+                            {/* <button className="btn btn-sm bg-light text-muted" style={{ "borderRadius": "30px", fontSize: "12px" }}>
                                 <b>Due</b> on 2/10/2025
-                            </button>
+                            </button> */}
                         </div>
                     </div>
-                    <h5 className="card-title" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90%' }}>Graphic Design</h5>
+                    <h5 className="card-title" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90%' }}>Project One</h5>
                     <p className="card-text text-muted fw-light" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90%' }}>
-                        Description of task 1 shjjdsgjdhfjdjskfd
+                        Project is about shjjdsgjdhfjdjskfd
                     </p>
                     <hr />
                     <div className="d-flex justify-content-between w-100">
                         <div>
-                            <img src="/profile.jpeg" alt="profile" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover" }} />
+                            <button className="btn btn-sm bg-light text-muted" style={{ "borderRadius": "30px", fontSize: "12px" }}>
+                                <b><FaUsers className="me-1" size={15} />100</b> team-mates
+                            </button>
                         </div>
                         <div>
-                            <button className="btn btn-sm btn-outline-danger" style={{ "borderRadius": "30px"}}>
+                            <button className="btn btn-sm btn-outline-danger" style={{ "borderRadius": "30px" }}>
                                 <FaTrashAlt className="me-2" />Trash
                             </button>
                         </div>

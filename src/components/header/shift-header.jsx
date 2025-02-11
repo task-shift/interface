@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { SiEbox } from "react-icons/si";
-import { GoOrganization } from "react-icons/go";
+import { CiFolderOn } from "react-icons/ci";
 import { FaCaretDown } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
@@ -67,23 +67,23 @@ export default function ShiftHeader() {
                                 <a class="nav-link" href="#">
                                     <div className="dropdown">
                                         <button class="btn btn-md bg-light text-muted" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ "borderRadius": "30px" }}>
-                                            <GoOrganization /> {selectedOrg} <FaCaretDown />
+                                            <CiFolderOn /> {selectedOrg} <FaCaretDown />
                                         </button>
 
                                         <ul class="dropdown-menu border-0 shadow-sm text-muted" style={{ "borderRadius": "20px" }}>
                                             <li>
                                                 <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("John project")}>
-                                                    <GoOrganization /> John project
+                                                    <CiFolderOn /> John project
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("Dark Angel")}>
-                                                    <GoOrganization /> Dark Angel
+                                                    <CiFolderOn /> Dark Angel
                                                 </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("Cheribum$")}>
-                                                    <GoOrganization /> Cheribum$
+                                                    <CiFolderOn /> Cheribum$
                                                 </a>
                                             </li>
                                         </ul>

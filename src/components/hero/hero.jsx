@@ -8,9 +8,9 @@ export default function Hero() {
                         <div class="col-lg-6">
                             <div class="mb-4">
                                 <div class="d-flex align-items-center gap-2 mb-3">
-                                    <img src="" class="rounded-circle" alt="User 1" />
-                                    <img src="" class="rounded-circle" alt="User 2" />
-                                    <img src="" class="rounded-circle" alt="User 3" />
+                                    <img src="/profile.jpeg" alt="profile" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover" }} />
+                                    <img src="/profile.jpeg" alt="profile" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover" }} />
+                                    <img src="/profile.jpeg" alt="profile" style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover" }} />
                                     <span class="text-muted">Join 2,000+ others who signed up</span>
                                 </div>
                             </div>
@@ -20,7 +20,7 @@ export default function Hero() {
 
                             <div class="mb-4">
                                 <form class="d-flex">
-                                    <input type="text" class="form-control form-control-lg border-0 bg-light" placeholder="Email address" style={{ "borderRadius": "35px 0 0 35px"}}/>
+                                    <input type="text" class="form-control form-control-lg border-0 bg-light" placeholder="Email address" style={{ "borderRadius": "35px 0 0 35px" }} />
                                     <button class="me-5 btn btn-primary btn-lg px-4" style={{ "borderRadius": "0 35px 35px 0" }}>Book a Demo</button>
                                 </form>
                             </div>
