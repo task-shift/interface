@@ -2,6 +2,7 @@
 import ProjectTab from "../tabs/project-tab";
 import HomeTab from "../tabs/home-tab";
 import AgentTab from "../tabs/agent-tab";
+import TeamTab from "../tabs/team-tab";
 export default function ShiftNavbar() {
     return (
         <>
@@ -51,7 +52,7 @@ export default function ShiftNavbar() {
                     <ProjectTab />
                 </div>
                 <div class="tab-pane fade" id="teams-tab" role="tabpanel" aria-labelledby="pills-teams-tab" tabindex="0">
-
+                    <TeamTab />
                 </div>
                 <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="pills-settings-tab" tabindex="0">
 
