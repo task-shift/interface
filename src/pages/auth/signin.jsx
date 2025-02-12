@@ -8,7 +8,7 @@ export default function Signin() {
         <>
             <Header />
             <body class="d-flex align-items-center justify-content-center vh-100 bg-body-tertiary">
-                <main class="form-signin w-100 m-auto shadow-hover">
+                <main class="form-signin w-100 m-auto">
                     <form>
                         <Link to="/">
                             <SiEbox color="#2466FF" size={50} className="mb-4" />

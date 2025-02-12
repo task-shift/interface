@@ -1,6 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import ProjectCard from "../cards/project-card";
+import { CiFolderOn } from "react-icons/ci";
+import CreateProjectModal from "../modal/create-project-modal";
 
 export default function ProjectTab() {
     return (
@@ -15,10 +17,8 @@ export default function ProjectTab() {
                         <div className="card-body p-0" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <h5 className="card-title">
                                 <div className="d-flex justify-content-between w-100 p-3">
-                                    <button class="btn btn-md text-muted" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}>
-                                        Untitled project
-                                    </button>
-                                    <button class="btn btn-md text-muted" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}>
+                                    <button class="btn btn-md text-muted d-inline-flex align-items-center" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}><CiFolderOn size={20} className="me-2" />Untitled project</button>
+                                    <button class="btn btn-md text-muted" data-bs-toggle="modal" data-bs-target="#createProjectModal" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}>
                                         Create new project <MdOutlineCreateNewFolder size={20} />
                                     </button>
                                 </div>
@@ -53,6 +53,7 @@ export default function ProjectTab() {
                         </div>
                     </div>
                 </div>
+                <CreateProjectModal />
             </div>
         </>
     )
