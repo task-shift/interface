@@ -3,7 +3,6 @@ import { FaUsers } from "react-icons/fa";
 import { CiFolderOn } from "react-icons/ci";
 import { useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
-import TeamCard from "../cards/team-card";
 import TeamNavbar from "../header/team-navbar";
 export default function TeamTab() {
 
@@ -96,31 +95,6 @@ export default function TeamTab() {
 
                             <TeamNavbar />
 
-                            <div className="container" style={{ overflowY: 'auto' }}>
-                                <div className="row mt-2" >
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                       <TeamCard />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

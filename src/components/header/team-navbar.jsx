@@ -1,4 +1,7 @@
 /* eslint-disable react/no-unknown-property */
+import TeamActiveTab from "../tabs/team-active-tab";
+import TeamInvitedTab from "../tabs/team-invited-tab";
+
 export default function TeamNavbar() {
 
     return (
@@ -22,8 +25,16 @@ export default function TeamNavbar() {
                         Invited
                     </button>
                 </li>
-               
             </ul>
+
+            <div class="tab-content" id="pills-tabContent" style={{ height: '100%', overflow: 'hidden' }}>
+                <div class="tab-pane fade show active" id="team-active-tab" role="tabpanel" aria-labelledby="pills-team-active-tab" tabindex="0" style={{ height: '100%', overflowY: 'auto' }}>
+                    <TeamActiveTab />
+                </div>
+                <div class="tab-pane fade show active" id="team-invited-tab" role="tabpanel" aria-labelledby="pills-team-invited-tab" tabindex="0" style={{ height: '100%', overflowY: 'auto' }}>
+                    <TeamInvitedTab />
+                </div>
+            </div>
         </>
     )
 
