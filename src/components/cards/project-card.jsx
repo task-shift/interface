@@ -80,7 +80,7 @@ export default function ProjectCard() {
                     <div className="d-flex justify-content-between w-100">
                         <div>
                             <button className="btn btn-sm bg-light text-muted" style={{ "borderRadius": "30px", fontSize: "12px" }}>
-                                <b><FaUsers className="me-1" size={15} />100</b> team-mates
+                                <b><FaUsers className="me-1" size={15} />100</b>
                             </button>
                         </div>
                         <div>
