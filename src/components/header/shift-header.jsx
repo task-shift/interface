@@ -1,56 +1,13 @@
 /* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { SiEbox } from "react-icons/si";
-import { CiFolderOn } from "react-icons/ci";
-import { FaCaretDown } from "react-icons/fa";
+import { GoOrganization } from "react-icons/go";
 import { FaRegUserCircle } from "react-icons/fa";
-import { useState } from "react";
 
 export default function ShiftHeader() {
-    const [selectedOrg, setSelectedOrg] = useState("untitled");
-    const [isSwitching, setIsSwitching] = useState(false);
-
-    const handleOrgSelect = (orgName) => {
-        setIsSwitching(true);
-        setTimeout(() => {
-            setSelectedOrg(orgName);
-            setIsSwitching(false);
-        }, 2000); // Simulate a 2-second switch process
-    };
 
     return (
         <>
-            {isSwitching && (
-                <div style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backdropFilter: 'blur(4px)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    zIndex: 1000,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <div style={{
-                        backgroundColor: 'white',
-                        padding: '20px 40px',
-                        borderRadius: '20px',
-                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '10px'
-                    }}>
-                        <div className="spinner-border text-primary" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                        <p className="text-muted mb-0">Switching projects...</p>
-                    </div>
-                </div>
-            )}
             
             <nav class="navbar navbar-expand-lg" style={{ "fontFamily": "Roboto, sans-serif" }}>
                 <div class="container">
@@ -65,29 +22,10 @@ export default function ShiftHeader() {
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <div className="dropdown">
-                                        <button class="btn btn-md bg-light text-muted" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ "borderRadius": "30px" }}>
-                                            <CiFolderOn /> {selectedOrg} <FaCaretDown />
+                                    
+                                        <button class="btn btn-md bg-light text-muted" aria-expanded="false" style={{ "borderRadius": "30px" }}>
+                                            <GoOrganization /> John Org
                                         </button>
-
-                                        <ul class="dropdown-menu border-0 shadow-sm text-muted" style={{ "borderRadius": "20px" }}>
-                                            <li>
-                                                <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("John project")}>
-                                                    <CiFolderOn /> John project
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("Dark Angel")}>
-                                                    <CiFolderOn /> Dark Angel
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-muted" href="#" onClick={() => handleOrgSelect("Cheribum$")}>
-                                                    <CiFolderOn /> Cheribum$
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </a>
                             </li>
                         </ul>
