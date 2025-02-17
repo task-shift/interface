@@ -4,8 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { IoSendSharp } from "react-icons/io5";
 import { FaRegTimesCircle, } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
-
-import TaskCard from "../cards/task-card";
+import HomeNavbar from "../header/home-navbar";
 
 export default function HomeTab() {
     const texts = [
@@ -96,13 +95,13 @@ export default function HomeTab() {
     return (
         <>
             <div className="mt-5">
-                <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>Chat with your AI task agent—tell it what you need!<br />assign tasks, receive reports, and much more!</p>
+                <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>Chat with your AI task agent—tell it what you need!<br />assign tasks, create projects, departments...</p>
 
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
-                        <div className="card-body" style={{ overflowY: "auto", height: "100%" }}>
+                        <div className="card-body" style={{ overflowY: "hidden", height: "100%" }}>
                             <h5 className="card-title"></h5>
-                            <div className="container">
+                            <div className="container" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                                 <div className="d-flex justify-content-center" style={{ width: "100%", maxWidth: "800px" }}>
                                     {isFormVisible ? (
                                         <div ref={formRef} className="w-100">
@@ -112,7 +111,7 @@ export default function HomeTab() {
                                                         <textarea
                                                             className="form-control border-0 bg-white"
                                                             placeholder={placeholder}
-                                                            style={{ "borderRadius": "10px 0 0 10px", "minHeight": "150px" }}
+                                                            style={{ "borderRadius": "10px 0 0 10px", "minHeight": "120px" }}
                                                             onInput={(e) => {
                                                                 const value = e.target.value;
                                                                 if (value.endsWith('@')) {
@@ -190,7 +189,7 @@ export default function HomeTab() {
                                                             Hide <FaRegTimesCircle />
                                                         </button>
                                                     </div>
-                                                    <button className="btn btn-primary px-4" type="submit" style={{ "borderRadius": "0 35px 35px 0", "height": "150px" }}><IoSendSharp size={20} /></button>
+                                                    <button className="btn btn-primary px-4" type="submit" style={{ "borderRadius": "0 35px 35px 0", "height": "120px" }}><IoSendSharp size={20} /></button>
                                                 </div>
                                             </form>
                                         </div>
@@ -205,27 +204,10 @@ export default function HomeTab() {
                                     )}
                                 </div>
 
-                                <div className="row mt-5" >
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
-                                    <div className="col-md-4 mb-3">
-                                        <TaskCard />
-                                    </div>
+    
 
-                                    
+                                <div style={{ flex: 1, overflowY: "auto" }}>
+                                    <HomeNavbar />
                                 </div>
                             </div>
                         </div>
