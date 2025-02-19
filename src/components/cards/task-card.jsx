@@ -5,8 +5,8 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export default function TaskCard() {
     const [status, setStatus] = useState({
-        text: "Failed",
-        color: "danger"
+        text: "Finished",
+        color: "success"
     });
     const dropdownRef = useRef(null);
 

@@ -4,6 +4,7 @@ import { CiFolderOn } from "react-icons/ci";
 import { useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 import TeamNavbar from "../header/team-navbar";
+import AddMembersModal from "../modal/add-members-modal";
 export default function TeamTab() {
 
     const [selectedOrg, setSelectedOrg] = useState("untitled");
@@ -87,7 +88,7 @@ export default function TeamTab() {
                                             </li>
                                         </ul>
                                     </div>
-                                    <button class="btn btn-md text-muted" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}>
+                                    <button class="btn btn-md text-muted" data-bs-toggle="modal" data-bs-target="#addMembersModal" style={{ "borderRadius": "30px", backgroundColor: "#FBFEFF" }}>
                                         Add memebers <FaUsers size={20} />
                                     </button>
                                 </div>
@@ -98,6 +99,8 @@ export default function TeamTab() {
                         </div>
                     </div>
                 </div>
+
+                <AddMembersModal />
 
             </div>
 
