@@ -33,7 +33,7 @@ export default function ShiftHeader() {
                             <Link to="/signin">
                                 <button class="btn btn-md me-2" style={{ "borderRadius": "20px" }}>Signout</button>
                             </Link>
-                            <Link to="/signup">
+                            <Link>
                                 <button class="btn btn-md" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}><FaRegUserCircle className="me-2" />Profile</button>
                             </Link>
                         </form>
