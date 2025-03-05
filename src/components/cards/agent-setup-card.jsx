@@ -18,7 +18,7 @@ export default function AgentSetupCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Communication channel</div>
+                                    <div className="fw-bold mb-2">Team Communication channel</div>
                                     <div class="input-group mb-3">
                                         <select class="form-control" aria-label="Communication channel" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px" }}>
                                             <option value="">Select channel</option>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SiEbox } from "react-icons/si";
 import { GoOrganization } from "react-icons/go";
 import { FaRegUserCircle } from "react-icons/fa";
+import ProfileModal from "../modal/profile-modal";
 
 export default function ShiftHeader() {
 
@@ -34,12 +35,14 @@ export default function ShiftHeader() {
                                 <button class="btn btn-md me-2" style={{ "borderRadius": "20px" }}>Signout</button>
                             </Link>
                             <Link>
-                                <button class="btn btn-md" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }}><FaRegUserCircle className="me-2" />Profile</button>
+                                <button class="btn btn-md" style={{ "backgroundColor": "#2466FF", "color": "white", "borderRadius": "20px" }} data-bs-toggle="modal" data-bs-target="#profileModal"><FaRegUserCircle className="me-2" />Profile</button>
                             </Link>
                         </form>
                     </div>
                 </div>
             </nav>
+
+            <ProfileModal />
         </>
     )
 }
