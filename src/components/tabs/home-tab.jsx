@@ -5,7 +5,7 @@ import { IoSendSharp } from "react-icons/io5";
 import { FaRegTimesCircle, } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import HomeNavbar from "../header/home-navbar";
-// import GetStartedCard from "../cards/get-started-card";
+import GetStartedCard from "../cards/get-started-card";
 
 export default function HomeTab() {
     const texts = [
@@ -101,9 +101,9 @@ export default function HomeTab() {
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
 
-                        {/* <GetStartedCard /> */}
+                        <GetStartedCard />
 
-                        <div className="card-body" style={{ overflowY: "hidden", height: "100%" }}>
+                        {/* <div className="card-body" style={{ overflowY: "hidden", height: "100%" }}>
                             <h5 className="card-title"></h5>
                             <div className="container" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                                 <div className="d-flex justify-content-center" style={{ width: "100%", maxWidth: "800px" }}>
@@ -214,7 +214,7 @@ export default function HomeTab() {
                                     <HomeNavbar />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
