@@ -4,7 +4,8 @@ import { SiEbox } from "react-icons/si";
 export default function Header() {
     return (
         <>
-            <nav class="navbar navbar-expand-lg" style={{ "fontFamily": "Roboto, sans-serif" }}>
+        
+            <nav class="navbar navbar-expand-lg mt-3" style={{ "fontFamily": "Roboto, sans-serif" }}>
                 <div class="container">
                     <a class="navbar-brand" href="#">
                         <SiEbox color="#2466FF" size={24} className="me-2" />
