@@ -18,7 +18,7 @@ export default function AgentSetupCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Team Communication channel</div>
+                                    <div className="mb-2">Team Communication channel</div>
                                     <div class="input-group mb-3">
                                         <select class="form-control" aria-label="Communication channel" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px" }}>
                                             <option value="">Select channel</option>
@@ -38,7 +38,7 @@ export default function AgentSetupCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Add taskBot WhatsApp to your group</div>
+                                    <div className="mb-2">Add taskBot WhatsApp to your group</div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" value="+2348079767595" aria-label="Organization name" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px", backgroundColor: "#f8f9fa" }} readOnly />
                                         <button class="btn btn-outline-primary" type="button" id="button-addon2" style={{ "borderRadius": "0 35px 35px 0" }}>Copy</button>
@@ -53,7 +53,7 @@ export default function AgentSetupCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Test your agent</div>
+                                    <div className="mb-2">Test your agent</div>
                                     <div class="d-grid gap-2">
                                        <button class="btn btn-outline-primary" type="button" id="button-addon2" style={{ "borderRadius": "35px" }}>Send Welcome Message</button>
                                     </div>

@@ -17,7 +17,7 @@ export default function GetStartedCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Create your first organization</div>
+                                    <div className="mb-2">Create your first organization</div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Organization name" aria-label="Organization name" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px"}}/>
                                         <button class="btn btn-outline-primary" type="button" id="button-addon2" style={{ "borderRadius": "0 35px 35px 0" }}>Create</button>
@@ -34,7 +34,7 @@ export default function GetStartedCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Create a project</div>
+                                    <div className="mb-2">Create a project</div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Project name" aria-label="Organization name" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px"}}/>
                                         <button class="btn btn-outline-primary" type="button" id="button-addon2" style={{ "borderRadius": "0 35px 35px 0" }}>Create</button>
@@ -49,7 +49,7 @@ export default function GetStartedCard() {
                                     <FaExclamation />
                                 </div>
                                 <div className="timeline-content ms-3">
-                                    <div className="fw-bold mb-2">Add a team member</div>
+                                    <div className="mb-2">Add a team member</div>
                                     <div class="input-group mb-3">
                                         <input type="email" class="form-control" placeholder="Team member email" aria-label="Organization name" aria-describedby="button-addon2" style={{ "borderRadius": "35px 0 0 35px"}}/>
                                         <button class="btn btn-outline-primary" type="button" id="button-addon2" style={{ "borderRadius": "0 35px 35px 0" }}>Create</button>

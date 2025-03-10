@@ -96,14 +96,14 @@ export default function HomeTab() {
     return (
         <>
             <div className="mt-5">
-                <p className="text-muted text-center" style={{ "fontSize": "1.2rem" }}>Chat with your AI task agent—tell it what you need!<br />assign tasks, create projects, departments...</p>
+                <p className="text-muted text-center" style={{ "fontSize": "clamp(1rem, 2vw, 1.2rem)" }}>Chat with your AI task agent—tell it what you need!<br className="d-none d-md-block" /><span className="d-md-none"> </span>assign tasks, create projects, departments...</p>
 
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
 
-                        <GetStartedCard />
+                        {/* <GetStartedCard /> */}
 
-                        {/* <div className="card-body" style={{ overflowY: "hidden", height: "100%" }}>
+                        <div className="card-body" style={{ overflowY: "hidden", height: "100%" }}>
                             <h5 className="card-title"></h5>
                             <div className="container" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                                 <div className="d-flex justify-content-center" style={{ width: "100%", maxWidth: "800px" }}>
@@ -186,11 +186,18 @@ export default function HomeTab() {
                                                             </div>
                                                         </div>
                                                         <button
-                                                            className="btn btn-light position-absolute top-22 start-50 translate-middle shadow"
+                                                            className="btn btn-light position-absolute top-22 start-50 translate-middle shadow d-none d-sm-block"
                                                             style={{ zIndex: 1, borderRadius: "30px" }}
                                                             onClick={handleHideClick}
                                                         >
                                                             Hide <FaRegTimesCircle />
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-light position-absolute top-22 start-50 translate-middle shadow d-block d-sm-none"
+                                                            style={{ zIndex: 1, borderRadius: "30px", padding: "0.25rem 0.5rem", fontSize: "0.875rem" }}
+                                                            onClick={handleHideClick}
+                                                        >
+                                                            <FaRegTimesCircle />
                                                         </button>
                                                     </div>
                                                     <button className="btn btn-primary px-4" type="submit" style={{ "borderRadius": "0 35px 35px 0", "height": "120px" }}><IoSendSharp size={20} /></button>
@@ -203,7 +210,7 @@ export default function HomeTab() {
                                             style={{ borderRadius: "30px", backgroundColor: "#FBFEFF"}}
                                             onClick={handleShowClick}
                                         >
-                                            Show <IoEyeSharp/>
+                                            <span className="d-none d-sm-inline">Show </span><IoEyeSharp/>
                                         </button>
                                     )}
                                 </div>
@@ -214,7 +221,7 @@ export default function HomeTab() {
                                     <HomeNavbar />
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
