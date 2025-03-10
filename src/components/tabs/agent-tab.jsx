@@ -1,5 +1,6 @@
 import { SiEbox } from "react-icons/si";
 import { IoSendSharp } from "react-icons/io5";
+import AgentSetupCard from "../cards/agent-setup-card";
 
 export default function AgentTab() {
     return (
@@ -11,7 +12,10 @@ export default function AgentTab() {
 
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
-                        <div className="card-body p-0" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+
+                        <AgentSetupCard />
+
+                        {/* <div className="card-body p-0" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <h5 className="card-title"></h5>
                             <div className="container h-100 d-flex flex-column">
                                 <div className="chat-container" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -88,7 +92,7 @@ export default function AgentTab() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

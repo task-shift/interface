@@ -124,3 +124,36 @@ body {
 .hero-section {
   padding: 80px 0;
 }
+
+.timeline {
+    position: relative;
+    padding: 0;
+}
+
+.timeline-item {
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-icon {
+    position: relative;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+/* For the dotted line after the current status */
+.timeline-item.current::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 32px;
+    bottom: -32px;
+    width: 2px;
+    background-image: linear-gradient(to bottom, #e9ecef 50%, transparent 50%);
+    background-position: top;
+    background-size: 2px 8px;
+    background-repeat: repeat-y;
+    z-index: 0;
+}

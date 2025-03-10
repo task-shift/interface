@@ -32,11 +32,11 @@ export default function ShiftNavbar() {
                         Teams
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                {/* <li class="nav-item" role="presentation">
                     <button style={{ "borderRadius": "20px" }} class="nav-link text-dark" id="pills-settings-tab" data-bs-toggle="pill" data-bs-target="#settings-tab" type="button" role="tab" aria-controls="pills-settings-tab" aria-selected="false">
                         Settings
                     </button>
-                </li>
+                </li> */}
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="home-tab" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
