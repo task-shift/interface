@@ -341,7 +341,9 @@ const createHexagonalStructure = (scene) => {
 const TorusBackground = ({ tasks = defaultTasks }) => {
   const mountRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  
+  const requestRef = useRef(null); // For animation frame
+  const previousTimeRef = useRef(null); // For delta time calculation
+
   // Set dimensions on client side
   useEffect(() => {
     const updateDimensions = () => {
@@ -370,11 +372,15 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     // Renderer setup with transparency
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
-      alpha: true 
+      alpha: true,
+      powerPreference: 'high-performance' 
     });
     renderer.setSize(dimensions.width, dimensions.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0); // Transparent background
+    
+    // Completely disable pointer events on the canvas
+    renderer.domElement.style.pointerEvents = 'none';
     
     // Clear any existing canvas
     while (mountRef.current.firstChild) {
@@ -585,18 +591,34 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.15; // Slower rotation for a more subtle effect
     
-    // Global animation counter
+    // Completely disable user interaction with controls
+    controls.enabled = false;
+    controls.enableRotate = false;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    controls.update();
+    
+    // Global animation counter and timing variables
     let animationCounter = 0;
     
-    // Animation loop for continuous, ever-expanding animation
-    const animate = () => {
-      requestAnimationFrame(animate);
+    // Time-based animation for smooth consistent motion
+    const animate = (timestamp) => {
+      // Store animation frame request for cancellation on unmount
+      requestRef.current = requestAnimationFrame(animate);
       
-      animationCounter += 0.001;
+      // Calculate time delta for smooth animation
+      if (previousTimeRef.current === null) {
+        previousTimeRef.current = timestamp;
+      }
+      const deltaTime = Math.min((timestamp - previousTimeRef.current) / 1000, 0.1); // Cap delta time
+      previousTimeRef.current = timestamp;
+      
+      // Increment counter based on time
+      animationCounter += deltaTime * 0.05;
       
       // Expand the hexagonal structure over time
       const expansionFactor = 1 + 0.3 * Math.sin(animationCounter * 0.2); // Pulsing expansion
-      hexStructureData.pulsePhase += 0.01;
+      hexStructureData.pulsePhase += deltaTime * 0.01;
       
       // Update each cube in the hexagonal structure
       hexStructureData.cubes.forEach((cube, i) => {
@@ -617,8 +639,8 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
         cube.position.y = initialPos.y + Math.sin(animationCounter * 0.5 + i * 0.1) * 0.5;
         
         // Slowly rotate each cube
-        cube.rotation.x += 0.001 * Math.sin(animationCounter + i);
-        cube.rotation.y += 0.001 * Math.cos(animationCounter + i);
+        cube.rotation.x += deltaTime * 0.05 * Math.sin(animationCounter + i * 0.1);
+        cube.rotation.y += deltaTime * 0.05 * Math.cos(animationCounter + i * 0.1);
       });
       
       // Update line connections in the hexagonal structure
@@ -642,10 +664,10 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
       pathParams.maxRadius = 50 + 30 * Math.sin(animationCounter * 0.1);
       pathParams.currentExpansion = Math.sin(animationCounter * 0.2) * 0.5 + 0.5; // 0-1 oscillation
       
-      // Update cards along their paths
-      dynamicCardsData.cardData.forEach((data, i) => {
-        // Update progress
-        data.progress += data.path.speed * data.speedFactor;
+      // Update cards along their paths with time-based animation
+      dynamicCardsData.cardData.forEach((data) => {
+        // Update progress based on deltaTime for smooth motion
+        data.progress += data.path.speed * data.speedFactor * deltaTime * 20;
         if (data.progress > 1) data.progress -= 1; // Wrap around instead of resetting
         
         // Get interpolated position on path
@@ -709,7 +731,8 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
       renderer.render(scene, camera);
     };
     
-    animate();
+    // Start animation with requestAnimationFrame
+    requestRef.current = requestAnimationFrame(animate);
     
     // Handle resize
     const handleResize = () => {
@@ -722,6 +745,11 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     
     // Cleanup
     return () => {
+      // Cancel animation frame to prevent memory leaks
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+      
       if (mountRef.current?.contains(renderer.domElement)) {
         mountRef.current.removeChild(renderer.domElement);
       }
@@ -745,6 +773,7 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
       });
       
       renderer.dispose();
+      previousTimeRef.current = null;
     };
   }, [dimensions.width, dimensions.height, tasks]);
   
@@ -758,7 +787,9 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
         width: '100%',
         height: '100%',
         zIndex: -1,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        touchAction: 'none', // Prevent touch events
+        userSelect: 'none'   // Prevent text selection
       }}
     />
   );
