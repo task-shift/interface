@@ -394,6 +394,47 @@ const createHexagonalStructure = (scene) => {
 const TorusBackground = ({ tasks = defaultTasks }) => {
   const mountRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [devicePerformance, setDevicePerformance] = useState('high'); // 'low', 'medium', 'high'
+  const [webglSupported, setWebglSupported] = useState(true);
+  
+  // Detect device performance level on mount
+  useEffect(() => {
+    // Check for WebGL support
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    
+    if (!gl) {
+      console.warn('WebGL not supported - falling back to simpler visualization');
+      setWebglSupported(false);
+      return;
+    }
+    
+    // Performance detection based on device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isOldDevice = /iPhone\s(5|6|7|8)\/|iPad\sMini/i.test(navigator.userAgent) || 
+                        (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
+    
+    // Check GPU capabilities using WebGL parameters
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : '';
+    const isLowEndGPU = renderer && 
+                       (renderer.includes('Intel') || 
+                        renderer.includes('Microsoft Basic') || 
+                        renderer.includes('SwiftShader'));
+    
+    // Set performance level based on device capability
+    if (isMobile || isOldDevice || isLowEndGPU) {
+      if (isOldDevice || isLowEndGPU) {
+        setDevicePerformance('low');
+        console.log('Low performance device detected - using simplified visualization');
+      } else {
+        setDevicePerformance('medium');
+        console.log('Medium performance device detected - optimizing visualization');
+      }
+    } else {
+      console.log('High performance device detected - using full visualization');
+    }
+  }, []);
   
   // Set dimensions on client side
   useEffect(() => {
@@ -413,6 +454,66 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
   useEffect(() => {
     if (!mountRef.current || dimensions.width === 0 || dimensions.height === 0) return;
     
+    // Handle WebGL not supported case with a simple fallback
+    if (!webglSupported) {
+      const fallbackDiv = document.createElement('div');
+      fallbackDiv.style.position = 'fixed';
+      fallbackDiv.style.top = '0';
+      fallbackDiv.style.left = '0';
+      fallbackDiv.style.width = '100%';
+      fallbackDiv.style.height = '100%';
+      fallbackDiv.style.background = 'linear-gradient(to bottom right, #e6f2ff, #ffffff)';
+      fallbackDiv.style.zIndex = '-1';
+      
+      // Clear any existing content
+      while (mountRef.current.firstChild) {
+        mountRef.current.removeChild(mountRef.current.firstChild);
+      }
+      
+      mountRef.current.appendChild(fallbackDiv);
+      return;
+    }
+    
+    // Performance-adjusted settings
+    let settings = {
+      pixelRatio: 1,
+      antialias: true,
+      cubesPerLayer: 15,
+      layers: 5,
+      segmentsCount: 120,
+      connections: 40,
+      cardResolution: 1024,
+      shouldDrawConnections: true
+    };
+    
+    // Adjust settings based on device performance
+    if (devicePerformance === 'medium') {
+      settings = {
+        ...settings,
+        pixelRatio: Math.min(1.5, window.devicePixelRatio),
+        cubesPerLayer: 10,
+        layers: 4,
+        segmentsCount: 80,
+        connections: 30,
+        cardResolution: 768
+      };
+    } else if (devicePerformance === 'low') {
+      settings = {
+        ...settings,
+        pixelRatio: 1,
+        antialias: false,
+        cubesPerLayer: 6,
+        layers: 3,
+        segmentsCount: 60,
+        connections: 15,
+        cardResolution: 512,
+        shouldDrawConnections: false
+      };
+    } else {
+      // For high performance devices, use device pixel ratio but cap it
+      settings.pixelRatio = Math.min(2, window.devicePixelRatio);
+    }
+    
     // Scene setup
     const scene = new THREE.Scene();
     
@@ -420,14 +521,28 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     const camera = new THREE.PerspectiveCamera(60, dimensions.width / dimensions.height, 0.1, 1000);
     camera.position.z = 60;
     
-    // Renderer setup with transparency
+    // Error handler for WebGL context
+    const onWebGLError = (error) => {
+      console.error('WebGL Error:', error);
+      setWebglSupported(false);
+    };
+    
+    // Renderer setup with transparency and optimized settings
     const renderer = new THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: true 
+      antialias: settings.antialias, 
+      alpha: true,
+      powerPreference: 'high-performance',
+      precision: devicePerformance === 'low' ? 'lowp' : 'mediump',
+      stencil: false,
+      depth: true
     });
+    
     renderer.setSize(dimensions.width, dimensions.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(settings.pixelRatio);
     renderer.setClearColor(0x000000, 0); // Transparent background
+    
+    // Add error handler for renderer
+    renderer.domElement.addEventListener('webglcontextlost', onWebGLError, false);
     
     // Clear any existing canvas
     while (mountRef.current.firstChild) {
@@ -436,37 +551,45 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     
     mountRef.current.appendChild(renderer.domElement);
     
-    // Lighting
+    // Lighting - optimized
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(1, 1, 1);
-    scene.add(directionalLight);
+    // Only add directional light on medium and high performance devices
+    if (devicePerformance !== 'low') {
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(1, 1, 1);
+      scene.add(directionalLight);
+    }
     
-    // Create hexagonal structure with expansion data
-    const hexStructureData = createHexagonalStructure(scene);
+    // Create hexagonal structure with expansion data and performance-adjusted settings
+    const hexStructureData = createHexagonalStructure(scene, 
+      settings.cubesPerLayer, settings.layers, settings.connections);
     
     // Task cards and connections
     const cardGroup = new THREE.Group();
-    const connectionsGroup = new THREE.Group();
     scene.add(cardGroup);
-    scene.add(connectionsGroup);
+    
+    // Create connections group only if needed
+    const connectionsGroup = new THREE.Group();
+    if (settings.shouldDrawConnections) {
+      scene.add(connectionsGroup);
+    }
     
     // Dynamic path parameters for continuous motion
     const pathParams = {
       minRadius: 20,
-      maxRadius: 50, // Will expand over time
+      maxRadius: devicePerformance === 'low' ? 30 : 50, // Less expansion on low-end devices
       minHeight: -15,
       maxHeight: 15,
       expansionRate: 0.0001, // How fast paths expand
       currentExpansion: 0 // Current expansion state (0-1)
     };
     
-    // Create dynamic, expanding paths for cards
+    // Create dynamic, expanding paths for cards - optimized based on device
     const createCardPath = (index, count) => {
       const pathPoints = [];
-      const segments = 120; // More segments for smoother paths
+      const segments = settings.segmentsCount;
       
       // Each card has unique path parameters
       const baseRadius = pathParams.minRadius + (index / count) * (pathParams.maxRadius - pathParams.minRadius);
@@ -497,61 +620,159 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
       };
     };
     
-    // Create connections that follow dynamic paths
+    // Create connections that follow dynamic paths - optimized
     const createDynamicConnections = (cards) => {
+      // Skip connections on low performance devices
+      if (!settings.shouldDrawConnections) return;
+      
       // Clear existing connections
       while(connectionsGroup.children.length > 0) {
         connectionsGroup.remove(connectionsGroup.children[0]);
       }
       
-      // Create more interesting connection patterns
-      const connectionPatterns = [
-        // Chain pattern
-        ...Array.from({ length: cards.length - 1 }, (_, i) => [i, i + 1]),
-        
-        // Star pattern from center
-        ...Array.from({ length: cards.length - 1 }, (_, i) => [0, i + 1]),
-        
-        // Random additional connections
-        ...Array.from({ length: 10 }, () => {
-          const i = Math.floor(Math.random() * cards.length);
-          let j;
-          do {
-            j = Math.floor(Math.random() * cards.length);
-          } while (j === i);
-          return [i, j];
-        })
-      ];
+      // Create simpler connection patterns for better performance
+      const connectionPatterns = [];
       
-      // Create connections with dynamic properties
-      connectionPatterns.forEach(([fromIdx, toIdx]) => {
+      // Chain pattern
+      connectionPatterns.push(...Array.from({ length: cards.length - 1 }, (_, i) => [i, i + 1]));
+      
+      // Star pattern from center only on higher performance devices
+      if (devicePerformance !== 'low') {
+        connectionPatterns.push(...Array.from({ length: cards.length - 1 }, (_, i) => [0, i + 1]));
+      }
+      
+      // Random additional connections - fewer on lower performance devices
+      const randomCount = devicePerformance === 'low' ? 5 : 10;
+      for (let i = 0; i < randomCount; i++) {
+        const fromIdx = Math.floor(Math.random() * cards.length);
+        let toIdx;
+        do {
+          toIdx = Math.floor(Math.random() * cards.length);
+        } while (toIdx === fromIdx);
+        connectionPatterns.push([fromIdx, toIdx]);
+      }
+      
+      // Create connections with optimized materials
+      const lineMaterial = new THREE.LineBasicMaterial({ 
+        color: 0x2466FF,
+        transparent: true,
+        opacity: 0.6,
+        linewidth: 1
+      });
+      
+      // Create connections with dynamic properties - reuse geometry and material
+      const lineGeometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(connectionPatterns.length * 6); // 2 points * 3 coordinates per connection
+      lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      
+      connectionPatterns.forEach(([fromIdx, toIdx], i) => {
         if (fromIdx < cards.length && toIdx < cards.length) {
           const from = cards[fromIdx];
           const to = cards[toIdx];
           
-          const points = [
-            from.position.clone(),
-            to.position.clone()
-          ];
-          
-          const geometry = new THREE.BufferGeometry().setFromPoints(points);
-          const lineMaterial = new THREE.LineBasicMaterial({ 
-            color: 0x2466FF,
-            transparent: true,
-            opacity: 0.6,
-            linewidth: 1
-          });
-          
-          const line = new THREE.Line(geometry, lineMaterial);
-          connectionsGroup.add(line);
+          positions[i * 6] = from.position.x;
+          positions[i * 6 + 1] = from.position.y;
+          positions[i * 6 + 2] = from.position.z;
+          positions[i * 6 + 3] = to.position.x;
+          positions[i * 6 + 4] = to.position.y;
+          positions[i * 6 + 5] = to.position.z;
         }
       });
+      
+      lineGeometry.attributes.position.needsUpdate = true;
+      const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+      connectionsGroup.add(lines);
     };
     
-    // Create dynamic cards with unique paths
+    // Create task card textures with optimized resolution
+    const createOptimizedTaskCardTexture = (task) => {
+      // Use optimized function parameters based on device performance
+      const canvas = document.createElement('canvas');
+      canvas.width = settings.cardResolution;
+      canvas.height = settings.cardResolution * 0.6;
+      const ctx = canvas.getContext('2d');
+      
+      // Use the existing createTaskCardTexture function with adjusted canvas size
+      if (devicePerformance === 'low') {
+        // Simplified card design for low-end devices
+        ctx.fillStyle = '#ffffff';
+        roundRect(ctx, 0, 0, canvas.width, canvas.height, 20);
+        ctx.fill();
+        
+        // Status badge
+        const statusColor = STATUS_COLORS[task.status] || '#6c757d';
+        ctx.fillStyle = statusColor;
+        roundRect(ctx, 20, 20, canvas.width * 0.2, 40, 10);
+        ctx.fill();
+        
+        // Title
+        ctx.fillStyle = '#212529';
+        ctx.font = 'bold 24px Arial';
+        ctx.fillText(task.title, 20, 80, canvas.width - 40);
+        
+        // Description
+        ctx.fillStyle = '#f0f5ff';
+        roundRect(ctx, 20, 100, canvas.width - 40, canvas.height - 140, 10);
+        ctx.fill();
+        
+        ctx.fillStyle = '#000000';
+        ctx.font = '20px Arial';
+        ctx.fillText(task.description || 'No description', 30, 130, canvas.width - 60);
+      } else {
+        // Use the existing function but with the new canvas
+        ctx.fillStyle = '#ffffff';
+        roundRect(ctx, 0, 0, canvas.width, canvas.height, 30);
+        ctx.fill();
+        
+        // Add a subtle shadow
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 3;
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+        
+        const scaleFactor = canvas.width / 1024; // Scale based on original 1024px width
+        
+        // Status badge
+        const statusColor = STATUS_COLORS[task.status] || '#6c757d';
+        ctx.fillStyle = statusColor;
+        roundRect(ctx, 40 * scaleFactor, 40 * scaleFactor, 200 * scaleFactor, 50 * scaleFactor, 15 * scaleFactor);
+        ctx.fill();
+        
+        // Status text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${28 * scaleFactor}px Arial`;
+        ctx.fillText(task.status, 65 * scaleFactor, 75 * scaleFactor);
+        
+        // Task title
+        ctx.fillStyle = '#212529';
+        ctx.font = `bold ${36 * scaleFactor}px Arial`;
+        ctx.fillText(task.title, 40 * scaleFactor, 140 * scaleFactor, canvas.width - 80 * scaleFactor);
+        
+        // Description background
+        ctx.fillStyle = '#f0f5ff';
+        roundRect(ctx, 40 * scaleFactor, 160 * scaleFactor, canvas.width - 80 * scaleFactor, 180 * scaleFactor, 15 * scaleFactor);
+        ctx.fill();
+        
+        // Description text
+        ctx.fillStyle = '#000000';
+        ctx.font = `bold ${30 * scaleFactor}px Arial`;
+        ctx.fillText('Description:', 60 * scaleFactor, 195 * scaleFactor);
+        ctx.fillText(task.description || 'No description', 60 * scaleFactor, 240 * scaleFactor, canvas.width - 120 * scaleFactor);
+      }
+      
+      // Create a texture from the canvas
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      texture.minFilter = THREE.LinearFilter; // Use LinearFilter instead of MipmapLinearFilter for performance
+      texture.generateMipmaps = false; // Disable mipmaps for better performance
+      return texture;
+    };
+    
+    // Create dynamic cards with unique paths - optimized for performance
     const createDynamicCards = () => {
       // Map input tasks to ensure they have all required properties
-      // This merges any passed tasks with defaultTasks to ensure descriptions exist
       const taskItems = tasks.length > 0 
         ? tasks.map(task => {
             // Find matching default task by ID or title for fallback description
@@ -569,37 +790,39 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
           })
         : defaultTasks;
       
-      console.log('Creating cards with task items:', taskItems);
-      
-      const cardPaths = [];
       const cards = [];
       const cardData = [];
       
-      taskItems.forEach((task, i) => {
-        // Check that each task has a description
-        console.log(`Task ${i} (${task.title}): description = "${task.description}"`);
-        
-        // Create larger card geometry for better visibility
-        const cardGeometry = new THREE.PlaneGeometry(8, 4.8); // Increased size by ~33%
-        
-        // Create texture for this task
-        const texture = createTaskCardTexture(task);
+      // For low performance devices, limit the number of visible cards
+      const visibleTasks = devicePerformance === 'low' ? 
+        taskItems.slice(0, Math.min(6, taskItems.length)) : taskItems;
+      
+      // Use object pooling for card geometries and materials to reduce memory usage
+      const cardGeometry = new THREE.PlaneGeometry(8, 4.8);
+      
+      visibleTasks.forEach((task, i) => {
+        // Create optimized texture for this task
+        const texture = createOptimizedTaskCardTexture(task);
         
         // Create material with texture
-        const cardMaterial = new THREE.MeshStandardMaterial({
+        const cardMaterial = new THREE.MeshBasicMaterial({
           map: texture,
           side: THREE.DoubleSide,
           transparent: true,
           opacity: 1.0,
-          metalness: 0.2,
-          roughness: 0.7,
         });
+        
+        // Use MeshBasicMaterial on low-end devices for better performance
+        // Only use MeshStandardMaterial on high-end devices
+        if (devicePerformance === 'high') {
+          cardMaterial.metalness = 0.2;
+          cardMaterial.roughness = 0.7;
+        }
         
         const card = new THREE.Mesh(cardGeometry, cardMaterial);
         
         // Create dynamic path for this card
-        const path = createCardPath(i, taskItems.length);
-        cardPaths.push(path);
+        const path = createCardPath(i, visibleTasks.length);
         
         // Start at random position on the path
         const progress = Math.random();
@@ -621,43 +844,115 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
         cardGroup.add(card);
       });
       
-      // Create initial connections
-      createDynamicConnections(cards);
+      // Create initial connections (optimized)
+      if (settings.shouldDrawConnections) {
+        createDynamicConnections(cards);
+      }
       
-      return { cards, cardData, cardPaths };
+      return { cards, cardData };
     };
     
     // Create dynamic cards with continuous motion
     const dynamicCardsData = createDynamicCards();
     
-    // Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = false;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.15; // Slower rotation for a more subtle effect
+    // Controls - only enable on higher performance devices
+    let controls;
+    if (devicePerformance !== 'low') {
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.enableZoom = false;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.15; // Slower rotation for a more subtle effect
+    }
     
-    // Global animation counter
+    // Global animation counter and performance monitoring
     let animationCounter = 0;
+    let lastTime = 0;
+    let frameCount = 0;
+    let frameTime = 0;
+    let slowFrameCount = 0;
+    
+    // Set animation target frame rate based on device performance
+    const targetFPS = devicePerformance === 'low' ? 30 : 60;
+    const targetFrameTime = 1000 / targetFPS;
     
     // Animation loop for continuous, ever-expanding animation
-    const animate = () => {
-      requestAnimationFrame(animate);
+    const animate = (time) => {
+      const animationId = requestAnimationFrame(animate);
       
-      animationCounter += 0.001;
+      // Performance monitoring
+      if (lastTime) {
+        const delta = time - lastTime;
+        frameTime += delta;
+        frameCount++;
+        
+        // Count slow frames
+        if (delta > targetFrameTime * 1.2) {
+          slowFrameCount++;
+        }
+        
+        // Every 60 frames, check performance
+        if (frameCount === 60) {
+          const avgFrameTime = frameTime / frameCount;
+          const avgFPS = 1000 / avgFrameTime;
+          
+          // Log performance issues
+          if (avgFPS < targetFPS * 0.7 || slowFrameCount > 15) {
+            console.warn(`Performance issue detected: ${avgFPS.toFixed(1)} FPS, ${slowFrameCount} slow frames`);
+            
+            // Downgrade performance level if needed
+            if (devicePerformance === 'high' && (avgFPS < 40 || slowFrameCount > 20)) {
+              console.warn('Downgrading to medium performance settings');
+              setDevicePerformance('medium');
+              cancelAnimationFrame(animationId);
+              return;
+            } else if (devicePerformance === 'medium' && (avgFPS < 20 || slowFrameCount > 30)) {
+              console.warn('Downgrading to low performance settings');
+              setDevicePerformance('low');
+              cancelAnimationFrame(animationId);
+              return;
+            }
+          }
+          
+          // Reset counters
+          frameCount = 0;
+          frameTime = 0;
+          slowFrameCount = 0;
+        }
+      }
+      lastTime = time;
       
-      // Expand the hexagonal structure over time
-      const expansionFactor = 1 + 0.3 * Math.sin(animationCounter * 0.2); // Pulsing expansion
-      hexStructureData.pulsePhase += 0.01;
+      // Optimize animation speed for different devices
+      const speedFactor = devicePerformance === 'low' ? 0.5 : 1.0;
+      animationCounter += 0.001 * speedFactor;
       
-      // Update each cube in the hexagonal structure
+      // Skip frames on low performance devices
+      if (devicePerformance === 'low' && frameCount % 2 !== 0) {
+        return;
+      }
+      
+      // Expand the hexagonal structure over time - simplified for low-end devices
+      const expansionFactor = devicePerformance === 'low' ? 
+        1 + 0.1 * Math.sin(animationCounter * 0.1) : 
+        1 + 0.3 * Math.sin(animationCounter * 0.2);
+      
+      // Update rotation and movement animations based on device capability
+      if (devicePerformance !== 'low') {
+        hexStructureData.pulsePhase += 0.01 * speedFactor;
+      }
+      
+      // Update each cube in the hexagonal structure - batch updates for efficiency
       hexStructureData.cubes.forEach((cube, i) => {
+        if (devicePerformance === 'low' && i % 2 !== 0) return; // Skip every other cube on low-end devices
+        
         const initialPos = hexStructureData.initialPositions[i];
         
-        // Calculate new expanded position with pulsing effect
-        const radius = hexStructureData.currentHexRadius * 
-          (1 + 0.05 * Math.sin(animationCounter * 0.5 + initialPos.layer * 0.2));
+        // Calculate new expanded position with pulsing effect - simpler on low-end devices
+        let radius = hexStructureData.currentHexRadius;
+        if (devicePerformance !== 'low') {
+          radius *= (1 + 0.05 * Math.sin(animationCounter * 0.5 + initialPos.layer * 0.2));
+        }
         
         const layerRadius = radius - initialPos.layer * 2;
         const angle = (initialPos.index / initialPos.totalInLayer) * Math.PI * 2;
@@ -666,39 +961,54 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
         cube.position.x = layerRadius * Math.cos(angle) * expansionFactor;
         cube.position.z = layerRadius * Math.sin(angle) * expansionFactor;
         
-        // Add subtle vertical motion
-        cube.position.y = initialPos.y + Math.sin(animationCounter * 0.5 + i * 0.1) * 0.5;
-        
-        // Slowly rotate each cube
-        cube.rotation.x += 0.001 * Math.sin(animationCounter + i);
-        cube.rotation.y += 0.001 * Math.cos(animationCounter + i);
+        // Add subtle vertical motion - only on higher-end devices
+        if (devicePerformance !== 'low') {
+          cube.position.y = initialPos.y + Math.sin(animationCounter * 0.5 + i * 0.1) * 0.5;
+          
+          // Slowly rotate each cube
+          cube.rotation.x += 0.001 * Math.sin(animationCounter + i);
+          cube.rotation.y += 0.001 * Math.cos(animationCounter + i);
+        }
       });
       
-      // Update line connections in the hexagonal structure
-      hexStructureData.lineConnections.forEach(conn => {
-        const fromCube = hexStructureData.cubes[conn.fromIdx];
-        const toCube = hexStructureData.cubes[conn.toIdx];
-        
-        const positions = conn.line.geometry.attributes.position.array;
-        
-        positions[0] = fromCube.position.x;
-        positions[1] = fromCube.position.y;
-        positions[2] = fromCube.position.z;
-        positions[3] = toCube.position.x;
-        positions[4] = toCube.position.y;
-        positions[5] = toCube.position.z;
-        
-        conn.line.geometry.attributes.position.needsUpdate = true;
-      });
+      // Update line connections - only if we're using the optimized connection lines approach
+      if (settings.shouldDrawConnections && connectionsGroup.children.length > 0) {
+        // Only update on medium/high performance devices or every other frame on low performance
+        if (devicePerformance !== 'low' || frameCount % 2 === 0) {
+          const lineSegments = connectionsGroup.children[0];
+          const positions = lineSegments.geometry.attributes.position.array;
+          
+          hexStructureData.lineConnections.forEach((conn, i) => {
+            if (i >= positions.length / 6) return; // Skip if out of bounds
+            
+            const fromCube = hexStructureData.cubes[conn.fromIdx];
+            const toCube = hexStructureData.cubes[conn.toIdx];
+            
+            positions[i * 6] = fromCube.position.x;
+            positions[i * 6 + 1] = fromCube.position.y;
+            positions[i * 6 + 2] = fromCube.position.z;
+            positions[i * 6 + 3] = toCube.position.x;
+            positions[i * 6 + 4] = toCube.position.y;
+            positions[i * 6 + 5] = toCube.position.z;
+          });
+          
+          lineSegments.geometry.attributes.position.needsUpdate = true;
+        }
+      }
       
-      // Slowly expand the maximum path radius
-      pathParams.maxRadius = 50 + 30 * Math.sin(animationCounter * 0.1);
-      pathParams.currentExpansion = Math.sin(animationCounter * 0.2) * 0.5 + 0.5; // 0-1 oscillation
+      // Slowly expand the maximum path radius - simpler on low-end devices
+      if (devicePerformance === 'low') {
+        pathParams.maxRadius = 30 + 10 * Math.sin(animationCounter * 0.1);
+        pathParams.currentExpansion = 0.5 + 0.2 * Math.sin(animationCounter * 0.1);
+      } else {
+        pathParams.maxRadius = 50 + 30 * Math.sin(animationCounter * 0.1);
+        pathParams.currentExpansion = Math.sin(animationCounter * 0.2) * 0.5 + 0.5; // 0-1 oscillation
+      }
       
-      // Update cards along their paths
-      dynamicCardsData.cardData.forEach((data, i) => {
+      // Update cards along their paths - optimized updates
+      dynamicCardsData.cardData.forEach((data) => {
         // Update progress
-        data.progress += data.path.speed * data.speedFactor;
+        data.progress += data.path.speed * data.speedFactor * speedFactor;
         if (data.progress > 1) data.progress -= 1; // Wrap around instead of resetting
         
         // Get interpolated position on path
@@ -720,52 +1030,64 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
         // Make cards always face the camera
         data.card.lookAt(camera.position);
         
-        // Add subtle rotation variation
-        data.card.rotation.z = Math.sin(animationCounter * 0.5 + data.pulsePhase) * 0.1;
-        
-        // Subtle size pulsing
-        const scaleFactor = 1 + 0.05 * Math.sin(animationCounter * 0.3 + data.pulsePhase);
-        data.card.scale.set(scaleFactor, scaleFactor, 1);
-      });
-      
-      // Dynamically update connections between cards
-      connectionsGroup.children.forEach((line, i) => {
-        const positions = line.geometry.attributes.position.array;
-        
-        // Get source and target indices for this connection
-        const connectionIndex = i % dynamicCardsData.cards.length;
-        const targetIndex = (connectionIndex + 1 + Math.floor(animationCounter * 5) % (dynamicCardsData.cards.length - 1)) % dynamicCardsData.cards.length;
-        
-        if (connectionIndex !== targetIndex && connectionIndex < dynamicCardsData.cards.length && targetIndex < dynamicCardsData.cards.length) {
-          const fromCard = dynamicCardsData.cards[connectionIndex];
-          const toCard = dynamicCardsData.cards[targetIndex];
+        // Add subtle rotation variation - only on higher-end devices
+        if (devicePerformance !== 'low') {
+          data.card.rotation.z = Math.sin(animationCounter * 0.5 + data.pulsePhase) * 0.1;
           
-          positions[0] = fromCard.position.x;
-          positions[1] = fromCard.position.y;
-          positions[2] = fromCard.position.z;
-          positions[3] = toCard.position.x;
-          positions[4] = toCard.position.y;
-          positions[5] = toCard.position.z;
-          
-          // Gradually fade connections in and out
-          line.material.opacity = 0.2 + 0.4 * Math.sin(animationCounter * 0.2 + i * 0.1);
-          
-          line.geometry.attributes.position.needsUpdate = true;
+          // Subtle size pulsing
+          const scaleFactor = 1 + 0.05 * Math.sin(animationCounter * 0.3 + data.pulsePhase);
+          data.card.scale.set(scaleFactor, scaleFactor, 1);
         }
       });
       
-      // Slowly rotate the entire hexagonal structure
-      hexStructureData.group.rotation.x = Math.sin(animationCounter * 0.1) * 0.2;
-      hexStructureData.group.rotation.y = Math.cos(animationCounter * 0.15) * 0.3;
+      // Update card connections - with optimized approach
+      if (settings.shouldDrawConnections && connectionsGroup.children.length > 1) {
+        // Only update on higher performance devices
+        if (devicePerformance !== 'low') {
+          const lines = connectionsGroup.children[1];
+          if (lines && lines.geometry && lines.geometry.attributes.position) {
+            const positions = lines.geometry.attributes.position.array;
+            
+            for (let i = 0; i < Math.min(dynamicCardsData.cards.length - 1, positions.length / 6); i++) {
+              const fromCard = dynamicCardsData.cards[i];
+              const toCard = dynamicCardsData.cards[(i + 1) % dynamicCardsData.cards.length];
+              
+              positions[i * 6] = fromCard.position.x;
+              positions[i * 6 + 1] = fromCard.position.y;
+              positions[i * 6 + 2] = fromCard.position.z;
+              positions[i * 6 + 3] = toCard.position.x;
+              positions[i * 6 + 4] = toCard.position.y;
+              positions[i * 6 + 5] = toCard.position.z;
+            }
+            
+            lines.geometry.attributes.position.needsUpdate = true;
+          }
+        }
+      }
       
-      controls.update();
+      // Slowly rotate the entire hexagonal structure
+      if (devicePerformance === 'low') {
+        // Simple rotation for low-end devices
+        hexStructureData.group.rotation.y += 0.002 * speedFactor;
+      } else {
+        hexStructureData.group.rotation.x = Math.sin(animationCounter * 0.1) * 0.2;
+        hexStructureData.group.rotation.y = Math.cos(animationCounter * 0.15) * 0.3;
+      }
+      
+      // Update controls only if they exist
+      if (controls) {
+        controls.update();
+      }
+      
       renderer.render(scene, camera);
     };
     
-    animate();
+    animate(0);
     
     // Handle resize
     const handleResize = () => {
+      if (!camera || !renderer) return;
+      
       camera.aspect = dimensions.width / dimensions.height;
       camera.updateProjectionMatrix();
       renderer.setSize(dimensions.width, dimensions.height);
@@ -775,31 +1097,43 @@ const TorusBackground = ({ tasks = defaultTasks }) => {
     
     // Cleanup
     return () => {
-      if (mountRef.current?.contains(renderer.domElement)) {
+      // Remove event listeners
+      window.removeEventListener('resize', handleResize);
+      if (renderer?.domElement) {
+        renderer.domElement.removeEventListener('webglcontextlost', onWebGLError);
+      }
+      
+      // Cancel animation frame
+      cancelAnimationFrame(animate);
+      
+      // Clean up DOM
+      if (mountRef.current?.contains(renderer?.domElement)) {
         mountRef.current.removeChild(renderer.domElement);
       }
-      window.removeEventListener('resize', handleResize);
       
       // Dispose of resources
-      scene.traverse(object => {
-        if (object.geometry) object.geometry.dispose();
-        
-        if (object.material) {
-          if (Array.isArray(object.material)) {
-            object.material.forEach(material => {
-              if (material.map) material.map.dispose();
-              material.dispose();
-            });
-          } else {
-            if (object.material.map) object.material.map.dispose();
-            object.material.dispose();
+      if (scene) {
+        scene.traverse(object => {
+          if (object.geometry) object.geometry.dispose();
+          
+          if (object.material) {
+            if (Array.isArray(object.material)) {
+              object.material.forEach(material => {
+                if (material.map) material.map.dispose();
+                material.dispose();
+              });
+            } else {
+              if (object.material.map) object.material.map.dispose();
+              object.material.dispose();
+            }
           }
-        }
-      });
+        });
+      }
       
-      renderer.dispose();
+      if (renderer) renderer.dispose();
+      if (controls) controls.dispose();
     };
-  }, [dimensions.width, dimensions.height, tasks]);
+  }, [dimensions.width, dimensions.height, tasks, devicePerformance, webglSupported]);
   
   return (
     <div 
