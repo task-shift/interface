@@ -3,6 +3,7 @@ import { SiEbox } from "react-icons/si";
 import { IoSendSharp } from "react-icons/io5";
 import Header from '../components/header/header';
 import { Link } from "react-router-dom";
+import TorusBackground from '../components/TorusBackground';
 
 export default function Index() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -22,6 +23,22 @@ export default function Index() {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const messagesEndRef = useRef(null);
+
+  // Sample tasks for the background
+  const backgroundTasks = [
+    { id: 'task-1', title: 'Create project', color: '#FF5733' },
+    { id: 'task-2', title: 'Design UI', color: '#33FF57' },
+    { id: 'task-3', title: 'Develop backend', color: '#3357FF' },
+    { id: 'task-4', title: 'Test application', color: '#F033FF' },
+    { id: 'task-5', title: 'Deploy to production', color: '#FF33A8' },
+    { id: 'task-6', title: 'User feedback', color: '#33FFF5' },
+    { id: 'task-7', title: 'Implement features', color: '#FFD133' },
+    { id: 'task-8', title: 'Code review', color: '#FF5733' },
+    { id: 'task-9', title: 'Documentation', color: '#33FF57' },
+    { id: 'task-10', title: 'Team meeting', color: '#3357FF' },
+    { id: 'task-11', title: 'Bug fixes', color: '#F033FF' },
+    { id: 'task-12', title: 'Performance optimization', color: '#FF33A8' },
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -69,6 +86,8 @@ export default function Index() {
 
   return (
     <>
+      <TorusBackground tasks={backgroundTasks} />
+      
       <style>
         {`
           @keyframes bounce {

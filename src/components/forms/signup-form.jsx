@@ -10,6 +10,10 @@ export default function SignupForm() {
                 </div>
             </div>
             <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" placeholder="John doe" />
+                <label for="floatingInput">Full Name</label>
+            </div>
+            <div class="form-floating">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
                 <label for="floatingInput">Email address</label>
             </div>
