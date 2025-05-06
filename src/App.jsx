@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from './pages/index'
 import Signin from './pages/auth/signin'
 import Signup from './pages/auth/signup'
+import Verify from './pages/auth/verify'
 import Shift from './pages/shift/shift'
 import './App.css'
 
@@ -27,6 +28,10 @@ function App() {
           <Route
             path="/signup"
             element={<Signup />}
+          ></Route>
+          <Route
+            path="/verify"
+            element={<Verify />}
           ></Route>
           <Route
             path="/shift"
