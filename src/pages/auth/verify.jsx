@@ -123,7 +123,7 @@ export default function Verify() {
                         <button 
                             className="w-100 btn btn-primary" 
                             type="submit"
-                            disabled={isSubmitting || verificationCode.join('').length !== 7}
+                            disabled={isSubmitting || verificationCode.some(digit => digit === '')}
                         >
                             {isSubmitting ? (
                                 <>
