@@ -123,7 +123,13 @@ export default function Verify() {
                         <button 
                             className="w-100 btn btn-primary" 
                             type="submit"
-                            disabled={isSubmitting || verificationCode.some(digit => digit === '')}
+                            style={{
+                                backgroundColor: '#2466FF',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '12px'
+                            }}
+                            disabled={isSubmitting}
                         >
                             {isSubmitting ? (
                                 <>
