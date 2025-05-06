@@ -1,13 +1,30 @@
 /* eslint-disable react/no-unknown-property */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SiEbox } from "react-icons/si";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/header/header";
-import { Link } from "react-router-dom";
+import { auth, initializeWorker } from '../../services/api';
 
 export default function Verify() {
+    const navigate = useNavigate();
     const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '', '']);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
+
+    useEffect(() => {
+        // Initialize the service worker
+        initializeWorker().catch(console.error);
+        
+        // Get email from session storage
+        const storedEmail = sessionStorage.getItem('verificationEmail');
+        if (!storedEmail) {
+            // If no email in session storage, redirect to signup
+            navigate('/signup');
+            return;
+        }
+        setEmail(storedEmail);
+    }, [navigate]);
 
     // Handle input change for each digit
     const handleInputChange = (index, value) => {
@@ -60,13 +77,43 @@ export default function Verify() {
         setError('');
 
         try {
-            // TODO: Add your verification API call here
-            // const response = await verifyCode(code);
-            // if (response.success) {
-            //     // Redirect to success page or dashboard
-            // }
-        } catch (err) {
-            setError('Invalid verification code. Please try again.');
+            const response = await auth.verify(code);
+            
+            if (response.status === 200) {
+                // Clear email from session storage
+                sessionStorage.removeItem('verificationEmail');
+                // Redirect to dashboard or success page
+                navigate('/shift');
+            } else {
+                setError(response.data.message || 'Invalid verification code. Please try again.');
+            }
+        } catch (error) {
+            setError(error.message || 'An error occurred during verification.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleResendCode = async () => {
+        if (!email || isSubmitting) return;
+
+        setIsSubmitting(true);
+        setError('');
+
+        try {
+            const response = await auth.resendCode(email);
+            
+            if (response.status === 200) {
+                // Clear the current verification code
+                setVerificationCode(['', '', '', '', '', '', '']);
+                // Focus the first input
+                const firstInput = document.getElementById('code-0');
+                if (firstInput) firstInput.focus();
+            } else {
+                setError(response.data.message || 'Failed to resend code. Please try again.');
+            }
+        } catch (error) {
+            setError(error.message || 'An error occurred while resending the code.');
         } finally {
             setIsSubmitting(false);
         }
@@ -86,7 +133,7 @@ export default function Verify() {
 
                         <h1 class="h3 mb-3 fw-normal text-center">Verify your email</h1>
                         <p className="text-muted mb-4 text-center">
-                            We've sent a 7-digit verification code to your email address. 
+                            We&apos;ve sent a 7-digit verification code to your email address. 
                             Please enter it below to complete your registration.
                         </p>
 
@@ -145,10 +192,10 @@ export default function Verify() {
                             <button 
                                 type="button" 
                                 className="btn btn-link text-decoration-none"
-                                onClick={() => {/* TODO: Add resend code logic */}}
+                                onClick={handleResendCode}
                                 disabled={isSubmitting}
                             >
-                                Didn't receive the code? Resend
+                                Didn&apos;t receive the code? Resend
                             </button>
                         </div>
 
