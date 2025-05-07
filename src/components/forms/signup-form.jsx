@@ -22,21 +22,25 @@ export default function SignupForm() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent form submission
+        if (isSubmitting) return; // Prevent double submission
+
         setError('');
         setIsSubmitting(true);
 
         try {
-            await signupUser(formData);
-            // The service worker will handle the redirect
+            const response = await signupUser(formData);
+            console.log('Signup successful:', response);
+            // Service worker will handle redirect
         } catch (err) {
+            console.error('Signup error:', err);
             setError(err.message || 'Failed to sign up');
             setIsSubmitting(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
             <div class="form-floating">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1">@</span>
