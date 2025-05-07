@@ -13,7 +13,6 @@ export default function SignupForm() {
     });
     const [error, setError] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,44 +26,12 @@ export default function SignupForm() {
         setTermsAccepted(e.target.checked);
     };
 
-    // Separate the submit button click handler from the form onSubmit
-    const handleButtonClick = () => {
-        // Basic validation
-        if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
-            setError('Please fill out all fields');
-            return;
-        }
-        
-        if (!termsAccepted) {
-            setError('Please accept the terms and conditions');
-            return;
-        }
-        
-        setError('');
-        
-        // Alert form data
-        alert(JSON.stringify(formData, null, 2));
-        setSubmitted(true);
+    const testAlert = () => {
+        alert('Button clicked!');
     };
-
-    // Stop form submission completely
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form submit prevented!");
-        return false;
-    };
-
-    // Show success message after submission
-    if (submitted) {
-        return (
-            <div className="alert alert-success" role="alert">
-                Form submitted successfully! Data: {JSON.stringify(formData)}
-            </div>
-        );
-    }
 
     return (
-        <form onSubmit={handleFormSubmit} method="GET" action="#">
+        <>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -134,20 +101,19 @@ export default function SignupForm() {
                 </label>
             </div>
             
-            {/* Use type="button" to avoid form submission */}
             <button 
                 className="btn w-100 py-2" 
                 type="button"
-                onClick={handleButtonClick}
+                onClick={testAlert}
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
             >
-                Sign up
+                Test Button
             </button>
             
             {/* <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
             </div> */}
-        </form>
+        </>
     )
 }
 
