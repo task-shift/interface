@@ -9,16 +9,14 @@ export default function Signup() {
             <Header />
             <body class="d-flex align-items-center justify-content-center vh-100 bg-body-tertiary">
                 <main class="form-signin w-100 m-auto shadow-hover">
-                    <form>
-                        <Link to="/">
-                            <SiEbox color="#2466FF" size={50} className="mb-4" />
-                        </Link>
+                    <Link to="/">
+                        <SiEbox color="#2466FF" size={50} className="mb-4" />
+                    </Link>
 
-                        <h1 class="h3 mb-3 fw-normal">Welcome to <span className="text-muted">task</span>Shift</h1>
+                    <h1 class="h3 mb-3 fw-normal">Welcome to <span className="text-muted">task</span>Shift</h1>
 
-                        <SignupForm />
-                        <p class="mt-5 mb-3 text-body-secondary">&copy; gods 2025</p>
-                    </form>
+                    <SignupForm />
+                    <p class="mt-5 mb-3 text-body-secondary">&copy; gods 2025</p>
                 </main>
             </body>
         </>

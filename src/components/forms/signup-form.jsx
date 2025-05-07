@@ -115,7 +115,6 @@ export default function SignupForm() {
             </div>
             <button 
                 className="btn w-100 py-2" 
-                type="submit" 
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
             >
