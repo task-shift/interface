@@ -12,6 +12,7 @@ export default function SignupForm() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,9 +22,21 @@ export default function SignupForm() {
         }));
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault(); // Prevent form from submitting normally
-        if (isSubmitting) return;
+    const handleTermsChange = (e) => {
+        setTermsAccepted(e.target.checked);
+    };
+
+    const handleFormSubmit = () => {
+        // Basic validation
+        if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
+            setError('Please fill out all fields');
+            return;
+        }
+        
+        if (!termsAccepted) {
+            setError('Please accept the terms and conditions');
+            return;
+        }
 
         setError('');
         setIsSubmitting(true);
@@ -45,7 +58,6 @@ export default function SignupForm() {
                         placeholder="Username"
                         value={formData.username}
                         onChange={handleChange}
-                        required
                     />
                 </div>
             </div>
@@ -58,7 +70,6 @@ export default function SignupForm() {
                     placeholder="John doe"
                     value={formData.fullname}
                     onChange={handleChange}
-                    required
                 />
                 <label htmlFor="floatingInput">Full Name</label>
             </div>
@@ -71,7 +82,6 @@ export default function SignupForm() {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                 />
                 <label htmlFor="floatingEmail">Email address</label>
             </div>
@@ -84,7 +94,6 @@ export default function SignupForm() {
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
-                    required
                 />
                 <label htmlFor="floatingPassword">Password</label>
             </div>
@@ -100,7 +109,8 @@ export default function SignupForm() {
                     className="form-check-input"
                     type="checkbox"
                     id="termsCheck"
-                    required
+                    checked={termsAccepted}
+                    onChange={handleTermsChange}
                 />
                 <label className="form-check-label" htmlFor="termsCheck">
                     Agree to terms and conditions
