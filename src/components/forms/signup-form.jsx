@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import { signupUser } from "../../services/worker"
+import { Link, useNavigate } from "react-router-dom"
+import { signup } from "../../services/api"
 
 export default function SignupForm() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         fullname: '',
@@ -22,18 +23,21 @@ export default function SignupForm() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent form submission
-        e.stopPropagation(); // Stop event bubbling
-        if (isSubmitting) return; // Prevent double submission
+        e.preventDefault();
+        if (isSubmitting) return;
 
         setError('');
         setIsSubmitting(true);
 
         try {
-            await signupUser({
-                ...formData,
-                type: 'user' // Ensure type is set
-            });
+            const response = await signup(formData);
+            
+            // Store auth data
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            
+            // Navigate to verification page
+            navigate('/verify');
         } catch (err) {
             console.error('Signup error:', err);
             setError(err.message || 'Failed to sign up');
@@ -42,7 +46,7 @@ export default function SignupForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} action="javascript:void(0);">
+        <form onSubmit={handleSubmit}>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -114,7 +118,6 @@ export default function SignupForm() {
                 type="submit" 
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
-                onClick={(e) => e.preventDefault()}
             >
                 {isSubmitting ? 'Signing up...' : 'Sign up'}
             </button>
