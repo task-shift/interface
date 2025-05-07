@@ -16,14 +16,15 @@ export default function SignupForm() {
     const [error, setError] = useState('');
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent form from submitting normally
         if (isSubmitting) return;
 
         setError('');
@@ -31,6 +32,7 @@ export default function SignupForm() {
 
         try {
             const response = await signup(formData);
+            console.log('Signup successful:', response);
             
             // Store auth data
             localStorage.setItem('token', response.token);
@@ -41,12 +43,13 @@ export default function SignupForm() {
         } catch (err) {
             console.error('Signup error:', err);
             setError(err.message || 'Failed to sign up');
+        } finally {
             setIsSubmitting(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="POST">
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -108,13 +111,19 @@ export default function SignupForm() {
             )}
 
             <div className="form-check text-start my-3">
-                <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" required />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
+                <input 
+                    className="form-check-input" 
+                    type="checkbox" 
+                    id="termsCheck" 
+                    required 
+                />
+                <label className="form-check-label" htmlFor="termsCheck">
                     Agree to terms and conditions
                 </label>
             </div>
             <button 
                 className="btn w-100 py-2" 
+                type="submit" 
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
             >
