@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import PropTypes from 'prop-types'
 
 export default function SignupForm() {
     const [formData, setFormData] = useState({
@@ -12,30 +13,7 @@ export default function SignupForm() {
     });
     const [error, setError] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const formRef = useRef(null);
-
-    useEffect(() => {
-        // Add a global function that can be accessed via onclick attribute
-        window.submitSignupForm = function() {
-            // Basic validation
-            if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
-                setError('Please fill out all fields');
-                return;
-            }
-            
-            if (!termsAccepted) {
-                setError('Please accept the terms and conditions');
-                return;
-            }
-            
-            setError('');
-            alert(JSON.stringify(formData, null, 2));
-        };
-
-        return () => {
-            delete window.submitSignupForm;
-        };
-    }, [formData, termsAccepted]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,9 +26,32 @@ export default function SignupForm() {
     const handleTermsChange = (e) => {
         setTermsAccepted(e.target.checked);
     };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        // Basic validation
+        if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
+            setError('Please fill out all fields');
+            return;
+        }
+        
+        if (!termsAccepted) {
+            setError('Please accept the terms and conditions');
+            return;
+        }
+        
+        setError('');
+        setIsSubmitting(true);
+        
+        // In a real app, we would call an API here
+        // Instead, we'll just alert the data
+        alert(JSON.stringify(formData, null, 2));
+        setIsSubmitting(false);
+    };
 
     return (
-        <div ref={formRef}>
+        <form onSubmit={handleSubmit}>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -120,23 +121,22 @@ export default function SignupForm() {
                 </label>
             </div>
             
-            {/* Using dangerouslySetInnerHTML to create a button with direct DOM onclick */}
-            <div dangerouslySetInnerHTML={{
-                __html: `
-                <button 
-                    class="btn w-100 py-2" 
-                    type="button" 
-                    onclick="javascript:submitSignupForm()"
-                    style="background-color: #2466FF; color: white; border-radius: 20px;"
-                >
-                    Sign up
-                </button>
-                `
-            }} />
+            <button 
+                className="btn w-100 py-2" 
+                type="submit"
+                style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
+                disabled={isSubmitting}
+            >
+                {isSubmitting ? 'Signing up...' : 'Sign up'}
+            </button>
             
             <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
             </div>
-        </div>
+        </form>
     )
+}
+
+SignupForm.propTypes = {
+    onSubmit: PropTypes.func
 }
