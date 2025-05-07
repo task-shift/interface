@@ -1,10 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { signup } from "../../services/api"
+import { Link } from "react-router-dom"
 
 export default function SignupForm() {
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         fullname: '',
@@ -30,26 +28,13 @@ export default function SignupForm() {
         setError('');
         setIsSubmitting(true);
 
-        try {
-            const response = await signup(formData);
-            console.log('Signup successful:', response);
-            
-            // Store auth data
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('user', JSON.stringify(response.user));
-            
-            // Navigate to verification page
-            navigate('/verify');
-        } catch (err) {
-            console.error('Signup error:', err);
-            setError(err.message || 'Failed to sign up');
-        } finally {
-            setIsSubmitting(false);
-        }
+        // Alert form details
+        alert(JSON.stringify(formData, null, 2));
+        setIsSubmitting(false);
     };
 
     return (
-        <form onSubmit={handleSubmit} method="POST">
+        <form onSubmit={handleSubmit} noValidate>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
