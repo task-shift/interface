@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 
 export default function SignupForm() {
@@ -12,6 +12,30 @@ export default function SignupForm() {
     });
     const [error, setError] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
+    const formRef = useRef(null);
+
+    useEffect(() => {
+        // Add a global function that can be accessed via onclick attribute
+        window.submitSignupForm = function() {
+            // Basic validation
+            if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
+                setError('Please fill out all fields');
+                return;
+            }
+            
+            if (!termsAccepted) {
+                setError('Please accept the terms and conditions');
+                return;
+            }
+            
+            setError('');
+            alert(JSON.stringify(formData, null, 2));
+        };
+
+        return () => {
+            delete window.submitSignupForm;
+        };
+    }, [formData, termsAccepted]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,7 +50,7 @@ export default function SignupForm() {
     };
 
     return (
-        <>
+        <div ref={formRef}>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -95,31 +119,24 @@ export default function SignupForm() {
                     Agree to terms and conditions
                 </label>
             </div>
-            <button
-                className="btn w-100 py-2"
-                type="button"
-                onClick={() => {
-                    // Immediate inline validation and alert
-                    if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
-                        setError('Please fill out all fields');
-                        return;
-                    }
-                    
-                    if (!termsAccepted) {
-                        setError('Please accept the terms and conditions');
-                        return;
-                    }
-                    
-                    setError('');
-                    alert(JSON.stringify(formData, null, 2));
-                }}
-                style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
-            >
-                Sign up
-            </button>
+            
+            {/* Using dangerouslySetInnerHTML to create a button with direct DOM onclick */}
+            <div dangerouslySetInnerHTML={{
+                __html: `
+                <button 
+                    class="btn w-100 py-2" 
+                    type="button" 
+                    onclick="javascript:submitSignupForm()"
+                    style="background-color: #2466FF; color: white; border-radius: 20px;"
+                >
+                    Sign up
+                </button>
+                `
+            }} />
+            
             <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
             </div>
-        </>
+        </div>
     )
 }
