@@ -1,74 +1,123 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom"
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { signupUser } from '../../services/worker';
 
 export default function SignupForm() {
-    const [form, setForm] = useState({
-        username: '',
-        email: '',
-        fullname: '',
-        password: '',
-        type: 'user',
-    });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        setIsLoading(true);
         setError('');
+
+        const formData = new FormData(e.target);
+        const userData = {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            fullname: formData.get('fullname'),
+            password: formData.get('password'),
+            type: "user"
+        };
+
         try {
-            const response = await signupUser(form);
-            if (response && response.success) {
+            const response = await signupUser(userData);
+            if (response.success && response.token && response.user) {
+                // Store token and user data in localStorage or state management
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('user', JSON.stringify(response.user));
+                
+                // Redirect to verify page
                 navigate('/verify');
             } else {
-                setError(response?.message || 'Signup failed.');
+                setError('Signup failed. Please try again.');
             }
         } catch (err) {
-            setError('Signup failed.');
+            setError(err.message || 'Failed to register. Please try again.');
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div class="form-floating">
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon1">@</span>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="username" value={form.username} onChange={handleChange} required />
+        <>
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
                 </div>
-            </div>
-            <div class="form-floating">
-                <input type="text" class="form-control" id="floatingInput" placeholder="John doe" name="fullname" value={form.fullname} onChange={handleChange} required />
-                <label for="floatingInput">Full Name</label>
-            </div>
-            <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value={form.email} onChange={handleChange} required />
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" value={form.password} onChange={handleChange} required />
-                <label for="floatingPassword">Password</label>
-            </div>
+            )}
+            <form onSubmit={handleSubmit}>
+                <div className="form-floating mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="username"
+                        name="username"
+                        placeholder="Username"
+                        required
+                    />
+                    <label htmlFor="username">Username</label>
+                </div>
 
-            <div class="form-check text-start my-3">
-                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
-                <label class="form-check-label" for="flexCheckDefault">
-                    Agree to terms and conditions
-                </label>
-            </div>
-            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                {loading ? 'Signing up...' : 'Sign Up'}
-            </button>
-            {error && <div className="alert alert-danger mt-2">{error}</div>}
-            <Link to="/signin"><small>Sign in here</small></Link>
-        </form>
-    )
+                <div className="form-floating mb-3">
+                    <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="name@example.com"
+                        required
+                    />
+                    <label htmlFor="email">Email address</label>
+                </div>
+
+                <div className="form-floating mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="fullname"
+                        name="fullname"
+                        placeholder="Full Name"
+                        required
+                    />
+                    <label htmlFor="fullname">Full Name</label>
+                </div>
+
+                <div className="form-floating mb-3">
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                    />
+                    <label htmlFor="password">Password</label>
+                </div>
+
+                <button 
+                    className="w-100 btn btn-primary" 
+                    type="submit"
+                    disabled={isLoading}
+                    style={{
+                        backgroundColor: '#2466FF',
+                        border: 'none',
+                        borderRadius: '8px',
+                        padding: '12px'
+                    }}
+                >
+                    {isLoading ? (
+                        <>
+                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            Signing up...
+                        </>
+                    ) : (
+                        'Sign up'
+                    )}
+                </button>
+            </form>
+        </>
+    );
 }
