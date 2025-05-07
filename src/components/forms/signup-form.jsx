@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 
 export default function SignupForm() {
@@ -10,7 +10,6 @@ export default function SignupForm() {
         password: '',
         type: 'user'
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
 
@@ -25,34 +24,6 @@ export default function SignupForm() {
     const handleTermsChange = (e) => {
         setTermsAccepted(e.target.checked);
     };
-
-    // Add a direct DOM method to handle submission
-    useEffect(() => {
-        window.handleSignupSubmit = function() {
-            // Basic validation
-            if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
-                setError('Please fill out all fields');
-                return;
-            }
-            
-            if (!termsAccepted) {
-                setError('Please accept the terms and conditions');
-                return;
-            }
-
-            setError('');
-            setIsSubmitting(true);
-
-            // Alert form details
-            alert(JSON.stringify(formData, null, 2));
-            setIsSubmitting(false);
-        };
-
-        return () => {
-            // Clean up when component unmounts
-            delete window.handleSignupSubmit;
-        };
-    }, [formData, termsAccepted]);
 
     return (
         <>
@@ -127,11 +98,24 @@ export default function SignupForm() {
             <button
                 className="btn w-100 py-2"
                 type="button"
-                onClick={() => window.handleSignupSubmit()}
+                onClick={() => {
+                    // Immediate inline validation and alert
+                    if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
+                        setError('Please fill out all fields');
+                        return;
+                    }
+                    
+                    if (!termsAccepted) {
+                        setError('Please accept the terms and conditions');
+                        return;
+                    }
+                    
+                    setError('');
+                    alert(JSON.stringify(formData, null, 2));
+                }}
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
-                disabled={isSubmitting}
             >
-                {isSubmitting ? 'Signing up...' : 'Sign up'}
+                Sign up
             </button>
             <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
