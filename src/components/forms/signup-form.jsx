@@ -41,13 +41,8 @@ export default function SignupForm() {
         }
     };
 
-    const onFormSubmit = (e) => {
-        e.preventDefault();
-        handleSubmit(e);
-    };
-
     return (
-        <form method="POST" onSubmit={onFormSubmit}>
+        <form onSubmit={handleSubmit} action="javascript:void(0);">
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -119,6 +114,7 @@ export default function SignupForm() {
                 type="submit" 
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
+                onClick={(e) => e.preventDefault()}
             >
                 {isSubmitting ? 'Signing up...' : 'Sign up'}
             </button>
