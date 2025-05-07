@@ -14,11 +14,14 @@ self.addEventListener('message', async (event) => {
 
       const data = await response.json();
       
-      // Send the response back to the client
+      // Send the complete response back to the client
       event.source.postMessage({
         type: 'SIGNUP_RESPONSE',
-        success: response.ok,
-        data: data
+        success: data.success,
+        data: {
+          token: data.token,
+          user: data.user
+        }
       });
     } catch (error) {
       event.source.postMessage({
