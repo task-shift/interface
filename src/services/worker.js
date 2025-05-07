@@ -1,34 +1,48 @@
-const API_BASE_URL = 'http://localhost:3000/api';
+// Service worker registration and management
+let swRegistration = null;
 
-// Handle API requests
-self.addEventListener('message', async (event) => {
-    if (event.data.type === 'API_REQUEST') {
-        try {
-            const { endpoint, method, data } = event.data;
-            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            const responseData = await response.json();
-            
-            // Send the response back to the main thread
-            self.postMessage({
-                type: 'API_RESPONSE',
-                requestId: event.data.requestId,
-                data: responseData,
-                status: response.status,
-            });
-        } catch (error) {
-            // Send error back to main thread
-            self.postMessage({
-                type: 'API_ERROR',
-                requestId: event.data.requestId,
-                error: error.message,
-            });
-        }
+export const registerServiceWorker = async () => {
+  if ('serviceWorker' in navigator) {
+    try {
+      swRegistration = await navigator.serviceWorker.register('/sw.js');
+      await navigator.serviceWorker.ready;
+      return true;
+    } catch (error) {
+      console.error('Service Worker registration failed:', error);
+      return false;
     }
-}); 
+  }
+  return false;
+};
+
+export const signupUser = (userData) => {
+  return new Promise((resolve, reject) => {
+    if (!navigator.serviceWorker.controller) {
+      reject(new Error('Service Worker not ready'));
+      return;
+    }
+
+    // Create message channel for secure communication
+    const messageChannel = new MessageChannel();
+    
+    // Handle response from service worker
+    messageChannel.port1.onmessage = (event) => {
+      if (event.data.type === 'SIGNUP_RESPONSE') {
+        if (event.data.success) {
+          resolve(event.data.data);
+        } else {
+          reject(new Error(event.data.error));
+        }
+      }
+    };
+
+    // Send request to service worker
+    navigator.serviceWorker.controller.postMessage(
+      {
+        type: 'SIGNUP_REQUEST',
+        payload: userData
+      },
+      [messageChannel.port2]
+    );
+  });
+}; 
