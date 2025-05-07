@@ -21,7 +21,7 @@ export default function SignupForm() {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault(); // Prevent form from submitting normally
         if (isSubmitting) return;
 
@@ -34,7 +34,7 @@ export default function SignupForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -108,7 +108,8 @@ export default function SignupForm() {
             </div>
             <button
                 className="btn w-100 py-2"
-                type="submit"
+                type="button"
+                onClick={handleFormSubmit}
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
             >
@@ -117,6 +118,6 @@ export default function SignupForm() {
             <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
             </div>
-        </form>
+        </>
     )
 }
