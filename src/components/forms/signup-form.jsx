@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 import PropTypes from 'prop-types'
 
 export default function SignupForm() {
@@ -13,7 +13,7 @@ export default function SignupForm() {
     });
     const [error, setError] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,10 +26,9 @@ export default function SignupForm() {
     const handleTermsChange = (e) => {
         setTermsAccepted(e.target.checked);
     };
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
+
+    // Separate the submit button click handler from the form onSubmit
+    const handleButtonClick = () => {
         // Basic validation
         if (!formData.username || !formData.fullname || !formData.email || !formData.password) {
             setError('Please fill out all fields');
@@ -42,16 +41,30 @@ export default function SignupForm() {
         }
         
         setError('');
-        setIsSubmitting(true);
         
-        // In a real app, we would call an API here
-        // Instead, we'll just alert the data
+        // Alert form data
         alert(JSON.stringify(formData, null, 2));
-        setIsSubmitting(false);
+        setSubmitted(true);
     };
 
+    // Stop form submission completely
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log("Form submit prevented!");
+        return false;
+    };
+
+    // Show success message after submission
+    if (submitted) {
+        return (
+            <div className="alert alert-success" role="alert">
+                Form submitted successfully! Data: {JSON.stringify(formData)}
+            </div>
+        );
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFormSubmit} method="GET" action="#">
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
@@ -121,18 +134,19 @@ export default function SignupForm() {
                 </label>
             </div>
             
+            {/* Use type="button" to avoid form submission */}
             <button 
                 className="btn w-100 py-2" 
-                type="submit"
+                type="button"
+                onClick={handleButtonClick}
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
-                disabled={isSubmitting}
             >
-                {isSubmitting ? 'Signing up...' : 'Sign up'}
+                Sign up
             </button>
             
-            <div className="mt-3">
+            {/* <div className="mt-3">
                 <Link to="/signin"><small>Sign in here</small></Link>
-            </div>
+            </div> */}
         </form>
     )
 }
