@@ -41,45 +41,45 @@ const roundRect = (ctx, x, y, width, height, radius) => {
 };
 
 // Create a simple trash icon
-const drawTrashIcon = (ctx, x, y) => {
-  // Trash can body
-  ctx.beginPath();
-  ctx.moveTo(x - 12, y - 6);
-  ctx.lineTo(x + 12, y - 6);
-  ctx.lineTo(x + 10, y + 14);
-  ctx.lineTo(x - 10, y + 14);
-  ctx.closePath();
-  ctx.fillStyle = '#dc3545'; // danger color
-  ctx.fill();
+// const drawTrashIcon = (ctx, x, y) => {
+//   // Trash can body
+//   ctx.beginPath();
+//   ctx.moveTo(x - 12, y - 6);
+//   ctx.lineTo(x + 12, y - 6);
+//   ctx.lineTo(x + 10, y + 14);
+//   ctx.lineTo(x - 10, y + 14);
+//   ctx.closePath();
+//   ctx.fillStyle = '#dc3545'; // danger color
+//   ctx.fill();
   
-  // Trash can lid
-  ctx.beginPath();
-  ctx.moveTo(x - 14, y - 6);
-  ctx.lineTo(x + 14, y - 6);
-  ctx.lineTo(x + 14, y - 10);
-  ctx.lineTo(x - 14, y - 10);
-  ctx.closePath();
-  ctx.fill();
+//   // Trash can lid
+//   ctx.beginPath();
+//   ctx.moveTo(x - 14, y - 6);
+//   ctx.lineTo(x + 14, y - 6);
+//   ctx.lineTo(x + 14, y - 10);
+//   ctx.lineTo(x - 14, y - 10);
+//   ctx.closePath();
+//   ctx.fill();
   
-  // Handle
-  ctx.beginPath();
-  ctx.moveTo(x, y - 10);
-  ctx.lineTo(x, y - 14);
-  ctx.strokeStyle = '#dc3545';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-};
+//   // Handle
+//   ctx.beginPath();
+//   ctx.moveTo(x, y - 10);
+//   ctx.lineTo(x, y - 14);
+//   ctx.strokeStyle = '#dc3545';
+//   ctx.lineWidth = 2;
+//   ctx.stroke();
+// };
 
-// Create down caret icon
-const drawCaretDownIcon = (ctx, x, y) => {
-  ctx.beginPath();
-  ctx.moveTo(x - 8, y - 4);
-  ctx.lineTo(x, y + 4);
-  ctx.lineTo(x + 8, y - 4);
-  ctx.closePath();
-  ctx.fillStyle = '#ffffff';
-  ctx.fill();
-};
+// // Create down caret icon
+// const drawCaretDownIcon = (ctx, x, y) => {
+//   ctx.beginPath();
+//   ctx.moveTo(x - 8, y - 4);
+//   ctx.lineTo(x, y + 4);
+//   ctx.lineTo(x + 8, y - 4);
+//   ctx.closePath();
+//   ctx.fillStyle = '#ffffff';
+//   ctx.fill();
+// };
 
 // Create texture for cards that match the TaskCard component style
 const createTaskCardTexture = (task) => {

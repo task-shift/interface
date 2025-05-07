@@ -96,7 +96,7 @@ export default function HomeTab() {
     return (
         <>
             <div className="mt-5">
-                <p className="text-muted text-center" style={{ "fontSize": "clamp(1rem, 2vw, 1.2rem)" }}>Chat with your AI task agent—tell it what you need!<br className="d-none d-md-block" /><span className="d-md-none"> </span>assign tasks, create projects, departments...</p>
+                <p className="text-muted text-center" style={{ "fontSize": "clamp(1rem, 2vw, 1.2rem)" }}>Assign tasks with your AI task agent—tell it what you need!</p>
 
                 <div className="d-flex justify-content-center">
                     <div className="card bg-light border-0 mx-3" style={{ width: "100%", maxWidth: "800px", borderRadius: "20px", height: "500px" }}>
@@ -223,7 +223,7 @@ export default function HomeTab() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         </>
     )

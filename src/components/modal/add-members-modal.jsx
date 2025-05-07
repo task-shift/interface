@@ -35,18 +35,17 @@ export default function AddMembersModal() {
                                     </div>
                                     <div class="form-floating">
                                         <select class="form-select" id="floatingSelect" aria-label="Role selection">
-                                            <option value="admin">Project 1</option>
-                                            <option value="editor">Project 2</option>
-                                            <option value="viewer">Project 3</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="editor">teamate</option>
                                         </select>
-                                        <label for="floatingSelect">Project assigned</label>
+                                        <label for="floatingSelect">Permission assigned</label>
                                     </div>
                                 </main>
                             </div>
                         </div>
                         <div class="modal-footer border-top-0">
                             <button type="button" class="btn btn-md text-white" style={{ "borderRadius": "30px", backgroundColor: "#2466FF" }}>
-                                Create project
+                                Add member
                             </button>
                         </div>
                     </div>

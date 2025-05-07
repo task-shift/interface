@@ -16,12 +16,12 @@ export default function HomeNavbar() {
                 `}
             </style>
             <ul class="nav nav-pills mb-3 justify-content-center mt-3" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
+                {/* <li class="nav-item" role="presentation">
                     <button style={{ "borderRadius": "20px" }} class="nav-link active text-dark" id="pills-task-active-tab" data-bs-toggle="pill" data-bs-target="#task-active-tab" type="button" role="tab" aria-controls="pills-home-tab" aria-selected="true">
                         Tasks
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
+                </li> */}
+                {/* <li class="nav-item" role="presentation">
                     <button style={{ "borderRadius": "20px" }} class="nav-link text-dark" id="pills-project-tab" data-bs-toggle="pill" data-bs-target="#project-tab" type="button" role="tab" aria-controls="pills-agents-tab" aria-selected="false">
                         Projects
                     </button>
@@ -30,7 +30,7 @@ export default function HomeNavbar() {
                     <button style={{ "borderRadius": "20px" }} class="nav-link text-dark" id="pills-department-tab" data-bs-toggle="pill" data-bs-target="#department-tab" type="button" role="tab" aria-controls="pills-department-tab" aria-selected="false">
                         Departments
                     </button>
-                </li>
+                </li> */}
             </ul>
 
             <div class="tab-content" id="pills-tabContent" style={{ height: '100%', overflow: 'hidden' }}>

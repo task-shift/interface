@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { SiEbox } from "react-icons/si";
 import { IoSendSharp } from "react-icons/io5";
-import Header from '../components/header/header';
+// import Header from '../components/header/header';
 import { Link } from "react-router-dom";
 import TorusBackground from '../components/TorusBackground';
 
