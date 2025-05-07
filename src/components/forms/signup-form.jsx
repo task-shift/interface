@@ -34,15 +34,15 @@ export default function SignupForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit}>
             <div className="form-floating">
                 <div className="input-group">
                     <span className="input-group-text" id="basic-addon1">@</span>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         name="username"
-                        className="form-control" 
-                        placeholder="Username" 
+                        className="form-control"
+                        placeholder="Username"
                         value={formData.username}
                         onChange={handleChange}
                         required
@@ -50,12 +50,12 @@ export default function SignupForm() {
                 </div>
             </div>
             <div className="form-floating">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     name="fullname"
-                    className="form-control" 
-                    id="floatingInput" 
-                    placeholder="John doe" 
+                    className="form-control"
+                    id="floatingInput"
+                    placeholder="John doe"
                     value={formData.fullname}
                     onChange={handleChange}
                     required
@@ -63,12 +63,12 @@ export default function SignupForm() {
                 <label htmlFor="floatingInput">Full Name</label>
             </div>
             <div className="form-floating">
-                <input 
-                    type="email" 
+                <input
+                    type="email"
                     name="email"
-                    className="form-control" 
-                    id="floatingEmail" 
-                    placeholder="name@example.com" 
+                    className="form-control"
+                    id="floatingEmail"
+                    placeholder="name@example.com"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -76,12 +76,12 @@ export default function SignupForm() {
                 <label htmlFor="floatingEmail">Email address</label>
             </div>
             <div className="form-floating">
-                <input 
-                    type="password" 
+                <input
+                    type="password"
                     name="password"
-                    className="form-control" 
-                    id="floatingPassword" 
-                    placeholder="Password" 
+                    className="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
                     required
@@ -96,25 +96,27 @@ export default function SignupForm() {
             )}
 
             <div className="form-check text-start my-3">
-                <input 
-                    className="form-check-input" 
-                    type="checkbox" 
-                    id="termsCheck" 
-                    required 
+                <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="termsCheck"
+                    required
                 />
                 <label className="form-check-label" htmlFor="termsCheck">
                     Agree to terms and conditions
                 </label>
             </div>
-            <button 
-                className="btn w-100 py-2" 
-                type="submit" 
+            <button
+                className="btn w-100 py-2"
+                type="submit"
                 style={{ backgroundColor: "#2466FF", color: "white", borderRadius: "20px" }}
                 disabled={isSubmitting}
             >
                 {isSubmitting ? 'Signing up...' : 'Sign up'}
             </button>
-            <Link to="/signin"><small>Sign in here</small></Link>
+            <div className="mt-3">
+                <Link to="/signin"><small>Sign in here</small></Link>
+            </div>
         </form>
     )
 }
