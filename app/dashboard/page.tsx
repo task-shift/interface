@@ -233,30 +233,31 @@ export default function DashboardPage() {
                   type: "UI UX Design",
                   progress: 75,
                   time: "3 Days Left",
-                  image: "/mobile-design.jpg"
+                  image: "/tasks/mobile-app-design.jpg"
                 },
                 {
                   title: "Creating Perfect Website",
                   type: "Web Developer",
                   progress: 85,
                   time: "4 Days Left",
-                  image: "/perfect-website.jpg"
+                  image: "/tasks/perfect-website.jpg"
                 },
                 {
                   title: "Mobile App Design",
                   type: "UI UX Design",
                   progress: 65,
                   time: "3 Days Left",
-                  image: "/app-design.jpg"
+                  image: "/tasks/app-design.jpg"
                 }
               ].map((task, index) => (
                 <div key={index} className="bg-black rounded-xl overflow-hidden shadow-lg border border-[#1a1a1a]">
-                  <div className="h-40 relative">
+                  <div className="h-48 relative">
                     <Image
                       src={task.image}
                       alt={task.title}
                       fill
-                      className="object-cover"
+                      className="object-cover brightness-90"
+                      priority
                     />
                   </div>
                   <div className="p-4">
@@ -269,7 +270,7 @@ export default function DashboardPage() {
                         <span className="text-[#4d4d4d]">Progress</span>
                         <span className="text-[#0055FF]">{task.progress}%</span>
                       </div>
-                      <div className="h-1 bg-[#1a1a1a] rounded-full">
+                      <div className="h-1.5 bg-[#1a1a1a] rounded-full">
                         <div 
                           className="h-full bg-[#0055FF] rounded-full"
                           style={{ width: `${task.progress}%` }}
@@ -289,7 +290,7 @@ export default function DashboardPage() {
                         {[1,2,3,4,5].map((i) => (
                           <div key={i} className="h-8 w-8 rounded-full border-2 border-black">
                             <Image
-                              src={`/team-member-${i}.jpg`}
+                              src={`/team/member-${i}.jpg`}
                               alt={`Team member ${i}`}
                               width={32}
                               height={32}
