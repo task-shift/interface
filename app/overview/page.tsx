@@ -1,6 +1,5 @@
 "use client"
 
-import { Metadata } from "next"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -34,11 +33,6 @@ const taskPriorityData = {
   High: 35,
   Medium: 45,
   Low: 20
-}
-
-export const metadata: Metadata = {
-  title: "Overview | TaskShift",
-  description: "Task Management Overview",
 }
 
 export default function OverviewPage() {
