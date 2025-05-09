@@ -3,6 +3,8 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { Placeholder } from "@/components/Placeholder"
+import { Avatar } from "@/components/Avatar"
 
 export const metadata: Metadata = {
   title: "TaskShift | Task Management",
@@ -233,32 +235,26 @@ export default function DashboardPage() {
                   type: "UI UX Design",
                   progress: 75,
                   time: "3 Days Left",
-                  image: "/tasks/mobile-app-design.jpg"
+                  gradient: "blue" as const
                 },
                 {
                   title: "Creating Perfect Website",
                   type: "Web Developer",
                   progress: 85,
                   time: "4 Days Left",
-                  image: "/tasks/perfect-website.jpg"
+                  gradient: "purple" as const
                 },
                 {
                   title: "Mobile App Design",
                   type: "UI UX Design",
                   progress: 65,
                   time: "3 Days Left",
-                  image: "/tasks/app-design.jpg"
+                  gradient: "green" as const
                 }
               ].map((task, index) => (
                 <div key={index} className="bg-black rounded-xl overflow-hidden shadow-lg border border-[#1a1a1a]">
                   <div className="h-48 relative">
-                    <Image
-                      src={task.image}
-                      alt={task.title}
-                      fill
-                      className="object-cover brightness-90"
-                      priority
-                    />
+                    <Placeholder gradient={task.gradient} />
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-medium mb-1">{task.title}</h3>
@@ -289,13 +285,7 @@ export default function DashboardPage() {
                       <div className="flex -space-x-2">
                         {[1,2,3,4,5].map((i) => (
                           <div key={i} className="h-8 w-8 rounded-full border-2 border-black">
-                            <Image
-                              src={`/team/member-${i}.jpg`}
-                              alt={`Team member ${i}`}
-                              width={32}
-                              height={32}
-                              className="rounded-full"
-                            />
+                            <Avatar index={i-1} />
                           </div>
                         ))}
                       </div>
