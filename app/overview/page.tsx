@@ -40,8 +40,16 @@ export default function OverviewPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Overlay for mobile menu */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[60] md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Left Sidebar */}
-      <aside className={`fixed left-0 top-0 w-full md:w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-4 md:p-6 z-50 transform ${
+      <aside className={`fixed left-0 top-0 w-full md:w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-4 md:p-6 z-[70] transform ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0 transition-transform duration-200 ease-in-out`}>
         {/* Close button for mobile */}
@@ -132,7 +140,7 @@ export default function OverviewPage() {
       </aside>
 
       {/* Mobile Header */}
-      <div className="fixed top-0 left-0 right-0 h-16 bg-black border-b border-[#1a1a1a] flex items-center justify-between px-4 md:hidden z-40">
+      <div className="fixed top-0 left-0 right-0 h-16 bg-black border-b border-[#1a1a1a] flex items-center justify-between px-4 md:hidden z-50">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
             <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -150,14 +158,6 @@ export default function OverviewPage() {
           </svg>
         </button>
       </div>
-
-      {/* Overlay for mobile menu */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
