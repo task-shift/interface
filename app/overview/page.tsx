@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar } from "../components/Avatar"
+import { useState } from "react"
 
 const taskDistribution = {
   "UI/UX Design": 35,
@@ -39,10 +40,24 @@ export const metadata: Metadata = {
 }
 
 export default function OverviewPage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Left Sidebar */}
-      <aside className="fixed left-0 top-0 w-full md:w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-4 md:p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out">
+      <aside className={`fixed left-0 top-0 w-full md:w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-4 md:p-6 z-50 transform ${
+        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      } md:translate-x-0 transition-transform duration-200 ease-in-out`}>
+        {/* Close button for mobile */}
+        <button 
+          className="absolute top-4 right-4 text-white md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         {/* Logo */}
         <div className="flex items-center gap-2 mb-8 md:mb-10">
           <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
@@ -130,12 +145,23 @@ export default function OverviewPage() {
           </div>
           <span className="text-lg font-semibold">TaskShift</span>
         </div>
-        <button className="text-white">
+        <button 
+          className="text-white"
+          onClick={() => setIsMobileMenuOpen(true)}
+        >
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
+
+      {/* Overlay for mobile menu */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
