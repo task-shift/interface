@@ -42,15 +42,15 @@ export default function OverviewPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Left Sidebar */}
-      <aside className="fixed left-0 top-0 w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-6">
+      <aside className="fixed left-0 top-0 w-full md:w-[240px] h-screen bg-black border-r border-[#1a1a1a] p-4 md:p-6 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out">
         {/* Logo */}
-        <div className="flex items-center gap-2 mb-10">
+        <div className="flex items-center gap-2 mb-8 md:mb-10">
           <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
             <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <span className="text-xl font-semibold">TaskShift</span>
+          <span className="text-lg md:text-xl font-semibold">TaskShift</span>
         </div>
 
         {/* Navigation */}
@@ -104,7 +104,7 @@ export default function OverviewPage() {
         </nav>
 
         {/* Help Center */}
-        <div className="absolute bottom-8 left-6 right-6">
+        <div className="hidden md:block absolute bottom-8 left-6 right-6">
           <div className="bg-black rounded-xl p-4 text-center border border-[#1a1a1a]">
             <div className="w-8 h-8 bg-[#1a1a1a] rounded-full flex items-center justify-center mx-auto mb-3">
               <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -120,16 +120,33 @@ export default function OverviewPage() {
         </div>
       </aside>
 
+      {/* Mobile Header */}
+      <div className="fixed top-0 left-0 right-0 h-16 bg-black border-b border-[#1a1a1a] flex items-center justify-between px-4 md:hidden z-40">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
+            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <span className="text-lg font-semibold">TaskShift</span>
+        </div>
+        <button className="text-white">
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
       {/* Main Content */}
-      <main className="pl-[240px]">
+      <main className="pt-16 md:pt-0 md:pl-[240px]">
         {/* Top Navigation */}
-        <header className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-black border-b border-[#1a1a1a]">
-          <div>
-            <h1 className="text-2xl font-medium">Hi, Skylar Dias</h1>
-            <p className="text-[#4d4d4d]">Let's finish your task today!</p>
+        <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
+          <div className="mb-4 md:mb-0">
+            <h1 className="text-xl md:text-2xl font-medium">Hi, Skylar Dias</h1>
+            <p className="text-sm md:text-base text-[#4d4d4d]">Let's finish your task today!</p>
           </div>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             {/* Notifications & Profile */}
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -146,9 +163,9 @@ export default function OverviewPage() {
         </header>
 
         {/* Dashboard Content */}
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {/* Top Stats Grid */}
-          <div className="grid grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 md:mb-8">
             <div className="bg-[#0F1117] rounded-xl p-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
@@ -231,13 +248,13 @@ export default function OverviewPage() {
           </div>
 
           {/* Running Task Stats and Activity */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
-            <div className="bg-[#0F1117] rounded-xl p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-medium">Running Task</h2>
-                <div className="text-6xl font-semibold">65</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                <h2 className="text-lg md:text-xl font-medium mb-2 md:mb-0">Running Task</h2>
+                <div className="text-4xl md:text-6xl font-semibold">65</div>
               </div>
-              <div className="flex items-end justify-between">
+              <div className="flex flex-col md:flex-row md:items-end justify-between">
                 <div>
                   <div className="text-[#4d4d4d] mb-2">Total Task</div>
                   <div className="text-3xl">100</div>
@@ -270,9 +287,9 @@ export default function OverviewPage() {
               </div>
             </div>
             
-            <div className="bg-[#0F1117] rounded-xl p-6">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-medium">Activity</h2>
+                <h2 className="text-lg md:text-xl font-medium">Activity</h2>
                 <select className="bg-transparent text-[#4d4d4d] border-none outline-none">
                   <option>This Week</option>
                   <option>This Month</option>
@@ -295,11 +312,11 @@ export default function OverviewPage() {
           </div>
 
           {/* Charts Grid */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
             {/* Monthly Task Trend */}
-            <div className="bg-[#0F1117] rounded-xl p-6">
-              <h2 className="text-xl font-medium mb-6">Monthly Task Trend</h2>
-              <div className="h-[200px] relative">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Monthly Task Trend</h2>
+              <div className="h-[200px] md:h-[250px] relative">
                 <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
                   {/* Grid Lines */}
                   {[0, 1, 2, 3, 4].map((line) => (
@@ -348,10 +365,10 @@ export default function OverviewPage() {
             </div>
 
             {/* Task Priority Distribution */}
-            <div className="bg-[#0F1117] rounded-xl p-6">
-              <h2 className="text-xl font-medium mb-6">Task Priority Distribution</h2>
-              <div className="flex items-center justify-between">
-                <div className="relative w-[180px] h-[180px]">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Task Priority Distribution</h2>
+              <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 md:gap-0">
+                <div className="relative w-[160px] md:w-[180px] h-[160px] md:h-[180px]">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                     {Object.entries(taskPriorityData).map(([priority, value], index) => {
                       const previousValues = Object.values(taskPriorityData)
@@ -400,9 +417,9 @@ export default function OverviewPage() {
           </div>
 
           {/* Task Distribution and Team Performance */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
-            <div className="bg-[#0F1117] rounded-xl p-6">
-              <h2 className="text-xl font-medium mb-6">Task Distribution</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Task Distribution</h2>
               <div className="space-y-4">
                 {Object.entries(taskDistribution).map(([category, percentage]) => (
                   <div key={category}>
@@ -427,9 +444,9 @@ export default function OverviewPage() {
               </div>
             </div>
 
-            <div className="bg-[#0F1117] rounded-xl p-6">
-              <h2 className="text-xl font-medium mb-6">Team Performance</h2>
-              <div className="space-y-6">
+            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Team Performance</h2>
+              <div className="space-y-4 md:space-y-6">
                 {teamPerformance.map((member) => (
                   <div key={member.name} className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -476,9 +493,9 @@ export default function OverviewPage() {
           </div>
 
           {/* Monthly Mentors */}
-          <section className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-medium">Monthly Mentors</h2>
+          <section className="mb-6 md:mb-8">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-medium">Monthly Mentors</h2>
               <div className="flex gap-2">
                 <Button variant="ghost" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -493,7 +510,7 @@ export default function OverviewPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {[
                 {
                   name: "Curious George",
