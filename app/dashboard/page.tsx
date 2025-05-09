@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Placeholder } from "../components/Placeholder"
 import { Avatar } from "../components/Avatar"
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts"
 
 export const metadata: Metadata = {
   title: "TaskShift | Task Management",
@@ -12,6 +13,16 @@ export const metadata: Metadata = {
 }
 
 export default function DashboardPage() {
+  const activityData = [
+    { day: 'S', tasks: 1 },
+    { day: 'M', tasks: 2 },
+    { day: 'T', tasks: 1 },
+    { day: 'W', tasks: 1.5 },
+    { day: 'T', tasks: 2 },
+    { day: 'F', tasks: 1.5 },
+    { day: 'S', tasks: 1 },
+  ]
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Left Sidebar */}
@@ -150,70 +161,92 @@ export default function DashboardPage() {
 
         {/* Dashboard Content */}
         <div className="p-6">
-          {/* AI Assistant Chat Section */}
+          {/* Welcome Section */}
           <section className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-medium">AI Task Assistant</h2>
-              <Button variant="outline" className="border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] bg-transparent">
-                <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-                </svg>
-                Clear Chat
-              </Button>
-            </div>
-
-            <div className="bg-black rounded-xl border border-[#1a1a1a] overflow-hidden h-[600px] flex flex-col">
-              {/* Chat Messages Area */}
-              <div className="flex-1 p-6 overflow-y-auto">
-                <div className="h-full w-full flex items-center justify-center text-[#4d4d4d]">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <svg className="h-8 w-8 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <p className="text-lg mb-2">No messages yet</p>
-                    <p className="text-sm">Start a conversation with your AI assistant</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Chat Input Area */}
-              <div className="p-4 border-t border-[#1a1a1a] bg-black">
-                <div className="flex items-center gap-4">
-                  <div className="flex-1 relative">
-                    <textarea
-                      placeholder="Type your message..."
-                      className="w-full pl-4 pr-12 py-3 bg-black border border-[#1a1a1a] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none min-h-[100px]"
-                      style={{ height: '100px' }}
-                    />
-                    <div className="absolute right-3 bottom-3 flex gap-2">
-                      <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                        </svg>
-                      </button>
-                      <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <Button className="bg-[#0055FF] hover:bg-[#0044CC] text-white px-6 h-[100px]">
-                    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <h1 className="text-2xl font-semibold mb-2">Hi, Skylar Dias</h1>
+            <p className="text-[#4d4d4d]">Let's finish your task today!</p>
           </section>
 
-          {/* New Task Section */}
-          <section>
+          {/* Stats and Activity Section */}
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            {/* Running Task Stats */}
+            <div className="bg-[#0F1117] rounded-xl p-6">
+              <h2 className="text-lg font-medium mb-4">Running Task</h2>
+              <div className="flex items-center gap-8">
+                <div className="relative">
+                  <div className="w-32 h-32">
+                    <svg className="w-full h-full" viewBox="0 0 36 36">
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#1a1a1a"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="#0055FF"
+                        strokeWidth="2"
+                        strokeDasharray="45, 100"
+                      />
+                    </svg>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                      <div className="text-3xl font-semibold">65</div>
+                      <div className="text-sm text-[#4d4d4d]">of 100</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-4xl font-semibold mb-2">45%</div>
+                  <div className="text-lg text-[#4d4d4d]">Task</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity Graph */}
+            <div className="bg-[#0F1117] rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-medium">Activity</h2>
+                <select className="bg-transparent text-[#4d4d4d] border-none text-sm">
+                  <option>This Week</option>
+                </select>
+              </div>
+              <div className="relative h-[180px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={activityData}>
+                    <XAxis 
+                      dataKey="day" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#4d4d4d', fontSize: 12 }}
+                    />
+                    <YAxis 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#4d4d4d', fontSize: 12 }}
+                      ticks={[1, 2, 3]}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="tasks"
+                      stroke="#0055FF"
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 8, fill: "#0055FF" }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <div className="absolute top-8 left-12 bg-[#0F1117] text-white px-3 py-1 rounded-lg shadow-lg">
+                  2 Task
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Monthly Mentors Section */}
+          <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-medium">New Task</h2>
+              <h2 className="text-xl font-medium">Monthly Mentors</h2>
               <div className="flex gap-2">
                 <Button variant="ghost" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,7 +261,80 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                {
+                  name: "Curious George",
+                  role: "UI UX Design",
+                  tasks: 40,
+                  rating: 4.7,
+                  reviews: 750,
+                  status: "Follow"
+                },
+                {
+                  name: "Abraham Lincoln",
+                  role: "3D Design",
+                  tasks: 32,
+                  rating: 4.9,
+                  reviews: 510,
+                  status: "Followed"
+                }
+              ].map((mentor, index) => (
+                <div key={index} className="bg-[#0F1117] rounded-xl p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full overflow-hidden">
+                      <Avatar index={index} />
+                    </div>
+                    <div>
+                      <h3 className="font-medium">{mentor.name}</h3>
+                      <p className="text-sm text-[#4d4d4d]">{mentor.role}</p>
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-2">
+                          <svg className="h-4 w-4 text-[#4d4d4d]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                          </svg>
+                          <span className="text-sm text-[#4d4d4d]">{mentor.tasks} Task</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <svg className="h-4 w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                          <span className="text-sm">{mentor.rating}</span>
+                          <span className="text-sm text-[#4d4d4d]">({mentor.reviews} Reviews)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <Button 
+                    variant={mentor.status === "Follow" ? "default" : "outline"}
+                    className={mentor.status === "Follow" ? "bg-[#0055FF] hover:bg-[#0044CC]" : "border-[#1a1a1a] text-[#4d4d4d]"}
+                  >
+                    {mentor.status}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Upcoming Task Section */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-medium">Upcoming Task</h2>
+              <div className="flex gap-2">
+                <Button variant="ghost" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </Button>
+                <Button variant="ghost" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
               {[
                 {
                   title: "Creating Mobile App Design",
@@ -243,13 +349,6 @@ export default function DashboardPage() {
                   progress: 85,
                   time: "4 Days Left",
                   gradient: "purple" as const
-                },
-                {
-                  title: "Mobile App Design",
-                  type: "UI UX Design",
-                  progress: 65,
-                  time: "3 Days Left",
-                  gradient: "green" as const
                 }
               ].map((task, index) => (
                 <div key={index} className="bg-black rounded-xl overflow-hidden shadow-lg border border-[#1a1a1a]">
