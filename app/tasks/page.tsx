@@ -1,6 +1,5 @@
 "use client"
 
-import { Metadata } from "next"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -8,11 +7,6 @@ import Image from "next/image"
 import { Placeholder } from "../components/Placeholder"
 import { Avatar } from "../components/Avatar"
 import { useState } from "react"
-
-export const metadata: Metadata = {
-  title: "Tasks | TaskShift",
-  description: "Task Management Dashboard",
-}
 
 const tasks = [
   {
