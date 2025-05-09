@@ -2,212 +2,240 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export const metadata: Metadata = {
-  title: "Explore Task | TaskShift",
+  title: "Nuegas | Task Management",
   description: "Task Management Dashboard",
 }
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-zinc-900 text-white">
-      {/* Top Navigation */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-        <div className="flex items-center gap-8">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <span className="text-xl font-semibold">TaskShift</span>
+    <div className="min-h-screen bg-[#FAFAFA] text-[#1A1D1F]">
+      {/* Left Sidebar */}
+      <aside className="fixed left-0 top-0 w-[240px] h-screen bg-white border-r border-[#EFEFEF] p-6">
+        {/* Logo */}
+        <div className="flex items-center gap-2 mb-10">
+          <div className="w-8 h-8 bg-[#4B6BFB] rounded flex items-center justify-center">
+            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+              <path d="M19 5H5v14h14V5zM5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5z" fill="currentColor"/>
+            </svg>
           </div>
-
-          {/* Explore Task Title */}
-          <h1 className="text-xl">Explore Task</h1>
+          <span className="text-xl font-semibold">Nuegas</span>
         </div>
 
-        {/* Search, Category, Sort */}
-        <div className="flex items-center gap-6">
-          <div className="relative">
-            <Input
-              type="text"
-              placeholder="Search Task"
-              className="w-[300px] bg-zinc-800 border-zinc-700 pl-10"
-            />
-            <svg className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        {/* Navigation */}
+        <nav className="space-y-1">
+          <Link 
+            href="/overview" 
+            className="flex items-center gap-3 px-3 py-2 text-[#6F767E] hover:text-[#1A1D1F] rounded-lg group"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
+            Overview
+          </Link>
+          <Link 
+            href="/tasks" 
+            className="flex items-center gap-3 px-3 py-2 bg-[#EFEFEF] text-[#1A1D1F] rounded-lg"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Task
+          </Link>
+          <Link 
+            href="/mentors" 
+            className="flex items-center gap-3 px-3 py-2 text-[#6F767E] hover:text-[#1A1D1F] rounded-lg group"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            Mentors
+          </Link>
+          <Link 
+            href="/messages" 
+            className="flex items-center gap-3 px-3 py-2 text-[#6F767E] hover:text-[#1A1D1F] rounded-lg group"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            Message
+          </Link>
+          <Link 
+            href="/settings" 
+            className="flex items-center gap-3 px-3 py-2 text-[#6F767E] hover:text-[#1A1D1F] rounded-lg group"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Settings
+          </Link>
+        </nav>
+
+        {/* Help Center */}
+        <div className="absolute bottom-8 left-6 right-6">
+          <div className="bg-[#1A1D1F] rounded-xl p-4 text-center">
+            <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-white font-medium mb-1">Help Center</h3>
+            <p className="text-sm text-white/60 mb-3">Having Trouble in Learning. Please contact us for more questions.</p>
+            <Button className="w-full bg-white/10 hover:bg-white/20 text-white border-0">
+              Go To Help Center
+            </Button>
           </div>
+        </div>
+      </aside>
 
-          <Button variant="outline" className="flex items-center gap-2 bg-zinc-800 border-zinc-700 text-zinc-300">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-            Category
-          </Button>
-
-          <Button variant="outline" className="flex items-center gap-2 bg-zinc-800 border-zinc-700 text-zinc-300">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-            </svg>
-            Sort By: Deadline
-          </Button>
-
-          {/* User Profile */}
-          <div className="flex items-center gap-4">
+      {/* Main Content */}
+      <main className="pl-[240px]">
+        {/* Top Navigation */}
+        <header className="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-white border-b border-[#EFEFEF]">
+          <h1 className="text-xl font-medium">Explore Task</h1>
+          
+          <div className="flex items-center gap-6">
+            {/* Search */}
             <div className="relative">
-              <svg className="h-6 w-6 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              <Input
+                type="text"
+                placeholder="Search Task"
+                className="w-[300px] pl-10 bg-[#F4F4F4] border-0 placeholder:text-[#6F767E]"
+              />
+              <svg className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#6F767E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-blue-500"></span>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-600"></div>
-          </div>
-        </div>
-      </header>
 
-      {/* Sidebar */}
-      <div className="flex">
-        <aside className="w-64 h-[calc(100vh-73px)] border-r border-zinc-800 p-4">
-          <nav>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/overview" className="flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                  Overview
-                </Link>
-              </li>
-              <li>
-                <Link href="/tasks" className="flex items-center gap-3 px-4 py-2 bg-blue-600/20 text-white rounded-lg">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  Task
-                </Link>
-              </li>
-              <li>
-                <Link href="/mentors" className="flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                  Mentors
-                </Link>
-              </li>
-              <li>
-                <Link href="/messages" className="flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
-                  Message
-                </Link>
-              </li>
-              <li>
-                <Link href="/settings" className="flex items-center gap-3 px-4 py-2 text-zinc-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  Settings
-                </Link>
-              </li>
-            </ul>
-          </nav>
+            {/* Category & Sort */}
+            <Button variant="outline" className="border-[#EFEFEF] text-[#6F767E] hover:bg-[#F4F4F4]">
+              <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+              Category
+            </Button>
 
-          {/* Help Center */}
-          <div className="absolute bottom-8 left-4 right-4">
-            <div className="bg-zinc-800 rounded-xl p-4 text-center">
-              <div className="w-8 h-8 bg-zinc-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <Button variant="outline" className="border-[#EFEFEF] text-[#6F767E] hover:bg-[#F4F4F4]">
+              <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+              </svg>
+              Sort By: Deadline
+            </Button>
+
+            {/* User Profile */}
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <svg className="h-6 w-6 text-[#6F767E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
+                <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-[#4B6BFB]"></span>
               </div>
-              <h3 className="text-white font-medium mb-1">Help Center</h3>
-              <p className="text-sm text-zinc-400 mb-3">Having Trouble in Learning. Please contact us for more questions.</p>
-              <Button variant="outline" className="w-full bg-zinc-700 border-zinc-600 text-white hover:bg-zinc-600">
-                Go To Help Center
-              </Button>
+              <div className="h-10 w-10 rounded-full bg-[#F4F4F4] overflow-hidden">
+                <Image
+                  src="/placeholder-avatar.jpg"
+                  alt="User avatar"
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
-        </aside>
+        </header>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6">
+        {/* Dashboard Content */}
+        <div className="p-6">
           {/* Time Limit Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">Time Limit</h2>
+              <h2 className="text-xl font-medium">Time Limit</h2>
               <div className="flex gap-2">
-                <Button variant="ghost" className="text-zinc-400 hover:text-white">
+                <Button variant="ghost" className="text-[#6F767E] hover:text-[#1A1D1F] hover:bg-[#F4F4F4]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
                   </svg>
                 </Button>
-                <Button variant="ghost" className="text-zinc-400 hover:text-white">
+                <Button variant="ghost" className="text-[#6F767E] hover:text-[#1A1D1F] hover:bg-[#F4F4F4]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </Button>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* Task Cards */}
               {[
                 {
                   title: "Creating Awesome Mobile Apps",
                   type: "UI UX Design",
                   progress: 90,
                   time: "1 Hour",
-                  image: "/path/to/image1.jpg"
+                  image: "/mobile-apps.jpg"
                 },
                 {
                   title: "Creating Fresh Website",
                   type: "Web Developer",
                   progress: 85,
                   time: "2 Hour",
-                  image: "/path/to/image2.jpg"
+                  image: "/website.jpg"
                 },
                 {
                   title: "Creating Color Palletes",
                   type: "UI UX Design",
                   progress: 100,
                   time: "1 Hour",
-                  image: "/path/to/image3.jpg"
+                  image: "/color-palettes.jpg"
                 }
               ].map((task, index) => (
-                <div key={index} className="bg-zinc-800 rounded-xl overflow-hidden">
-                  <div className="h-40 bg-zinc-700">
-                    {/* Task Image would go here */}
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm border border-[#EFEFEF]">
+                  <div className="h-40 relative">
+                    <Image
+                      src={task.image}
+                      alt={task.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-medium mb-1">{task.title}</h3>
-                    <p className="text-sm text-zinc-400 mb-4">{task.type}</p>
+                    <p className="text-sm text-[#6F767E] mb-4">{task.type}</p>
+                    
+                    {/* Progress Bar */}
                     <div className="mb-4">
                       <div className="flex justify-between text-sm mb-1">
                         <span>Progress</span>
-                        <span>{task.progress}%</span>
+                        <span className="text-[#4B6BFB]">{task.progress}%</span>
                       </div>
-                      <div className="h-2 bg-zinc-700 rounded-full">
+                      <div className="h-1 bg-[#F4F4F4] rounded-full">
                         <div 
-                          className="h-full bg-blue-600 rounded-full"
+                          className="h-full bg-[#4B6BFB] rounded-full"
                           style={{ width: `${task.progress}%` }}
                         />
                       </div>
                     </div>
+
+                    {/* Time and Team */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <svg className="h-5 w-5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg className="h-5 w-5 text-[#6F767E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span className="text-sm text-zinc-400">{task.time}</span>
+                        <span className="text-sm text-[#6F767E]">{task.time}</span>
                       </div>
                       <div className="flex -space-x-2">
                         {[1,2,3,4,5].map((i) => (
-                          <div key={i} className="h-8 w-8 rounded-full border-2 border-zinc-800 bg-gradient-to-r from-blue-400 to-blue-600" />
+                          <div key={i} className="h-8 w-8 rounded-full border-2 border-white">
+                            <Image
+                              src={`/team-member-${i}.jpg`}
+                              alt={`Team member ${i}`}
+                              width={32}
+                              height={32}
+                              className="rounded-full"
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -220,75 +248,91 @@ export default function DashboardPage() {
           {/* New Task Section */}
           <section>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold">New Task</h2>
+              <h2 className="text-xl font-medium">New Task</h2>
               <div className="flex gap-2">
-                <Button variant="ghost" className="text-zinc-400 hover:text-white">
+                <Button variant="ghost" className="text-[#6F767E] hover:text-[#1A1D1F] hover:bg-[#F4F4F4]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
                   </svg>
                 </Button>
-                <Button variant="ghost" className="text-zinc-400 hover:text-white">
+                <Button variant="ghost" className="text-[#6F767E] hover:text-[#1A1D1F] hover:bg-[#F4F4F4]">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </Button>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-              {/* New Task Cards - Similar structure to Time Limit cards */}
               {[
                 {
                   title: "Creating Mobile App Design",
                   type: "UI UX Design",
                   progress: 75,
                   time: "3 Days Left",
-                  image: "/path/to/image4.jpg"
+                  image: "/mobile-design.jpg"
                 },
                 {
                   title: "Creating Perfect Website",
                   type: "Web Developer",
                   progress: 85,
                   time: "4 Days Left",
-                  image: "/path/to/image5.jpg"
+                  image: "/perfect-website.jpg"
                 },
                 {
                   title: "Mobile App Design",
                   type: "UI UX Design",
                   progress: 65,
                   time: "3 Days Left",
-                  image: "/path/to/image6.jpg"
+                  image: "/app-design.jpg"
                 }
               ].map((task, index) => (
-                <div key={index} className="bg-zinc-800 rounded-xl overflow-hidden">
-                  <div className="h-40 bg-zinc-700">
-                    {/* Task Image would go here */}
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm border border-[#EFEFEF]">
+                  <div className="h-40 relative">
+                    <Image
+                      src={task.image}
+                      alt={task.title}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-medium mb-1">{task.title}</h3>
-                    <p className="text-sm text-zinc-400 mb-4">{task.type}</p>
+                    <p className="text-sm text-[#6F767E] mb-4">{task.type}</p>
+                    
+                    {/* Progress Bar */}
                     <div className="mb-4">
                       <div className="flex justify-between text-sm mb-1">
                         <span>Progress</span>
-                        <span>{task.progress}%</span>
+                        <span className="text-[#4B6BFB]">{task.progress}%</span>
                       </div>
-                      <div className="h-2 bg-zinc-700 rounded-full">
+                      <div className="h-1 bg-[#F4F4F4] rounded-full">
                         <div 
-                          className="h-full bg-blue-600 rounded-full"
+                          className="h-full bg-[#4B6BFB] rounded-full"
                           style={{ width: `${task.progress}%` }}
                         />
                       </div>
                     </div>
+
+                    {/* Time and Team */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <svg className="h-5 w-5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg className="h-5 w-5 text-[#6F767E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span className="text-sm text-zinc-400">{task.time}</span>
+                        <span className="text-sm text-[#6F767E]">{task.time}</span>
                       </div>
                       <div className="flex -space-x-2">
                         {[1,2,3,4,5].map((i) => (
-                          <div key={i} className="h-8 w-8 rounded-full border-2 border-zinc-800 bg-gradient-to-r from-blue-400 to-blue-600" />
+                          <div key={i} className="h-8 w-8 rounded-full border-2 border-white">
+                            <Image
+                              src={`/team-member-${i}.jpg`}
+                              alt={`Team member ${i}`}
+                              width={32}
+                              height={32}
+                              className="rounded-full"
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -297,8 +341,8 @@ export default function DashboardPage() {
               ))}
             </div>
           </section>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   )
 } 
