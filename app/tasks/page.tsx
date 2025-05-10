@@ -54,6 +54,18 @@ const tasks = [
 export default function TasksPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState("all")
+  const [chatInput, setChatInput] = useState("")
+  const [chatMessages, setChatMessages] = useState([
+    { role: "assistant", content: "Hi! I can help you create tasks. Try a prompt like: 'Create a high priority task for UI review due next Friday.'" }
+  ])
+
+  function handleSendMessage(e: React.FormEvent) {
+    e.preventDefault()
+    if (!chatInput.trim()) return
+    setChatMessages([...chatMessages, { role: "user", content: chatInput }])
+    setChatInput("")
+    // Here you would call your AI backend and append the response to chatMessages
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -178,6 +190,34 @@ export default function TasksPage() {
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
+        {/* AI Task Assistant Chat Section */}
+        <section className="p-4 md:p-6 border-b border-[#1a1a1a] bg-[#0F1117]">
+          <h2 className="text-lg md:text-xl font-medium mb-2 flex items-center gap-2">
+            <span className="bg-[#0055FF] text-white px-2 py-1 rounded text-xs font-semibold">AI</span>
+            Task Assistant
+          </h2>
+          <div className="flex flex-col gap-3 max-w-2xl">
+            <div className="flex flex-col gap-2 max-h-48 overflow-y-auto mb-2">
+              {chatMessages.map((msg, i) => (
+                <div key={i} className={`rounded-lg px-3 py-2 text-sm w-fit ${msg.role === "user" ? "ml-auto bg-[#0055FF]/20 text-white" : "bg-[#1a1a1a] text-[#4d4d4d]"}`}>
+                  {msg.content}
+                </div>
+              ))}
+            </div>
+            <form onSubmit={handleSendMessage} className="flex gap-2">
+              <Input
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                placeholder="Describe a task to create..."
+                className="flex-1 bg-black border-[#1a1a1a] text-white placeholder:text-[#4d4d4d]"
+              />
+              <Button type="submit" className="bg-[#0055FF] hover:bg-[#0044CC] text-white px-6">
+                Send
+              </Button>
+            </form>
+          </div>
+        </section>
+
         {/* Top Navigation */}
         <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
           <div className="mb-4 md:mb-0">
