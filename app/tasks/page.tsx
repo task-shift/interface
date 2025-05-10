@@ -203,12 +203,107 @@ export default function TasksPage() {
           </div>
         </header>
 
-        <div className="p-4 md:p-6 grid grid-cols-1 lg:grid-cols-[1fr,400px] gap-6">
+        <div className="p-4 md:p-6 flex flex-col lg:grid lg:grid-cols-[1fr,400px] gap-6">
+          {/* AI Chat Section - Shown first on mobile */}
+          <div className="order-1 lg:order-2 lg:border-l lg:border-[#1a1a1a] lg:pl-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-medium">AI Task Assistant</h2>
+              <Button 
+                variant="ghost" 
+                className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
+                onClick={() => setIsAiChatOpen(!isAiChatOpen)}
+              >
+                {isAiChatOpen ? (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                )}
+              </Button>
+            </div>
+
+            {isAiChatOpen && (
+              <div className="bg-[#0F1117] rounded-xl border border-[#1a1a1a] overflow-hidden">
+                {/* Chat Messages Area */}
+                <div className="h-[300px] md:h-[400px] p-4 overflow-y-auto">
+                  <div className="h-full w-full flex items-center justify-center text-[#4d4d4d]">
+                    <div className="text-center max-w-sm mx-auto">
+                      <div className="w-16 h-16 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg className="h-8 w-8 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <p className="text-lg mb-2">No messages yet</p>
+                      <p className="text-sm">Try these example prompts:</p>
+                      <div className="mt-4 space-y-2">
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white text-sm whitespace-normal h-auto py-2"
+                          onClick={() => setMessage("Create a high priority task for updating the design system")}
+                        >
+                          "Create a high priority task for updating the design system"
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white text-sm whitespace-normal h-auto py-2"
+                          onClick={() => setMessage("Add a new task for the API integration due next week")}
+                        >
+                          "Add a new task for the API integration due next week"
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chat Input Area */}
+                <div className="p-4 border-t border-[#1a1a1a]">
+                  <div className="flex flex-col gap-4">
+                    <div className="relative">
+                      <textarea
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Describe your task..."
+                        className="w-full pl-4 pr-12 py-3 bg-[#0F1117] border border-[#1a1a1a] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none"
+                        rows={4}
+                      />
+                      <div className="absolute right-3 bottom-3 flex gap-2">
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
+                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                          </svg>
+                        </button>
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
+                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <Button 
+                      className="bg-[#0055FF] hover:bg-[#0044CC] text-white w-full"
+                      onClick={() => {
+                        // Handle sending message to AI
+                        console.log("Sending message:", message)
+                      }}
+                    >
+                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Tasks Section */}
-          <div>
+          <div className="order-2 lg:order-1">
             {/* Task Filters */}
-            <div className="mb-6 border-b border-[#1a1a1a] overflow-x-auto">
-              <div className="flex gap-2 min-w-max pb-4">
+            <div className="mb-6 border-b border-[#1a1a1a]">
+              <div className="flex gap-2 pb-4 overflow-x-auto no-scrollbar">
                 {["all", "not started", "in progress", "completed"].map((filter) => (
                   <Button
                     key={filter}
@@ -217,7 +312,7 @@ export default function TasksPage() {
                       selectedFilter === filter 
                         ? "bg-[#0055FF] hover:bg-[#0044CC] text-white" 
                         : "text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
-                    }`}
+                    } whitespace-nowrap`}
                     onClick={() => setSelectedFilter(filter)}
                   >
                     {filter.charAt(0).toUpperCase() + filter.slice(1)}
@@ -274,101 +369,6 @@ export default function TasksPage() {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* AI Chat Section */}
-          <div className="lg:border-l lg:border-[#1a1a1a] lg:pl-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-medium">AI Task Assistant</h2>
-              <Button 
-                variant="ghost" 
-                className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
-                onClick={() => setIsAiChatOpen(!isAiChatOpen)}
-              >
-                {isAiChatOpen ? (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-                  </svg>
-                ) : (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                )}
-              </Button>
-            </div>
-
-            {isAiChatOpen && (
-              <div className="bg-[#0F1117] rounded-xl border border-[#1a1a1a] overflow-hidden">
-                {/* Chat Messages Area */}
-                <div className="h-[400px] p-4 overflow-y-auto">
-                  <div className="h-full w-full flex items-center justify-center text-[#4d4d4d]">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg className="h-8 w-8 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <p className="text-lg mb-2">No messages yet</p>
-                      <p className="text-sm">Try these example prompts:</p>
-                      <div className="mt-4 space-y-2">
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white"
-                          onClick={() => setMessage("Create a high priority task for updating the design system")}
-                        >
-                          "Create a high priority task for updating the design system"
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white"
-                          onClick={() => setMessage("Add a new task for the API integration due next week")}
-                        >
-                          "Add a new task for the API integration due next week"
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chat Input Area */}
-                <div className="p-4 border-t border-[#1a1a1a]">
-                  <div className="flex flex-col gap-4">
-                    <div className="relative">
-                      <textarea
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Describe your task..."
-                        className="w-full pl-4 pr-12 py-3 bg-[#0F1117] border border-[#1a1a1a] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none min-h-[100px]"
-                        style={{ height: '100px' }}
-                      />
-                      <div className="absolute right-3 bottom-3 flex gap-2">
-                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                          </svg>
-                        </button>
-                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <Button 
-                      className="bg-[#0055FF] hover:bg-[#0044CC] text-white w-full"
-                      onClick={() => {
-                        // Handle sending message to AI
-                        console.log("Sending message:", message)
-                      }}
-                    >
-                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </main>
