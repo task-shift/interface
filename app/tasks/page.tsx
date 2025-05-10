@@ -54,18 +54,8 @@ const tasks = [
 export default function TasksPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState("all")
-  const [chatInput, setChatInput] = useState("")
-  const [chatMessages, setChatMessages] = useState([
-    { role: "assistant", content: "Hi! I can help you create tasks. Try a prompt like: 'Create a high priority task for UI review due next Friday.'" }
-  ])
-
-  function handleSendMessage(e: React.FormEvent) {
-    e.preventDefault()
-    if (!chatInput.trim()) return
-    setChatMessages([...chatMessages, { role: "user", content: chatInput }])
-    setChatInput("")
-    // Here you would call your AI backend and append the response to chatMessages
-  }
+  const [message, setMessage] = useState("")
+  const [isAiChatOpen, setIsAiChatOpen] = useState(true)
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -190,34 +180,6 @@ export default function TasksPage() {
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
-        {/* AI Task Assistant Chat Section */}
-        <section className="p-4 md:p-6 border-b border-[#1a1a1a] bg-[#0F1117]">
-          <h2 className="text-lg md:text-xl font-medium mb-2 flex items-center gap-2">
-            <span className="bg-[#0055FF] text-white px-2 py-1 rounded text-xs font-semibold">AI</span>
-            Task Assistant
-          </h2>
-          <div className="flex flex-col gap-3 max-w-2xl">
-            <div className="flex flex-col gap-2 max-h-48 overflow-y-auto mb-2">
-              {chatMessages.map((msg, i) => (
-                <div key={i} className={`rounded-lg px-3 py-2 text-sm w-fit ${msg.role === "user" ? "ml-auto bg-[#0055FF]/20 text-white" : "bg-[#1a1a1a] text-[#4d4d4d]"}`}>
-                  {msg.content}
-                </div>
-              ))}
-            </div>
-            <form onSubmit={handleSendMessage} className="flex gap-2">
-              <Input
-                value={chatInput}
-                onChange={e => setChatInput(e.target.value)}
-                placeholder="Describe a task to create..."
-                className="flex-1 bg-black border-[#1a1a1a] text-white placeholder:text-[#4d4d4d]"
-              />
-              <Button type="submit" className="bg-[#0055FF] hover:bg-[#0044CC] text-white px-6">
-                Send
-              </Button>
-            </form>
-          </div>
-        </section>
-
         {/* Top Navigation */}
         <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
           <div className="mb-4 md:mb-0">
@@ -241,74 +203,172 @@ export default function TasksPage() {
           </div>
         </header>
 
-        {/* Task Filters */}
-        <div className="p-4 md:p-6 border-b border-[#1a1a1a] overflow-x-auto">
-          <div className="flex gap-2 min-w-max">
-            {["all", "not started", "in progress", "completed"].map((filter) => (
-              <Button
-                key={filter}
-                variant={selectedFilter === filter ? "default" : "ghost"}
-                className={`${
-                  selectedFilter === filter 
-                    ? "bg-[#0055FF] hover:bg-[#0044CC] text-white" 
-                    : "text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
-                }`}
-                onClick={() => setSelectedFilter(filter)}
-              >
-                {filter.charAt(0).toUpperCase() + filter.slice(1)}
-              </Button>
-            ))}
-          </div>
-        </div>
+        <div className="p-4 md:p-6 grid grid-cols-1 lg:grid-cols-[1fr,400px] gap-6">
+          {/* Tasks Section */}
+          <div>
+            {/* Task Filters */}
+            <div className="mb-6 border-b border-[#1a1a1a] overflow-x-auto">
+              <div className="flex gap-2 min-w-max pb-4">
+                {["all", "not started", "in progress", "completed"].map((filter) => (
+                  <Button
+                    key={filter}
+                    variant={selectedFilter === filter ? "default" : "ghost"}
+                    className={`${
+                      selectedFilter === filter 
+                        ? "bg-[#0055FF] hover:bg-[#0044CC] text-white" 
+                        : "text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
+                    }`}
+                    onClick={() => setSelectedFilter(filter)}
+                  >
+                    {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  </Button>
+                ))}
+              </div>
+            </div>
 
-        {/* Tasks Grid */}
-        <div className="p-4 md:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {tasks.map((task) => (
-              <div key={task.id} className="bg-[#0F1117] rounded-xl p-4 md:p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="font-medium mb-1">{task.title}</h3>
-                    <p className="text-sm text-[#4d4d4d] line-clamp-2">{task.description}</p>
+            {/* Tasks Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {tasks.map((task) => (
+                <div key={task.id} className="bg-[#0F1117] rounded-xl p-4 md:p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="font-medium mb-1">{task.title}</h3>
+                      <p className="text-sm text-[#4d4d4d] line-clamp-2">{task.description}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded text-xs ${
+                      task.priority === "High" ? "bg-red-500/10 text-red-500" :
+                      task.priority === "Medium" ? "bg-yellow-500/10 text-yellow-500" :
+                      "bg-green-500/10 text-green-500"
+                    }`}>
+                      {task.priority}
+                    </div>
                   </div>
-                  <div className={`px-2 py-1 rounded text-xs ${
-                    task.priority === "High" ? "bg-red-500/10 text-red-500" :
-                    task.priority === "Medium" ? "bg-yellow-500/10 text-yellow-500" :
-                    "bg-green-500/10 text-green-500"
-                  }`}>
-                    {task.priority}
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <svg className="h-5 w-5 text-[#4d4d4d]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-[#4d4d4d]">Due: {task.dueDate}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Avatar index={tasks.indexOf(task)} />
+                        <span>{task.assignee}</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="text-[#4d4d4d]">{task.status}</span>
+                        <span>{task.progress}%</span>
+                      </div>
+                      <div className="h-2 bg-[#1a1a1a] rounded-full">
+                        <div 
+                          className="h-full rounded-full bg-[#0055FF]"
+                          style={{ width: `${task.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AI Chat Section */}
+          <div className="lg:border-l lg:border-[#1a1a1a] lg:pl-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-medium">AI Task Assistant</h2>
+              <Button 
+                variant="ghost" 
+                className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
+                onClick={() => setIsAiChatOpen(!isAiChatOpen)}
+              >
+                {isAiChatOpen ? (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                )}
+              </Button>
+            </div>
+
+            {isAiChatOpen && (
+              <div className="bg-[#0F1117] rounded-xl border border-[#1a1a1a] overflow-hidden">
+                {/* Chat Messages Area */}
+                <div className="h-[400px] p-4 overflow-y-auto">
+                  <div className="h-full w-full flex items-center justify-center text-[#4d4d4d]">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg className="h-8 w-8 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <p className="text-lg mb-2">No messages yet</p>
+                      <p className="text-sm">Try these example prompts:</p>
+                      <div className="mt-4 space-y-2">
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white"
+                          onClick={() => setMessage("Create a high priority task for updating the design system")}
+                        >
+                          "Create a high priority task for updating the design system"
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white"
+                          onClick={() => setMessage("Add a new task for the API integration due next week")}
+                        >
+                          "Add a new task for the API integration due next week"
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <svg className="h-5 w-5 text-[#4d4d4d]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <span className="text-[#4d4d4d]">Due: {task.dueDate}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Avatar index={tasks.indexOf(task)} />
-                      <span>{task.assignee}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-[#4d4d4d]">{task.status}</span>
-                      <span>{task.progress}%</span>
-                    </div>
-                    <div className="h-2 bg-[#1a1a1a] rounded-full">
-                      <div 
-                        className="h-full rounded-full bg-[#0055FF]"
-                        style={{ width: `${task.progress}%` }}
+                {/* Chat Input Area */}
+                <div className="p-4 border-t border-[#1a1a1a]">
+                  <div className="flex flex-col gap-4">
+                    <div className="relative">
+                      <textarea
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Describe your task..."
+                        className="w-full pl-4 pr-12 py-3 bg-[#0F1117] border border-[#1a1a1a] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none min-h-[100px]"
+                        style={{ height: '100px' }}
                       />
+                      <div className="absolute right-3 bottom-3 flex gap-2">
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
+                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                          </svg>
+                        </button>
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
+                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
+                    <Button 
+                      className="bg-[#0055FF] hover:bg-[#0044CC] text-white w-full"
+                      onClick={() => {
+                        // Handle sending message to AI
+                        console.log("Sending message:", message)
+                      }}
+                    >
+                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Button>
                   </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </main>
