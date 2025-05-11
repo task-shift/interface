@@ -203,9 +203,9 @@ export default function TasksPage() {
           </div>
         </header>
 
-        <div className="p-4 md:p-6 flex flex-col lg:grid lg:grid-cols-[1fr,400px] gap-6">
-          {/* AI Chat Section - Shown first on mobile */}
-          <div className="order-1 lg:order-2 lg:border-l lg:border-[#1a1a1a] lg:pl-6">
+        <div className="p-4 md:p-6 flex flex-col gap-6">
+          {/* AI Chat Section - Always shown first */}
+          <div className="w-full">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-medium">AI Task Assistant</h2>
               <Button 
@@ -300,7 +300,7 @@ export default function TasksPage() {
           </div>
 
           {/* Tasks Section */}
-          <div className="order-2 lg:order-1">
+          <div className="w-full">
             {/* Task Filters */}
             <div className="mb-6 border-b border-[#1a1a1a]">
               <div className="flex gap-2 pb-4 overflow-x-auto no-scrollbar">
