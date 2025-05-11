@@ -229,70 +229,84 @@ export default function TasksPage() {
               <div className="bg-[#0F1117] rounded-xl border border-[#1a1a1a] overflow-hidden">
                 {/* Chat Messages Area */}
                 <div className="h-[300px] md:h-[400px] p-4 overflow-y-auto">
-                  <div className="h-full w-full flex items-center justify-center text-[#4d4d4d]">
+                  <div className="h-full w-full flex items-center justify-center">
                     <div className="text-center max-w-sm mx-auto">
-                      <div className="w-16 h-16 bg-[#1a1a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg className="h-8 w-8 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      <div className="w-20 h-20 bg-gradient-to-br from-[#0055FF] to-[#0044CC] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-[#0055FF]/20">
+                        <svg className="h-10 w-10 text-white" viewBox="0 0 24 24" fill="none">
+                          <path d="M21 12c0 1.2-4 2.4-4 3.6s2.8-.6 2.8.6c0 .3-.2.6-.3.9-.3.7-.7 1.4-1.2 1.9-.2.3-.5.5-.8.5-.4.1-.9-.1-1.5-.4-.6-.3-1.2-.7-1.8-1.2-.5-.4-1-.8-1.5-1.1-.5-.4-1-.7-1.4-1-.6-.4-1.2-.8-1.8-1.1-.7-.4-1.3-.7-1.9-.8-.6-.2-1.1-.3-1.6-.2-.4 0-.7.2-1 .4-.5.4-.8 1-.9 1.7 0 .3 0 .5.1.8-1.1-1.3-1.8-3-1.8-4.8 0-4.4 3.6-8 8-8s8 3.6 8 8z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M19.5 17.1c-.3.7-.7 1.4-1.2 1.9M14.7 14.8c-.5-.4-1-.8-1.5-1.1-.5-.4-1-.7-1.4-1M7.5 11.4c-.7-.4-1.3-.7-1.9-.8M4 15.5c0 .3 0 .5.1.8-1.1-1.3-1.8-3-1.8-4.8" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </div>
-                      <p className="text-lg mb-2">No messages yet</p>
-                      <p className="text-sm">Try these example prompts:</p>
-                      <div className="mt-4 space-y-2">
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white text-sm whitespace-normal h-auto py-2"
+                      <h3 className="text-xl font-medium text-white mb-2">AI Task Assistant</h3>
+                      <p className="text-[#4d4d4d] mb-8">Ready to help you manage tasks efficiently</p>
+                      <div className="space-y-3">
+                        <button 
+                          className="w-full px-4 py-3 bg-[#1a1a1a] hover:bg-[#262626] text-left text-[#808080] hover:text-white rounded-xl transition-colors duration-200 group"
                           onClick={() => setMessage("Create a high priority task for updating the design system")}
                         >
-                          "Create a high priority task for updating the design system"
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-[#1a1a1a] text-[#4d4d4d] hover:bg-[#1a1a1a] hover:text-white text-sm whitespace-normal h-auto py-2"
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-[#262626] group-hover:bg-[#333333] rounded-lg flex items-center justify-center flex-shrink-0">
+                              <svg className="h-4 w-4 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </div>
+                            Create a high priority task
+                          </div>
+                        </button>
+                        <button 
+                          className="w-full px-4 py-3 bg-[#1a1a1a] hover:bg-[#262626] text-left text-[#808080] hover:text-white rounded-xl transition-colors duration-200 group"
                           onClick={() => setMessage("Add a new task for the API integration due next week")}
                         >
-                          "Add a new task for the API integration due next week"
-                        </Button>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-[#262626] group-hover:bg-[#333333] rounded-lg flex items-center justify-center flex-shrink-0">
+                              <svg className="h-4 w-4 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                            Schedule API integration task
+                          </div>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Chat Input Area */}
-                <div className="p-4 border-t border-[#1a1a1a]">
+                <div className="p-4 border-t border-[#1a1a1a] bg-[#0F1117]">
                   <div className="flex flex-col gap-4">
                     <div className="relative">
                       <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Describe your task..."
-                        className="w-full pl-4 pr-12 py-3 bg-[#0F1117] border border-[#1a1a1a] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none"
-                        rows={4}
+                        className="w-full pl-4 pr-12 py-3 bg-[#1a1a1a] border-2 border-[#262626] focus:border-[#0055FF] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none transition-colors duration-200"
+                        rows={3}
                       />
                       <div className="absolute right-3 bottom-3 flex gap-2">
-                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#262626] rounded-lg">
+                          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                           </svg>
                         </button>
-                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#1a1a1a] rounded-lg">
-                          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#262626] rounded-lg">
+                          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                         </button>
                       </div>
                     </div>
-                    <Button 
-                      className="bg-[#0055FF] hover:bg-[#0044CC] text-white w-full"
+                    <button 
+                      className="w-full bg-[#0055FF] hover:bg-[#0044CC] text-white py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 group"
                       onClick={() => {
                         // Handle sending message to AI
                         console.log("Sending message:", message)
                       }}
                     >
-                      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                      <span>Send to AI</span>
+                      <svg className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none">
                         <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </Button>
+                    </button>
                   </div>
                 </div>
               </div>
