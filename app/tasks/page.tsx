@@ -91,14 +91,94 @@ export default function TasksPage() {
           </svg>
         </button>
 
-        {/* Logo */}
-        <div className="flex items-center gap-2 mb-8 md:mb-10">
-          <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
-            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+        {/* Logo and Organization Switcher */}
+        <div className="mb-8 md:mb-10 space-y-4">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
+              <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <span className="text-lg md:text-xl font-semibold">TaskShift</span>
           </div>
-          <span className="text-lg md:text-xl font-semibold">TaskShift</span>
+
+          {/* Organization Switcher */}
+          <div>
+            <button
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#0F1117] hover:bg-[#1a1a1a] transition-colors duration-200 group border border-[#1a1a1a]"
+              onClick={() => setIsOrgDropdownOpen(!isOrgDropdownOpen)}
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-[#0055FF] to-[#0044CC] rounded-lg flex items-center justify-center text-white font-medium shadow-lg shadow-[#0055FF]/10">
+                {currentOrg.logo}
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm text-[#808080]">Organization</p>
+                <p className="text-white font-medium truncate">{currentOrg.name}</p>
+              </div>
+              <svg 
+                className={`h-5 w-5 text-[#4d4d4d] transition-transform duration-200 ${isOrgDropdownOpen ? 'rotate-180' : ''}`} 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {/* Organization Dropdown */}
+            {isOrgDropdownOpen && (
+              <>
+                <div 
+                  className="fixed inset-0 z-30" 
+                  onClick={() => setIsOrgDropdownOpen(false)}
+                />
+                <div className="absolute left-4 right-4 mt-2 bg-[#0F1117] border border-[#1a1a1a] rounded-xl shadow-lg overflow-hidden z-40">
+                  <div className="p-2 space-y-1">
+                    {organizations.map((org) => (
+                      <button
+                        key={org.id}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-200 ${
+                          currentOrg.id === org.id 
+                            ? 'bg-[#0055FF] text-white' 
+                            : 'text-[#808080] hover:bg-[#1a1a1a] hover:text-white'
+                        }`}
+                        onClick={() => {
+                          setCurrentOrg(org)
+                          setIsOrgDropdownOpen(false)
+                        }}
+                      >
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-medium shadow-lg ${
+                          currentOrg.id === org.id 
+                            ? 'bg-[#0044CC] shadow-[#0055FF]/20' 
+                            : 'bg-[#1a1a1a]'
+                        }`}>
+                          {org.logo}
+                        </div>
+                        <span className="flex-1 text-left truncate">{org.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="p-2 border-t border-[#1a1a1a]">
+                    <button
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#808080] hover:bg-[#1a1a1a] hover:text-white transition-colors duration-200 group"
+                      onClick={() => {
+                        console.log("Create new organization")
+                        setIsOrgDropdownOpen(false)
+                      }}
+                    >
+                      <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center group-hover:bg-[#262626] transition-colors duration-200">
+                        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                      <span>Create Organization</span>
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Navigation */}
@@ -192,85 +272,9 @@ export default function TasksPage() {
       <main className="pt-16 md:pt-0 md:pl-[240px]">
         {/* Top Navigation */}
         <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
-          <div className="flex items-center gap-6">
-            {/* Organization Switcher */}
-            <div className="relative">
-              <button
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#1a1a1a] transition-colors duration-200"
-                onClick={() => setIsOrgDropdownOpen(!isOrgDropdownOpen)}
-              >
-                <div className="w-8 h-8 bg-gradient-to-br from-[#0055FF] to-[#0044CC] rounded-lg flex items-center justify-center text-white font-medium">
-                  {currentOrg.logo}
-                </div>
-                <span className="text-white">{currentOrg.name}</span>
-                <svg 
-                  className={`h-5 w-5 text-[#4d4d4d] transition-transform duration-200 ${isOrgDropdownOpen ? 'rotate-180' : ''}`} 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {/* Organization Dropdown */}
-              {isOrgDropdownOpen && (
-                <>
-                  <div 
-                    className="fixed inset-0 z-30" 
-                    onClick={() => setIsOrgDropdownOpen(false)}
-                  />
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-[#0F1117] border border-[#1a1a1a] rounded-xl shadow-lg overflow-hidden z-40">
-                    <div className="p-2 space-y-1">
-                      {organizations.map((org) => (
-                        <button
-                          key={org.id}
-                          className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                            currentOrg.id === org.id 
-                              ? 'bg-[#0055FF] text-white' 
-                              : 'text-[#808080] hover:bg-[#1a1a1a] hover:text-white'
-                          }`}
-                          onClick={() => {
-                            setCurrentOrg(org)
-                            setIsOrgDropdownOpen(false)
-                          }}
-                        >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-medium ${
-                            currentOrg.id === org.id 
-                              ? 'bg-[#0044CC]' 
-                              : 'bg-[#1a1a1a]'
-                          }`}>
-                            {org.logo}
-                          </div>
-                          <span>{org.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                    <div className="p-2 border-t border-[#1a1a1a]">
-                      <button
-                        className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[#808080] hover:bg-[#1a1a1a] hover:text-white transition-colors duration-200"
-                        onClick={() => {
-                          console.log("Create new organization")
-                          setIsOrgDropdownOpen(false)
-                        }}
-                      >
-                        <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-                          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                          </svg>
-                        </div>
-                        <span>Create Organization</span>
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div>
-              <h1 className="text-xl md:text-2xl font-medium">Tasks</h1>
-              <p className="text-sm md:text-base text-[#4d4d4d]">Manage and track your tasks</p>
-            </div>
+          <div>
+            <h1 className="text-xl md:text-2xl font-medium">Tasks</h1>
+            <p className="text-sm md:text-base text-[#4d4d4d]">Manage and track your tasks</p>
           </div>
           
           <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
