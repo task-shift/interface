@@ -197,9 +197,6 @@ export default function TasksPage() {
                 className="pl-10 bg-[#0F1117] border-[#1a1a1a] text-white placeholder:text-[#4d4d4d]"
               />
             </div>
-            <Button className="bg-[#0055FF] hover:bg-[#0044CC] text-white">
-              + Add New Task
-            </Button>
           </div>
         </header>
 
@@ -207,7 +204,7 @@ export default function TasksPage() {
           {/* AI Chat Section - Always shown first */}
           <div className="w-full">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-medium">AI Task Assistant</h2>
+              <h2 className="text-lg font-medium">Task Agent</h2>
               <Button 
                 variant="ghost" 
                 className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]"
@@ -237,7 +234,7 @@ export default function TasksPage() {
                           <path d="M19.5 17.1c-.3.7-.7 1.4-1.2 1.9M14.7 14.8c-.5-.4-1-.8-1.5-1.1-.5-.4-1-.7-1.4-1M7.5 11.4c-.7-.4-1.3-.7-1.9-.8M4 15.5c0 .3 0 .5.1.8-1.1-1.3-1.8-3-1.8-4.8" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </div>
-                      <h3 className="text-xl font-medium text-white mb-2">AI Task Assistant</h3>
+                      <h3 className="text-xl font-medium text-white mb-2">Task Agent Assistant</h3>
                       <p className="text-[#4d4d4d] mb-8">Ready to help you manage tasks efficiently</p>
                       <div className="space-y-3">
                         <button 
