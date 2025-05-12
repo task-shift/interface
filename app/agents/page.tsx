@@ -135,55 +135,57 @@ export default function AgentsPage() {
         <div className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Agent List */}
-            <div className="md:col-span-1 space-y-4">
-              {agents.map((agent) => (
-                <div
-                  key={agent.id}
-                  className={`bg-[#0F1117] rounded-xl p-4 cursor-pointer transition-colors ${
-                    selectedAgent?.id === agent.id ? 'border border-[#0055FF]' : 'hover:bg-[#1a1a1a]'
-                  }`}
-                  onClick={() => setSelectedAgent(agent)}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center">
-                        {agent.platform === "WhatsApp" && (
-                          <svg className="h-6 w-6 text-green-500" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a10.065 10.065 0 004.779 1.2h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.037-5.176-2.922-7.062A9.944 9.944 0 0012.012 2zm-3.97 14.487l-2.587.677 1.161-1.66a8.277 8.277 0 01-1.423-4.552c0-4.569 3.721-8.285 8.294-8.285 2.213 0 4.294.862 5.857 2.425a8.214 8.214 0 012.424 5.857c-.001 4.569-3.722 8.285-8.295 8.285h-.004c-1.43 0-2.828-.371-4.061-1.073l-.367-.221z"/>
-                          </svg>
-                        )}
-                        {agent.platform === "Slack" && (
-                          <svg className="h-6 w-6 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
-                          </svg>
-                        )}
-                        {agent.platform === "Telegram" && (
-                          <svg className="h-6 w-6 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
-                          </svg>
-                        )}
+            <div className="md:col-span-1">
+              <div className="h-[calc(100vh-180px)] overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-[#1a1a1a] scrollbar-track-transparent hover:scrollbar-thumb-[#262626]">
+                {agents.map((agent) => (
+                  <div
+                    key={agent.id}
+                    className={`bg-[#0F1117] rounded-xl p-4 cursor-pointer transition-colors ${
+                      selectedAgent?.id === agent.id ? 'border border-[#0055FF]' : 'hover:bg-[#1a1a1a]'
+                    }`}
+                    onClick={() => setSelectedAgent(agent)}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center">
+                          {agent.platform === "WhatsApp" && (
+                            <svg className="h-6 w-6 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a10.065 10.065 0 004.779 1.2h.004c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.037-5.176-2.922-7.062A9.944 9.944 0 0012.012 2zm-3.97 14.487l-2.587.677 1.161-1.66a8.277 8.277 0 01-1.423-4.552c0-4.569 3.721-8.285 8.294-8.285 2.213 0 4.294.862 5.857 2.425a8.214 8.214 0 012.424 5.857c-.001 4.569-3.722 8.285-8.295 8.285h-.004c-1.43 0-2.828-.371-4.061-1.073l-.367-.221z"/>
+                            </svg>
+                          )}
+                          {agent.platform === "Slack" && (
+                            <svg className="h-6 w-6 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                            </svg>
+                          )}
+                          {agent.platform === "Telegram" && (
+                            <svg className="h-6 w-6 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
+                            </svg>
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="font-medium">{agent.name}</h3>
+                          <p className="text-sm text-[#4d4d4d]">{agent.platform}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-medium">{agent.name}</h3>
-                        <p className="text-sm text-[#4d4d4d]">{agent.platform}</p>
+                      <div className={`px-2 py-1 rounded text-xs ${
+                        agent.status === "Active" ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
+                      }`}>
+                        {agent.status}
                       </div>
                     </div>
-                    <div className={`px-2 py-1 rounded text-xs ${
-                      agent.status === "Active" ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
-                    }`}>
-                      {agent.status}
+                    <div className="flex items-center justify-between text-sm text-[#4d4d4d]">
+                      <span>{agent.messages} messages</span>
+                      <span>{agent.lastActive}</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-sm text-[#4d4d4d]">
-                    <span>{agent.messages} messages</span>
-                    <span>{agent.lastActive}</span>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* Agent Details */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 h-[calc(100vh-180px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#1a1a1a] scrollbar-track-transparent hover:scrollbar-thumb-[#262626]">
               {selectedAgent ? (
                 <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
                   <div className="flex items-center justify-between mb-6">
