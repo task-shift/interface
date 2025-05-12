@@ -26,90 +26,90 @@ const agents = [
       { id: 3, content: "Great! Let me tell you about our features", type: "sent", timestamp: "10:32 AM" }
     ]
   },
-  {
-    id: 2,
-    name: "Support Bot",
-    platform: "Slack",
-    status: "Active",
-    messages: 856,
-    lastActive: "5 mins ago",
-    description: "Technical support and troubleshooting assistant",
-    messageHistory: [
-      { id: 1, content: "Having trouble with login?", type: "sent", timestamp: "11:20 AM" },
-      { id: 2, content: "Yes, can't access my account", type: "received", timestamp: "11:21 AM" },
-      { id: 3, content: "Let me help you reset your password", type: "sent", timestamp: "11:22 AM" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Marketing Bot",
-    platform: "Telegram",
-    status: "Inactive",
-    messages: 567,
-    lastActive: "1 hour ago",
-    description: "Handles marketing campaigns and promotions",
-    messageHistory: [
-      { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-      { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-      { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-    ]
-  },
-  {
-    id: 4,
-    name: "Marketing Bot",
-    platform: "Telegram",
-    status: "Inactive",
-    messages: 567,
-    lastActive: "1 hour ago",
-    description: "Handles marketing campaigns and promotions",
-    messageHistory: [
-      { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-      { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-      { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Marketing Bot",
-    platform: "Telegram",
-    status: "Inactive",
-    messages: 567,
-    lastActive: "1 hour ago",
-    description: "Handles marketing campaigns and promotions",
-    messageHistory: [
-      { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-      { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-      { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Marketing Bot",
-    platform: "Telegram",
-    status: "Inactive",
-    messages: 567,
-    lastActive: "1 hour ago",
-    description: "Handles marketing campaigns and promotions",
-    messageHistory: [
-      { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-      { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-      { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-    ]
-  },
-  {
-    id: 3,
-    name: "Marketing Bot",
-    platform: "Telegram",
-    status: "Inactive",
-    messages: 567,
-    lastActive: "1 hour ago",
-    description: "Handles marketing campaigns and promotions",
-    messageHistory: [
-      { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-      { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-      { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-    ]
-  }
+  // {
+  //   id: 2,
+  //   name: "Support Bot",
+  //   platform: "Slack",
+  //   status: "Active",
+  //   messages: 856,
+  //   lastActive: "5 mins ago",
+  //   description: "Technical support and troubleshooting assistant",
+  //   messageHistory: [
+  //     { id: 1, content: "Having trouble with login?", type: "sent", timestamp: "11:20 AM" },
+  //     { id: 2, content: "Yes, can't access my account", type: "received", timestamp: "11:21 AM" },
+  //     { id: 3, content: "Let me help you reset your password", type: "sent", timestamp: "11:22 AM" }
+  //   ]
+  // },
+  // {
+  //   id: 3,
+  //   name: "Marketing Bot",
+  //   platform: "Telegram",
+  //   status: "Inactive",
+  //   messages: 567,
+  //   lastActive: "1 hour ago",
+  //   description: "Handles marketing campaigns and promotions",
+  //   messageHistory: [
+  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
+  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
+  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
+  //   ]
+  // },
+  // {
+  //   id: 4,
+  //   name: "Marketing Bot",
+  //   platform: "Telegram",
+  //   status: "Inactive",
+  //   messages: 567,
+  //   lastActive: "1 hour ago",
+  //   description: "Handles marketing campaigns and promotions",
+  //   messageHistory: [
+  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
+  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
+  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
+  //   ]
+  // },
+  // {
+  //   id: 3,
+  //   name: "Marketing Bot",
+  //   platform: "Telegram",
+  //   status: "Inactive",
+  //   messages: 567,
+  //   lastActive: "1 hour ago",
+  //   description: "Handles marketing campaigns and promotions",
+  //   messageHistory: [
+  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
+  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
+  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
+  //   ]
+  // },
+  // {
+  //   id: 3,
+  //   name: "Marketing Bot",
+  //   platform: "Telegram",
+  //   status: "Inactive",
+  //   messages: 567,
+  //   lastActive: "1 hour ago",
+  //   description: "Handles marketing campaigns and promotions",
+  //   messageHistory: [
+  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
+  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
+  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
+  //   ]
+  // },
+  // {
+  //   id: 3,
+  //   name: "Marketing Bot",
+  //   platform: "Telegram",
+  //   status: "Inactive",
+  //   messages: 567,
+  //   lastActive: "1 hour ago",
+  //   description: "Handles marketing campaigns and promotions",
+  //   messageHistory: [
+  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
+  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
+  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
+  //   ]
+  // }
 ]
 
 export default function AgentsPage() {
@@ -195,13 +195,13 @@ export default function AgentsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Agent List */}
             <div className="md:col-span-1">
-              <div className="h-[400px] overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-[#262626] scrollbar-track-[#1a1a1a]">
+              <div className={`${displayedAgents.length > 1 ? 'h-[400px]' : 'h-full'} overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-[#262626] scrollbar-track-[#1a1a1a]`}>
                 {displayedAgents.map((agent) => (
                   <div
                     key={agent.id}
                     className={`bg-[#0F1117] rounded-xl p-6 cursor-pointer transition-colors ${
                       selectedAgent?.id === agent.id ? 'border border-[#0055FF]' : 'hover:bg-[#1a1a1a]'
-                    }`}
+                    } ${displayedAgents.length === 1 ? 'h-[400px] flex flex-col' : ''}`}
                     onClick={() => setSelectedAgent(agent)}
                   >
                     <div className="flex items-center gap-4">
@@ -232,7 +232,7 @@ export default function AgentsPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-6 text-sm text-[#4d4d4d]">
+                    <div className={`flex items-center justify-between text-sm text-[#4d4d4d] ${displayedAgents.length === 1 ? 'mt-auto' : 'mt-6'}`}>
                       <div>
                         <div className="text-white">{agent.messages}</div>
                         <div className="text-[#4d4d4d]">Total messages</div>
