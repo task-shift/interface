@@ -166,6 +166,19 @@ export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps)
             Task
           </Link>
           <Link 
+            href="/agents" 
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg group ${
+              pathname === '/agents'
+                ? 'bg-[#0055FF]/5 text-white'
+                : 'text-[#4d4d4d] hover:text-white'
+            }`}
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" />
+            </svg>
+            Agents
+          </Link>
+          <Link 
             href="/mentors" 
             className={`flex items-center gap-3 px-3 py-2 rounded-lg group ${
               pathname === '/mentors'
