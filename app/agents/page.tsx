@@ -128,8 +128,7 @@ export default function AgentsPage() {
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="12" cy="8" r="4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M3.69435 12.7909L8.09611 16.3605C8.38906 16.5954 8.81126 16.5495 9.05107 16.2557L19.3064 3.79088" stroke="white" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
           <span className="text-lg font-semibold">TaskShift</span>
