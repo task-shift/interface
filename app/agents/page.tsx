@@ -367,6 +367,45 @@ export default function AgentsPage() {
           {/* Charts Section */}
           <div className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {/* Quick Stats */}
+              <div className="bg-[#0F1117] rounded-xl p-6 col-span-1 md:col-span-2">
+                <h3 className="text-lg font-medium mb-4">Quick Stats</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Avg. Response Time</p>
+                    {selectedAgent ? (
+                      <p className="text-xl font-medium mt-1">2.4 mins</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Messages Today</p>
+                    {selectedAgent ? (
+                      <p className="text-xl font-medium mt-1">89</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Active Chats</p>
+                    {selectedAgent ? (
+                      <p className="text-xl font-medium mt-1">12</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Resolution Rate</p>
+                    {selectedAgent ? (
+                      <p className="text-xl font-medium mt-1">95%</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* Response Time Chart */}
               <div className="bg-[#0F1117] rounded-xl p-6">
                 <h3 className="text-lg font-medium mb-4">Average Response Time</h3>
@@ -411,45 +450,6 @@ export default function AgentsPage() {
                     Select an agent to view message metrics
                   </div>
                 )}
-              </div>
-
-              {/* Quick Stats */}
-              <div className="bg-[#0F1117] rounded-xl p-6">
-                <h3 className="text-lg font-medium mb-4">Quick Stats</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                    <p className="text-sm text-[#4d4d4d]">Avg. Response Time</p>
-                    {selectedAgent ? (
-                      <p className="text-xl font-medium mt-1">2.4 mins</p>
-                    ) : (
-                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
-                    )}
-                  </div>
-                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                    <p className="text-sm text-[#4d4d4d]">Messages Today</p>
-                    {selectedAgent ? (
-                      <p className="text-xl font-medium mt-1">89</p>
-                    ) : (
-                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
-                    )}
-                  </div>
-                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                    <p className="text-sm text-[#4d4d4d]">Active Chats</p>
-                    {selectedAgent ? (
-                      <p className="text-xl font-medium mt-1">12</p>
-                    ) : (
-                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
-                    )}
-                  </div>
-                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                    <p className="text-sm text-[#4d4d4d]">Resolution Rate</p>
-                    {selectedAgent ? (
-                      <p className="text-xl font-medium mt-1">95%</p>
-                    ) : (
-                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
