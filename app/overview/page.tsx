@@ -46,10 +46,9 @@ export default function OverviewPage() {
       {/* Mobile Header */}
       <div className="fixed top-0 left-0 right-0 h-16 bg-black border-b border-[#1a1a1a] flex items-center justify-between px-4 md:hidden z-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 flex items-center justify-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19.7274 20.4471C19.2716 19.1713 18.2672 18.0439 16.8701 17.2399C15.4729 16.4358 13.7611 16 12 16C10.2389 16 8.52706 16.4358 7.12991 17.2399C5.73276 18.0439 4.72839 19.1713 4.27259 20.4471" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="12" cy="8" r="4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+          <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
+            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
           <span className="text-lg font-semibold">TaskShift</span>

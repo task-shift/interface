@@ -147,9 +147,9 @@ export default function AgentsPage() {
       {/* Mobile Header */}
       <div className="fixed top-0 left-0 right-0 h-16 bg-black border-b border-[#1a1a1a] flex items-center justify-between px-4 md:hidden z-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 flex items-center justify-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.69435 12.7909L8.09611 16.3605C8.38906 16.5954 8.81126 16.5495 9.05107 16.2557L19.3064 3.79088" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+          <div className="w-8 h-8 bg-[#0055FF] rounded flex items-center justify-center">
+            <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
           <span className="text-lg font-semibold">TaskShift</span>
