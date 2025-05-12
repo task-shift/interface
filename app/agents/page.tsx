@@ -365,12 +365,12 @@ export default function AgentsPage() {
           </div>
 
           {/* Charts Section */}
-          {selectedAgent && (
-            <div className="mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                {/* Response Time Chart */}
-                <div className="bg-[#0F1117] rounded-xl p-6">
-                  <h3 className="text-lg font-medium mb-4">Average Response Time</h3>
+          <div className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {/* Response Time Chart */}
+              <div className="bg-[#0F1117] rounded-xl p-6">
+                <h3 className="text-lg font-medium mb-4">Average Response Time</h3>
+                {selectedAgent ? (
                   <div className="h-[200px] flex items-end justify-between gap-2">
                     {selectedAgent.metrics.responseTime.map((data) => (
                       <div key={data.date} className="flex flex-col items-center gap-2">
@@ -383,11 +383,17 @@ export default function AgentsPage() {
                       </div>
                     ))}
                   </div>
-                </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center text-[#4d4d4d]">
+                    Select an agent to view response time metrics
+                  </div>
+                )}
+              </div>
 
-                {/* Messages per Day Chart */}
-                <div className="bg-[#0F1117] rounded-xl p-6">
-                  <h3 className="text-lg font-medium mb-4">Messages per Day</h3>
+              {/* Messages per Day Chart */}
+              <div className="bg-[#0F1117] rounded-xl p-6">
+                <h3 className="text-lg font-medium mb-4">Messages per Day</h3>
+                {selectedAgent ? (
                   <div className="h-[200px] flex items-end justify-between gap-2">
                     {selectedAgent.metrics.messagesPerDay.map((data) => (
                       <div key={data.date} className="flex flex-col items-center gap-2">
@@ -400,75 +406,53 @@ export default function AgentsPage() {
                       </div>
                     ))}
                   </div>
-                </div>
-
-                {/* Satisfaction Rate */}
-                <div className="bg-[#0F1117] rounded-xl p-6">
-                  <h3 className="text-lg font-medium mb-4">Customer Satisfaction</h3>
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-32 h-32">
-                      <svg className="w-full h-full transform -rotate-90">
-                        <circle
-                          cx="64"
-                          cy="64"
-                          r="56"
-                          stroke="#1a1a1a"
-                          strokeWidth="12"
-                          fill="none"
-                        />
-                        <circle
-                          cx="64"
-                          cy="64"
-                          r="56"
-                          stroke="#0055FF"
-                          strokeWidth="12"
-                          fill="none"
-                          strokeDasharray={`${2 * Math.PI * 56}`}
-                          strokeDashoffset={`${2 * Math.PI * 56 * (1 - selectedAgent.metrics.satisfactionRate / 100)}`}
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-medium">{selectedAgent.metrics.satisfactionRate}%</span>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-[#0055FF]" />
-                        <span className="text-sm">Satisfied Customers</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
-                        <span className="text-sm text-[#4d4d4d]">Others</span>
-                      </div>
-                    </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center text-[#4d4d4d]">
+                    Select an agent to view message metrics
                   </div>
-                </div>
+                )}
+              </div>
 
-                {/* Quick Stats */}
-                <div className="bg-[#0F1117] rounded-xl p-6">
-                  <h3 className="text-lg font-medium mb-4">Quick Stats</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                      <p className="text-sm text-[#4d4d4d]">Avg. Response Time</p>
+              {/* Quick Stats */}
+              <div className="bg-[#0F1117] rounded-xl p-6">
+                <h3 className="text-lg font-medium mb-4">Quick Stats</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Avg. Response Time</p>
+                    {selectedAgent ? (
                       <p className="text-xl font-medium mt-1">2.4 mins</p>
-                    </div>
-                    <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                      <p className="text-sm text-[#4d4d4d]">Messages Today</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Messages Today</p>
+                    {selectedAgent ? (
                       <p className="text-xl font-medium mt-1">89</p>
-                    </div>
-                    <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                      <p className="text-sm text-[#4d4d4d]">Active Chats</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Active Chats</p>
+                    {selectedAgent ? (
                       <p className="text-xl font-medium mt-1">12</p>
-                    </div>
-                    <div className="p-4 bg-[#1a1a1a] rounded-lg">
-                      <p className="text-sm text-[#4d4d4d]">Resolution Rate</p>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
+                  </div>
+                  <div className="p-4 bg-[#1a1a1a] rounded-lg">
+                    <p className="text-sm text-[#4d4d4d]">Resolution Rate</p>
+                    {selectedAgent ? (
                       <p className="text-xl font-medium mt-1">95%</p>
-                    </div>
+                    ) : (
+                      <div className="h-7 mt-1 bg-[#262626] rounded animate-pulse" />
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </main>
     </div>
