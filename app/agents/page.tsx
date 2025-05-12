@@ -195,7 +195,7 @@ export default function AgentsPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Agent List */}
             <div className="md:col-span-1">
-              <div className="h-[400px] overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-[#1a1a1a] scrollbar-track-transparent hover:scrollbar-thumb-[#262626]">
+              <div className="h-[400px] overflow-y-auto pr-2 space-y-4 scrollbar-thin scrollbar-thumb-[#262626] scrollbar-track-[#1a1a1a]">
                 {displayedAgents.map((agent) => (
                   <div
                     key={agent.id}
@@ -249,7 +249,7 @@ export default function AgentsPage() {
 
             {/* Agent Details */}
             <div className="md:col-span-2">
-              <div className="h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#1a1a1a] scrollbar-track-transparent hover:scrollbar-thumb-[#262626]">
+              <div className="h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#262626] scrollbar-track-[#1a1a1a]">
                 {selectedAgent ? (
                   <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
                     <div className="flex items-center justify-between mb-6">
