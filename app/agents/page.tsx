@@ -232,6 +232,33 @@ export default function AgentsPage() {
                         </div>
                       </div>
                     </div>
+
+                    {displayedAgents.length === 1 && (
+                      <>
+                        <p className="text-sm text-[#4d4d4d] mt-6">{agent.description}</p>
+                        <div className="mt-6 space-y-4">
+                          <h3 className="font-medium">Recent Messages</h3>
+                          <div className="space-y-3">
+                            {agent.messageHistory.slice(0, 2).map((message) => (
+                              <div
+                                key={message.id}
+                                className={`flex ${message.type === 'sent' ? 'justify-end' : 'justify-start'}`}
+                              >
+                                <div className={`max-w-[85%] rounded-lg p-2.5 ${
+                                  message.type === 'sent' 
+                                    ? 'bg-[#0055FF] text-white' 
+                                    : 'bg-[#1a1a1a] text-white'
+                                }`}>
+                                  <p className="text-sm">{message.content}</p>
+                                  <p className="text-xs mt-1 opacity-70">{message.timestamp}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
+
                     <div className={`flex items-center justify-between text-sm text-[#4d4d4d] ${displayedAgents.length === 1 ? 'mt-auto' : 'mt-6'}`}>
                       <div>
                         <div className="text-white">{agent.messages}</div>
