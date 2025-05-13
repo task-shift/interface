@@ -47,90 +47,41 @@ const agents = [
       satisfactionRate: 92
     }
   },
-  // {
-  //   id: 2,
-  //   name: "Support Bot",
-  //   platform: "Slack",
-  //   status: "Active",
-  //   messages: 856,
-  //   lastActive: "5 mins ago",
-  //   description: "Technical support and troubleshooting assistant",
-  //   messageHistory: [
-  //     { id: 1, content: "Having trouble with login?", type: "sent", timestamp: "11:20 AM" },
-  //     { id: 2, content: "Yes, can't access my account", type: "received", timestamp: "11:21 AM" },
-  //     { id: 3, content: "Let me help you reset your password", type: "sent", timestamp: "11:22 AM" }
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   name: "Marketing Bot",
-  //   platform: "Telegram",
-  //   status: "Inactive",
-  //   messages: 567,
-  //   lastActive: "1 hour ago",
-  //   description: "Handles marketing campaigns and promotions",
-  //   messageHistory: [
-  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-  //   ]
-  // },
-  // {
-  //   id: 4,
-  //   name: "Marketing Bot",
-  //   platform: "Telegram",
-  //   status: "Inactive",
-  //   messages: 567,
-  //   lastActive: "1 hour ago",
-  //   description: "Handles marketing campaigns and promotions",
-  //   messageHistory: [
-  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   name: "Marketing Bot",
-  //   platform: "Telegram",
-  //   status: "Inactive",
-  //   messages: 567,
-  //   lastActive: "1 hour ago",
-  //   description: "Handles marketing campaigns and promotions",
-  //   messageHistory: [
-  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   name: "Marketing Bot",
-  //   platform: "Telegram",
-  //   status: "Inactive",
-  //   messages: 567,
-  //   lastActive: "1 hour ago",
-  //   description: "Handles marketing campaigns and promotions",
-  //   messageHistory: [
-  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-  //   ]
-  // },
-  // {
-  //   id: 3,
-  //   name: "Marketing Bot",
-  //   platform: "Telegram",
-  //   status: "Inactive",
-  //   messages: 567,
-  //   lastActive: "1 hour ago",
-  //   description: "Handles marketing campaigns and promotions",
-  //   messageHistory: [
-  //     { id: 1, content: "Check out our latest promotion!", type: "sent", timestamp: "09:15 AM" },
-  //     { id: 2, content: "Tell me more about the discount", type: "received", timestamp: "09:16 AM" },
-  //     { id: 3, content: "You can get 20% off using code SUMMER20", type: "sent", timestamp: "09:17 AM" }
-  //   ]
-  // }
+  {
+    id: 2,
+    name: "Sales Assistant",
+    platform: "WhatsApp",
+    status: "Active",
+    messages: 1234,
+    lastActive: "2 mins ago",
+    description: "Handles customer inquiries and sales support",
+    messageHistory: [
+      { id: 1, content: "Hello! How can I help you today?", type: "sent", timestamp: "10:30 AM" },
+      { id: 2, content: "I'm interested in your product", type: "received", timestamp: "10:31 AM" },
+      { id: 3, content: "Great! Let me tell you about our features", type: "sent", timestamp: "10:32 AM" }
+    ],
+    metrics: {
+      responseTime: [
+        { date: 'Mon', value: 2.5 },
+        { date: 'Tue', value: 2.1 },
+        { date: 'Wed', value: 3.2 },
+        { date: 'Thu', value: 2.8 },
+        { date: 'Fri', value: 2.3 },
+        { date: 'Sat', value: 2.0 },
+        { date: 'Sun', value: 2.4 }
+      ],
+      messagesPerDay: [
+        { date: 'Mon', value: 145 },
+        { date: 'Tue', value: 132 },
+        { date: 'Wed', value: 164 },
+        { date: 'Thu', value: 156 },
+        { date: 'Fri', value: 139 },
+        { date: 'Sat', value: 98 },
+        { date: 'Sun', value: 89 }
+      ],
+      satisfactionRate: 92
+    }
+  },
 ]
 
 export default function AgentsPage() {
