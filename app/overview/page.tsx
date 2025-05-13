@@ -173,46 +173,8 @@ export default function OverviewPage() {
             </div>
           </div>
 
-          {/* Running Task Stats and Activity */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
-            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-                <h2 className="text-lg md:text-xl font-medium mb-2 md:mb-0">Running Task</h2>
-                <div className="text-4xl md:text-6xl font-semibold">65</div>
-              </div>
-              <div className="flex flex-col md:flex-row md:items-end justify-between">
-                <div>
-                  <div className="text-[#4d4d4d] mb-2">Total Task</div>
-                  <div className="text-3xl">100</div>
-                </div>
-                <div className="relative w-24 h-24">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-lg font-medium">45%</div>
-                  </div>
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      fill="none"
-                      stroke="#1a1a1a"
-                      strokeWidth="10"
-                    />
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      fill="none"
-                      stroke="#0055FF"
-                      strokeWidth="10"
-                      strokeDasharray="282.7"
-                      strokeDashoffset={282.7 * (1 - 0.45)}
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            
+          {/* Activity */}
+          <div className="mb-6 md:mb-8">
             <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg md:text-xl font-medium">Activity</h2>
@@ -345,7 +307,14 @@ export default function OverviewPage() {
           {/* Task Distribution and Team Performance */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
             <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
-              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Task Distribution</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg md:text-xl font-medium">Task Distribution</h2>
+                <Button variant="ghost" size="icon" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                  </svg>
+                </Button>
+              </div>
               <div className="space-y-4">
                 {Object.entries(taskDistribution).map(([category, percentage]) => (
                   <div key={category}>
@@ -353,16 +322,10 @@ export default function OverviewPage() {
                       <span>{category}</span>
                       <span className="text-[#4d4d4d]">{percentage}%</span>
                     </div>
-                    <div className="h-2 bg-[#1a1a1a] rounded-full">
+                    <div className="h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
                       <div 
-                        className="h-full rounded-full"
-                        style={{ 
-                          width: `${percentage}%`,
-                          backgroundColor: category === "UI/UX Design" ? "#0055FF" :
-                                         category === "Frontend Dev" ? "#8B5CF6" :
-                                         category === "Backend Dev" ? "#10B981" :
-                                         "#F59E0B"
-                        }}
+                        className="h-full bg-[#0055FF] rounded-full"
+                        style={{ width: `${percentage}%` }}
                       />
                     </div>
                   </div>
@@ -371,49 +334,32 @@ export default function OverviewPage() {
             </div>
 
             <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
-              <h2 className="text-lg md:text-xl font-medium mb-4 md:mb-6">Team Performance</h2>
-              <div className="space-y-4 md:space-y-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg md:text-xl font-medium">Team Performance</h2>
+                <Button variant="ghost" size="icon" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                  </svg>
+                </Button>
+              </div>
+              <div className="space-y-4">
                 {teamPerformance.map((member) => (
                   <div key={member.name} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#1a1a1a] overflow-hidden">
                         <Avatar index={teamPerformance.indexOf(member)} />
-                        <span>{member.name}</span>
                       </div>
-                      <div className="text-sm text-[#4d4d4d]">
-                        {member.completed + member.ongoing} Tasks
-                      </div>
+                      <span className="flex-1">{member.name}</span>
+                      <span className="text-[#4d4d4d]">{member.completed + member.ongoing} tasks</span>
                     </div>
-                    <div className="flex h-2 rounded-full overflow-hidden">
+                    <div className="h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
                       <div 
-                        className="bg-[#0055FF]" 
+                        className="h-full bg-[#0055FF] rounded-full"
                         style={{ width: `${(member.completed / (member.completed + member.ongoing + member.delayed)) * 100}%` }}
-                      />
-                      <div 
-                        className="bg-[#F59E0B]" 
-                        style={{ width: `${(member.ongoing / (member.completed + member.ongoing + member.delayed)) * 100}%` }}
-                      />
-                      <div 
-                        className="bg-[#EF4444]" 
-                        style={{ width: `${(member.delayed / (member.completed + member.ongoing + member.delayed)) * 100}%` }}
                       />
                     </div>
                   </div>
                 ))}
-                <div className="flex items-center justify-center gap-6 pt-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#0055FF]" />
-                    <span className="text-[#4d4d4d]">Completed</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#F59E0B]" />
-                    <span className="text-[#4d4d4d]">Ongoing</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#EF4444]" />
-                    <span className="text-[#4d4d4d]">Delayed</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
