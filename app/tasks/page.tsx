@@ -8,6 +8,7 @@ import { Placeholder } from "../components/Placeholder"
 import { Avatar } from "../components/Avatar"
 import { useState } from "react"
 import { Sidebar } from "../components/Sidebar"
+import { Header } from "../components/Header"
 
 const tasks = [
   {
@@ -94,25 +95,15 @@ export default function TasksPage() {
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
-        {/* Top Navigation */}
-        <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
-          <div>
-            <h1 className="text-xl md:text-2xl font-medium">Tasks</h1>
-            <p className="text-sm md:text-base text-[#4d4d4d]">Manage and track your tasks</p>
-          </div>
-          
-          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
-            <div className="relative">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[#4d4d4d]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <Input 
-                placeholder="Search tasks..." 
-                className="pl-10 bg-[#0F1117] border-[#1a1a1a] text-white placeholder:text-[#4d4d4d]"
-              />
-            </div>
-          </div>
-        </header>
+        <Header 
+          title="Tasks"
+          subtitle="Manage and track your tasks"
+          rightContent={
+            <button className="bg-[#0055FF] text-white px-4 py-2 rounded-lg hover:bg-[#0044CC] transition-colors duration-200">
+              + New Task
+            </button>
+          }
+        />
 
         <div className="p-4 md:p-6 flex flex-col gap-6">
           {/* AI Chat Section - Always shown first */}

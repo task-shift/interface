@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Avatar } from "../components/Avatar"
 import { useState } from "react"
 import { Sidebar } from "../components/Sidebar"
+import { Header } from "../components/Header"
 
 interface Organization {
   id: number
@@ -49,17 +50,10 @@ export default function ProfilePage() {
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
-        {/* Top Navigation */}
-        <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
-          <div className="mb-4 md:mb-0">
-            <h1 className="text-xl md:text-2xl font-medium">Profile</h1>
-            <p className="text-sm md:text-base text-[#4d4d4d]">Manage your account settings</p>
-          </div>
-          
-          <Button className="bg-[#0055FF] hover:bg-[#0044CC]">
-            Save Changes
-          </Button>
-        </header>
+        <Header 
+          title="Profile"
+          subtitle="Manage your account settings"
+        />
 
         <div className="p-4 md:p-6">
           {/* Profile Info */}

@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Header } from "../components/Header"
 
 // Sample data for agents
 const agents = [
@@ -117,50 +118,15 @@ export default function AgentsPage() {
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
-        {/* Top Navigation */}
-        <header className="sticky top-0 z-30 flex flex-col md:flex-row md:items-center justify-between px-4 md:px-6 py-4 bg-black border-b border-[#1a1a1a]">
-          <div className="mb-4 md:mb-0">
-            <h1 className="text-xl md:text-2xl font-medium">Agents</h1>
-            <p className="text-sm md:text-base text-[#4d4d4d]">Manage your AI agents across different platforms</p>
-          </div>
-          
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-[#0055FF] hover:bg-[#0044CC]">
-                + Set Up New Agent
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-[#0F1117] border-[#1a1a1a] text-white">
-              <DialogHeader>
-                <DialogTitle>Set Up New Agent</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4 pt-4">
-                <div className="space-y-2">
-                  <Label>Agent Name</Label>
-                  <Input className="bg-[#1a1a1a] border-[#262626]" placeholder="Enter agent name" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Platform</Label>
-                  <Select>
-                    <SelectTrigger className="bg-[#1a1a1a] border-[#262626]">
-                      <SelectValue placeholder="Select platform" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#0F1117] border-[#1a1a1a]">
-                      <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                      <SelectItem value="slack">Slack</SelectItem>
-                      <SelectItem value="telegram">Telegram</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Description</Label>
-                  <Input className="bg-[#1a1a1a] border-[#262626]" placeholder="Enter agent description" />
-                </div>
-                <Button className="w-full bg-[#0055FF] hover:bg-[#0044CC]">Create Agent</Button>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </header>
+        <Header 
+          title="Agents"
+          subtitle="Manage and monitor your agents"
+          rightContent={
+            <button className="bg-[#0055FF] text-white px-4 py-2 rounded-lg hover:bg-[#0044CC] transition-colors duration-200">
+              + New Agent
+            </button>
+          }
+        />
 
         <div className="p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">

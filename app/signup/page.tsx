@@ -68,6 +68,15 @@ export default function SignUpPage() {
               />
             </div>
             <div className="grid gap-2">
+              <Label htmlFor="name" className="text-white">Username</Label>
+              <Input 
+                id="name" 
+                type="text"
+                placeholder="john2690"
+                className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
+              />
+            </div>
+            <div className="grid gap-2">
               <Label htmlFor="password" className="text-white">Password</Label>
               <Input 
                 id="password" 
