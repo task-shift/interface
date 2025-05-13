@@ -304,35 +304,8 @@ export default function OverviewPage() {
             </div>
           </div>
 
-          {/* Task Distribution and Team Performance */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
-            <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg md:text-xl font-medium">Task Distribution</h2>
-                <Button variant="ghost" size="icon" className="text-[#4d4d4d] hover:text-white hover:bg-[#1a1a1a]">
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                  </svg>
-                </Button>
-              </div>
-              <div className="space-y-4">
-                {Object.entries(taskDistribution).map(([category, percentage]) => (
-                  <div key={category}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>{category}</span>
-                      <span className="text-[#4d4d4d]">{percentage}%</span>
-                    </div>
-                    <div className="h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-[#0055FF] rounded-full"
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+          {/* Team Performance */}
+          <div className="mb-6 md:mb-8">
             <div className="bg-[#0F1117] rounded-xl p-4 md:p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg md:text-xl font-medium">Team Performance</h2>
