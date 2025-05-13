@@ -4,8 +4,9 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar } from "../components/Avatar"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Sidebar } from "../components/Sidebar"
+import { useRouter } from "next/navigation"
 
 const taskDistribution = {
   "UI/UX Design": 35,
@@ -38,6 +39,27 @@ const taskPriorityData = {
 
 export default function OverviewPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const router = useRouter()
+  const profileRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  const handleLogout = () => {
+    // Add any logout logic here (clear tokens, cookies, etc)
+    router.push('/login')
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -81,8 +103,28 @@ export default function OverviewPage() {
                 </svg>
                 <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-[#0055FF]"></span>
               </div>
-              <div className="h-10 w-10 rounded-full bg-[#1a1a1a] overflow-hidden">
-                <Avatar index={0} />
+              <div className="relative">
+                <button 
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="h-10 w-10 rounded-full bg-[#1a1a1a] overflow-hidden hover:ring-2 hover:ring-[#0055FF] transition-all duration-200"
+                >
+                  <Avatar index={0} />
+                </button>
+                
+                {isProfileOpen && (
+                  <div ref={profileRef} className="absolute right-0 mt-2 w-48 bg-[#0F1117] rounded-xl shadow-lg py-1 border border-[#1a1a1a] z-50">
+                    <div className="px-4 py-2 border-b border-[#1a1a1a]">
+                      <div className="font-medium">Skylar Dias</div>
+                      <div className="text-sm text-[#4d4d4d]">Admin</div>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[#1a1a1a] transition-colors duration-200"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
