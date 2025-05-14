@@ -243,11 +243,11 @@ export default function TasksPage() {
                       <p className="text-sm text-[#4d4d4d] line-clamp-2">{task.description}</p>
                     </div>
                     <div className={`px-2 py-1 rounded text-xs ${
-                      task.priority === "High" ? "bg-red-500/10 text-red-500" :
-                      task.priority === "Medium" ? "bg-yellow-500/10 text-yellow-500" :
+                      task.status === "Not Started" ? "bg-yellow-500/10 text-yellow-500" :
+                      task.status === "In Progress" ? "bg-blue-500/10 text-blue-500" :
                       "bg-green-500/10 text-green-500"
                     }`}>
-                      {task.priority}
+                      {task.status}
                     </div>
                   </div>
 
@@ -267,7 +267,7 @@ export default function TasksPage() {
 
                     <div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-[#4d4d4d]">{task.status}</span>
+                        <span className="text-[#4d4d4d]">Priority: {task.priority}</span>
                       </div>
                     </div>
                   </div>
