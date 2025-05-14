@@ -10,6 +10,21 @@ import { useState } from "react"
 import { Sidebar } from "../components/Sidebar"
 import { Header } from "../components/Header"
 
+interface User {
+  id: number
+  name: string
+  role: string
+}
+
+// Add users data
+const users: User[] = [
+  { id: 1, name: "Sarah Johnson", role: "Designer" },
+  { id: 2, name: "Mike Chen", role: "Developer" },
+  { id: 3, name: "Lisa Brown", role: "Product Manager" },
+  { id: 4, name: "John Smith", role: "Engineer" },
+  { id: 5, name: "Emma Davis", role: "UX Researcher" }
+]
+
 const tasks = [
   {
     id: 1,
@@ -64,6 +79,62 @@ export default function TasksPage() {
   const [isAiChatOpen, setIsAiChatOpen] = useState(true)
   const [isOrgDropdownOpen, setIsOrgDropdownOpen] = useState(false)
   const [currentOrg, setCurrentOrg] = useState(organizations[0])
+  const [showMentionPopup, setShowMentionPopup] = useState(false)
+  const [mentionFilter, setMentionFilter] = useState("")
+  const [cursorPosition, setCursorPosition] = useState({ top: 0, left: 0 })
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value
+    setMessage(value)
+
+    // Get cursor position for popup placement
+    const textarea = e.target
+    const cursorIndex = textarea.selectionStart
+    const textBeforeCursor = value.substring(0, cursorIndex)
+    const lines = textBeforeCursor.split('\n')
+    const currentLineIndex = lines.length - 1
+    const currentLine = lines[currentLineIndex]
+    
+    // Calculate position for popup
+    const lineHeight = 24 // Approximate line height in pixels
+    const charWidth = 8 // Approximate character width in pixels
+    const top = (currentLineIndex + 1) * lineHeight
+    const left = currentLine.length * charWidth
+
+    // Check if we should show the mention popup
+    const lastChar = value[cursorIndex - 1]
+    const isTypingMention = lastChar === '@'
+    
+    if (isTypingMention) {
+      setShowMentionPopup(true)
+      setMentionFilter("")
+      setCursorPosition({ top, left })
+    } else if (showMentionPopup) {
+      // Find the last @ symbol before cursor
+      const lastAtIndex = value.substring(0, cursorIndex).lastIndexOf('@')
+      
+      // If we can't find @ symbol or there's a space after @, close the popup
+      if (lastAtIndex === -1 || value.substring(lastAtIndex, cursorIndex).includes(' ')) {
+        setShowMentionPopup(false)
+      } else {
+        // Update the filter with text after @
+        const mentionText = value.substring(lastAtIndex + 1, cursorIndex)
+        setMentionFilter(mentionText.toLowerCase())
+      }
+    }
+  }
+
+  const handleMentionSelect = (user: User) => {
+    const lastAtIndex = message.lastIndexOf('@')
+    const newMessage = message.substring(0, lastAtIndex) + `@${user.name} ` + message.substring(lastAtIndex + mentionFilter.length + 1)
+    setMessage(newMessage)
+    setShowMentionPopup(false)
+  }
+
+  const filteredUsers = users.filter(user => 
+    user.name.toLowerCase().includes(mentionFilter) || 
+    user.role.toLowerCase().includes(mentionFilter)
+  )
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -175,11 +246,34 @@ export default function TasksPage() {
                     <div className="relative">
                       <textarea
                         value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={handleMessageChange}
                         placeholder="Describe your task..."
                         className="w-full pl-4 pr-12 py-3 bg-[#1a1a1a] border-2 border-[#262626] focus:border-[#0055FF] placeholder:text-[#4d4d4d] text-white rounded-xl resize-none transition-colors duration-200"
                         rows={3}
                       />
+                      {showMentionPopup && (
+                        <div 
+                          className="absolute z-50 bg-[#1a1a1a] border border-[#262626] rounded-lg shadow-lg max-h-48 overflow-y-auto"
+                          style={{ 
+                            top: `${cursorPosition.top + 30}px`,
+                            left: `${cursorPosition.left}px`
+                          }}
+                        >
+                          {filteredUsers.map(user => (
+                            <button
+                              key={user.id}
+                              className="w-full px-4 py-2 text-left hover:bg-[#262626] flex items-center gap-3"
+                              onClick={() => handleMentionSelect(user)}
+                            >
+                              <Avatar index={user.id - 1} />
+                              <div>
+                                <div className="text-white">{user.name}</div>
+                                <div className="text-[#4d4d4d] text-sm">{user.role}</div>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      )}
                       <div className="absolute right-3 bottom-3 flex gap-2">
                         <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#262626] rounded-lg">
                           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
