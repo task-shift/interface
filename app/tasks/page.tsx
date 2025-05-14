@@ -18,8 +18,7 @@ const tasks = [
     priority: "High",
     dueDate: "2024-03-20",
     assignee: "Sarah",
-    status: "In Progress",
-    progress: 65
+    status: "In Progress"
   },
   {
     id: 2,
@@ -28,8 +27,7 @@ const tasks = [
     priority: "Medium",
     dueDate: "2024-03-25",
     assignee: "Mike",
-    status: "Not Started",
-    progress: 0
+    status: "Not Started"
   },
   {
     id: 3,
@@ -38,8 +36,7 @@ const tasks = [
     priority: "Low",
     dueDate: "2024-03-22",
     assignee: "Lisa",
-    status: "Completed",
-    progress: 100
+    status: "Completed"
   },
   {
     id: 4,
@@ -48,8 +45,7 @@ const tasks = [
     priority: "High",
     dueDate: "2024-03-21",
     assignee: "John",
-    status: "In Progress",
-    progress: 45
+    status: "In Progress"
   }
 ]
 
@@ -270,15 +266,8 @@ export default function TasksPage() {
                     </div>
 
                     <div>
-                      <div className="flex justify-between text-sm mb-1">
+                      <div className="flex justify-between text-sm">
                         <span className="text-[#4d4d4d]">{task.status}</span>
-                        <span>{task.progress}%</span>
-                      </div>
-                      <div className="h-2 bg-[#1a1a1a] rounded-full">
-                        <div 
-                          className="h-full rounded-full bg-[#0055FF]"
-                          style={{ width: `${task.progress}%` }}
-                        />
                       </div>
                     </div>
                   </div>
