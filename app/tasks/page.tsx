@@ -90,15 +90,22 @@ export default function TasksPage() {
     // Get cursor position for popup placement
     const textarea = e.target
     const cursorIndex = textarea.selectionStart
+    
+    // Calculate cursor position
     const textBeforeCursor = value.substring(0, cursorIndex)
+    const lines = textBeforeCursor.split('\n')
+    const currentLineIndex = lines.length - 1
+    const currentLine = lines[currentLineIndex]
     
-    // Get cursor coordinates
-    const textareaRect = textarea.getBoundingClientRect()
-    const cursorCoords = getCursorCoordinates(textarea, cursorIndex)
+    // Get textarea metrics
+    const computedStyle = window.getComputedStyle(textarea)
+    const lineHeight = parseInt(computedStyle.lineHeight) || 24
+    const paddingLeft = parseInt(computedStyle.paddingLeft) || 16
+    const paddingTop = parseInt(computedStyle.paddingTop) || 12
     
-    // Calculate position relative to textarea
-    const top = cursorCoords.top - textareaRect.top
-    const left = cursorCoords.left - textareaRect.left
+    // Calculate position accounting for scroll
+    const top = (currentLineIndex * lineHeight) - textarea.scrollTop + paddingTop
+    const left = (currentLine.length * 8) + paddingLeft // 8px is approximate character width
 
     // Check if we should show the mention popup
     const lastChar = value[cursorIndex - 1]
@@ -120,41 +127,6 @@ export default function TasksPage() {
         const mentionText = value.substring(lastAtIndex + 1, cursorIndex)
         setMentionFilter(mentionText.toLowerCase())
       }
-    }
-  }
-
-  // Helper function to get cursor coordinates
-  const getCursorCoordinates = (textarea: HTMLTextAreaElement, cursorIndex: number) => {
-    // Create a hidden div with the same styling as textarea
-    const div = document.createElement('div')
-    div.style.position = 'absolute'
-    div.style.top = '0'
-    div.style.left = '0'
-    div.style.visibility = 'hidden'
-    div.style.whiteSpace = 'pre-wrap'
-    div.style.wordWrap = 'break-word'
-    div.style.padding = window.getComputedStyle(textarea).padding
-    div.style.width = window.getComputedStyle(textarea).width
-    div.style.font = window.getComputedStyle(textarea).font
-    div.style.lineHeight = window.getComputedStyle(textarea).lineHeight
-
-    // Add text content up to cursor
-    const textBeforeCursor = textarea.value.substring(0, cursorIndex)
-    div.textContent = textBeforeCursor
-
-    // Create a span for cursor position
-    const span = document.createElement('span')
-    span.textContent = '|'
-    div.appendChild(span)
-
-    // Add to document, measure, then remove
-    document.body.appendChild(div)
-    const rect = span.getBoundingClientRect()
-    document.body.removeChild(div)
-
-    return {
-      top: rect.top,
-      left: rect.left
     }
   }
 
@@ -289,7 +261,7 @@ export default function TasksPage() {
                         <div 
                           className="absolute z-50 bg-[#1a1a1a] border border-[#262626] rounded-lg shadow-lg max-h-48 overflow-y-auto w-64"
                           style={{ 
-                            top: `${cursorPosition.top + 24}px`,
+                            top: `${cursorPosition.top}px`,
                             left: `${cursorPosition.left}px`
                           }}
                         >
