@@ -162,9 +162,9 @@ export default function TasksPage() {
         >
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+            </svg>
         </button>
-      </div>
+        </div>
 
       {/* Main Content */}
       <main className="pt-16 md:pt-0 md:pl-[240px]">
@@ -190,8 +190,8 @@ export default function TasksPage() {
               >
                 {isAiChatOpen ? (
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                </svg>
                 ) : (
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
@@ -202,7 +202,7 @@ export default function TasksPage() {
 
             {isAiChatOpen && (
               <div className="bg-[#0F1117] rounded-xl border border-[#1a1a1a] overflow-hidden">
-                {/* Chat Messages Area */}
+              {/* Chat Messages Area */}
                 <div className="h-[300px] md:h-[400px] p-4 overflow-y-auto">
                   <div className="h-full w-full flex items-center justify-center">
                     <div className="text-center max-w-sm mx-auto">
@@ -236,21 +236,21 @@ export default function TasksPage() {
                             <div className="w-8 h-8 bg-[#262626] group-hover:bg-[#333333] rounded-lg flex items-center justify-center flex-shrink-0">
                               <svg className="h-4 w-4 text-[#0055FF]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
+                      </svg>
                             </div>
                             Schedule API integration task
                           </div>
                         </button>
                       </div>
-                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Chat Input Area */}
+              {/* Chat Input Area */}
                 <div className="p-4 border-t border-[#1a1a1a] bg-[#0F1117]">
                   <div className="flex flex-col gap-4">
                     <div className="relative">
-                      <textarea
+                    <textarea
                         value={message}
                         onChange={handleMessageChange}
                         placeholder="Describe your task..."
@@ -259,40 +259,44 @@ export default function TasksPage() {
                       />
                       {showMentionPopup && (
                         <div 
-                          className="absolute z-50 bg-[#1a1a1a] border border-[#262626] rounded-lg shadow-lg max-h-48 overflow-y-auto w-64"
+                          className="absolute z-50 bg-[#1a1a1a] border border-[#262626] rounded-lg shadow-lg overflow-y-auto"
                           style={{ 
                             top: `${cursorPosition.top}px`,
-                            left: `${cursorPosition.left}px`
+                            left: `${cursorPosition.left}px`,
+                            maxHeight: '200px',
+                            width: '180px'
                           }}
                         >
                           {filteredUsers.map(user => (
                             <button
                               key={user.id}
-                              className="w-full px-4 py-2 text-left hover:bg-[#262626] flex items-center gap-3"
+                              className="w-full px-3 py-2 text-left hover:bg-[#262626] flex items-center gap-2"
                               onClick={() => handleMentionSelect(user)}
                             >
-                              <Avatar index={user.id - 1} />
-                              <div>
-                                <div className="text-white">{user.name}</div>
-                                <div className="text-[#4d4d4d] text-sm">{user.role}</div>
+                              <div className="w-6 h-6 bg-[#0F1117] rounded flex items-center justify-center text-sm">
+                                {user.name.charAt(0)}
+                              </div>
+                              <div className="flex flex-col">
+                                <div className="text-white text-sm">{user.name}</div>
+                                <div className="text-[#4d4d4d] text-xs">@{user.name.toLowerCase().replace(' ', '')}</div>
                               </div>
                             </button>
                           ))}
                         </div>
                       )}
-                      <div className="absolute right-3 bottom-3 flex gap-2">
+                    <div className="absolute right-3 bottom-3 flex gap-2">
                         <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#262626] rounded-lg">
                           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                          </svg>
-                        </button>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                        </svg>
+                      </button>
                         <button className="text-[#0055FF] hover:text-[#0044CC] transition-colors p-2 hover:bg-[#262626] rounded-lg">
                           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </button>
-                      </div>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </button>
                     </div>
+                  </div>
                     <button 
                       className="w-full bg-[#0055FF] hover:bg-[#0044CC] text-white py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 group"
                       onClick={() => {
@@ -302,14 +306,14 @@ export default function TasksPage() {
                     >
                       <span>Send to AI</span>
                       <svg className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none">
-                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                     </button>
                   </div>
                 </div>
               </div>
             )}
-          </div>
+            </div>
 
           {/* Tasks Section */}
           <div className="w-full">
@@ -328,7 +332,7 @@ export default function TasksPage() {
                     onClick={() => setSelectedFilter(filter)}
                   >
                     {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                  </Button>
+                </Button>
                 ))}
               </div>
             </div>
