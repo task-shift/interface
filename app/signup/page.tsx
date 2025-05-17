@@ -15,11 +15,13 @@ export default function SignUpPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
+    setSuccess(null)
 
     const formData = new FormData(e.currentTarget)
     
@@ -34,11 +36,15 @@ export default function SignUpPage() {
 
       if (response.success) {
         // Store user data in your app's state management
-        // For example, using Zustand or Context
         localStorage.setItem('token', response.token)
         
-        // Redirect to dashboard
-        router.push('/overview')
+        // Show success message
+        setSuccess('Account created successfully! Redirecting to verification page...')
+        
+        // Redirect to verify page after 2 seconds
+        setTimeout(() => {
+          router.push('/verify')
+        }, 2000)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
@@ -89,6 +95,11 @@ export default function SignUpPage() {
                   {error}
                 </div>
               )}
+              {success && (
+                <div className="p-4 bg-green-500/10 border border-green-500 rounded-lg text-green-500">
+                  {success}
+                </div>
+              )}
               <div className="grid gap-2">
                 <Label htmlFor="fullname" className="text-white">Full Name</Label>
                 <Input 
@@ -98,6 +109,7 @@ export default function SignUpPage() {
                   placeholder="John Doe"
                   className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="grid gap-2">
@@ -109,6 +121,7 @@ export default function SignUpPage() {
                   placeholder="m@example.com"
                   className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="grid gap-2">
@@ -120,6 +133,7 @@ export default function SignUpPage() {
                   placeholder="john2690"
                   className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="grid gap-2">
@@ -130,10 +144,11 @@ export default function SignUpPage() {
                   type="password"
                   className="bg-zinc-800 border-zinc-700 text-white"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="terms" className="border-zinc-700 data-[state=checked]:bg-blue-600" />
+                <Checkbox id="terms" className="border-zinc-700 data-[state=checked]:bg-blue-600" required />
                 <label
                   htmlFor="terms"
                   className="text-sm font-medium leading-none text-zinc-400 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
