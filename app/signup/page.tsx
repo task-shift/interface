@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { authService } from '../services/auth.service'
-import { Metadata } from "next"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -11,11 +10,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-
-export const metadata: Metadata = {
-  title: "Sign Up | TaskShift",
-  description: "Create your TaskShift account",
-}
 
 export default function SignUpPage() {
   const router = useRouter()
