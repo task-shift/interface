@@ -46,7 +46,7 @@ class ApiService {
     }
   }
 
-  private async sendRequest<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
+  async sendRequest<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     if (!this.serviceWorker) {
       throw new Error('Service worker not initialized')
     }

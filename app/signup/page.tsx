@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { api } from '../services/api'
+import { authService } from '../services/auth.service'
 import { Metadata } from "next"
 import Link from "next/link"
 
@@ -30,7 +30,7 @@ export default function SignUpPage() {
     const formData = new FormData(e.currentTarget)
     
     try {
-      const response = await api.register({
+      const response = await authService.signup({
         username: formData.get('username') as string,
         email: formData.get('email') as string,
         fullname: formData.get('fullname') as string,
@@ -41,6 +41,7 @@ export default function SignUpPage() {
       if (response.success) {
         // Store user data in your app's state management
         // For example, using Zustand or Context
+        localStorage.setItem('token', response.token)
         
         // Redirect to dashboard
         router.push('/overview')
