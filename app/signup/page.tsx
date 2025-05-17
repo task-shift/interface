@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Alert } from "@/components/ui/alert"
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -91,14 +92,14 @@ export default function SignUpPage() {
           <form onSubmit={handleSubmit}>
             <CardContent className="grid gap-4">
               {error && (
-                <div className="p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500">
+                <Alert type="error" title="Error">
                   {error}
-                </div>
+                </Alert>
               )}
               {success && (
-                <div className="p-4 bg-green-500/10 border border-green-500 rounded-lg text-green-500">
+                <Alert type="success" title="Success">
                   {success}
-                </div>
+                </Alert>
               )}
               <div className="grid gap-2">
                 <Label htmlFor="fullname" className="text-white">Full Name</Label>
