@@ -1,3 +1,8 @@
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { api } from '@/services/api'
 import { Metadata } from "next"
 import Link from "next/link"
 
@@ -13,6 +18,40 @@ export const metadata: Metadata = {
 }
 
 export default function SignUpPage() {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
+
+    const formData = new FormData(e.currentTarget)
+    
+    try {
+      const response = await api.register({
+        username: formData.get('username') as string,
+        email: formData.get('email') as string,
+        fullname: formData.get('fullname') as string,
+        password: formData.get('password') as string,
+        type: 'user'
+      })
+
+      if (response.success) {
+        // Store user data in your app's state management
+        // For example, using Zustand or Context
+        
+        // Redirect to dashboard
+        router.push('/overview')
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
@@ -49,6 +88,11 @@ export default function SignUpPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
+            {error && (
+              <div className="p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500">
+                {error}
+              </div>
+            )}
             <div className="grid gap-2">
               <Label htmlFor="name" className="text-white">Full Name</Label>
               <Input 
