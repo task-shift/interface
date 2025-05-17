@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import { CreateOrgModal } from "./CreateOrgModal"
 
 // Organization data
 const organizations = [
@@ -22,6 +23,14 @@ export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps)
   const [isOrgDropdownOpen, setIsOrgDropdownOpen] = useState(false)
   const [currentOrg, setCurrentOrg] = useState(organizations[0])
   const pathname = usePathname()
+  const [isCreateOrgModalOpen, setIsCreateOrgModalOpen] = useState(false)
+
+  const handleCreateOrg = async (orgData: { name: string; description: string }) => {
+    // Here you would typically make an API call to create the organization
+    console.log('Creating organization:', orgData)
+    // For now, we'll just simulate a delay
+    await new Promise(resolve => setTimeout(resolve, 1000))
+  }
 
   return (
     <>
@@ -121,6 +130,7 @@ export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps)
                       onClick={() => {
                         console.log("Create new organization")
                         setIsOrgDropdownOpen(false)
+                        setIsCreateOrgModalOpen(true)
                       }}
                     >
                       <div className="w-10 h-10 bg-[#1a1a1a] rounded-lg flex items-center justify-center group-hover:bg-[#262626] transition-colors duration-200">
@@ -210,6 +220,13 @@ export function Sidebar({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps)
           </div>
         </div>
       </aside>
+
+      {/* Create Organization Modal */}
+      <CreateOrgModal 
+        isOpen={isCreateOrgModalOpen}
+        onClose={() => setIsCreateOrgModalOpen(false)}
+        onSubmit={handleCreateOrg}
+      />
     </>
   )
 } 
