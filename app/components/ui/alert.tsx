@@ -1,7 +1,9 @@
 import { ReactNode } from 'react'
 
-interface AlertProps {
-  type: 'error' | 'success' | 'info'
+export type AlertType = 'error' | 'success' | 'info'
+
+export interface AlertProps {
+  type: AlertType
   title?: string
   children: ReactNode
 }
